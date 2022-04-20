@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "johnsoncodehk.volar",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode",
+    "mrmlnc.vscode-less",
+    "lokalise.i18n-ally",
+    "antfu.iconify",
+    "mikestead.dotenv",
+    "heybourn.headwind",
+    "formulahendry.auto-rename-tag",
+    "coenraads.bracket-pair-colorizer-2",
+    "pranaygp.vscode-css-peek",
+    "liviuschera.noctis",
+    "vscode-icons-team.vscode-icons",
+    "ms-ceintl.vscode-language-pack-zh-hans",
+    "alphabotsec.vscode-eclipse-keybindings",
+    "ionutvmi.path-autocomplete",
+    "streetsidesoftware.code-spell-checker",
+    "eamodio.gitlens",
+    "vincaslt.highlight-matching-tag"
+  ]
+}
