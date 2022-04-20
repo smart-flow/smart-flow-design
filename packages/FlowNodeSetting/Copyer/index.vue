@@ -1,0 +1,241 @@
+<template>
+  <a-drawer
+    :width="drawerWidth()"
+    :headerStyle="headerStyle"
+    :bodyStyle="bodyStyle"
+    placement="right"
+    :closable="true"
+    :visible="visible"
+    :after-visible-change="afterVisibleChange"
+    @close="onClose"
+  >
+    <template slot="title">
+      <img :src="ccIcon" class="anticon" />
+      <span class="flow-ant-drawer-title">
+        <EditName v-model="node.nodeName" />
+      </span>
+    </template>
+    <div class="flow-setting-module">
+      <a-tabs>
+        <a-tab-pane key="1" tab="审批设置">
+          <div class="flow-setting-content">
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">抄送人</p>
+              <a-radio-group class="w-fill" :size="size" v-model="node.settype">
+                <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
+                  <span>{{ approval.name }}</span>
+                  <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
+                    <template slot="content">
+                      <div class="approver-tip-content">
+                        <div class="approver-tip-main-content">
+                          <div v-for="(popover, k) in approval.popovers" :key="k">
+                            <p class="main-title">{{ popover.title }}</p>
+                            <p class="content">{{ popover.content }}</p>
+                          </div>
+                        </div>
+                        <a v-if="approval.href" :href="approval.href" target="_blank">{{ approval.hrefName }}</a>
+                      </div>
+                    </template>
+                    <a-icon style="margin-left: 5px;" type="question-circle" />
+                  </a-popover>
+                </a-radio>
+              </a-radio-group>
+            </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">配置</p>
+              <div class="flow-setting-option">
+                <div class="flow-setting-option-item">
+                  <div class="flow-setting-option-item-left">
+                    <img :src="optionIcon" />
+                    <div class="flow-setting-option-desc">
+                      <p class="setting-option-title">发起人填写</p>
+                      <p class="setting-option-desc">允许发起人添加抄送人</p>
+                    </div>
+                  </div>
+                  <div class="flow-setting-option-item-switch">
+                    <a-switch checked-children="开" un-checked-children="关" />
+                  </div>
+                </div>
+              </div>
+              <span></span>
+            </div>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="表单权限">
+          <div class="flow-setting-content">
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">表单权限</p>
+              <AuthForm />
+            </div>
+          </div>
+        </a-tab-pane>
+      </a-tabs>
+    </div>
+    <FlowDrawerFooter @close="onClose" />
+  </a-drawer>
+</template>
+<script>
+  import { flowMixin } from '../../mixins/flowMixin';
+  import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
+  import EditName from '../../Common/EditName.vue';
+  import AuthForm from '../../Common/AuthForm.vue';
+  export default {
+    name: 'FlowCopyerSetting',
+    components: { FlowDrawerFooter, EditName, AuthForm },
+    mixins: [flowMixin],
+    data() {
+      return {
+        node: {},
+        visible: false,
+        headerStyle: {
+          background: 'linear-gradient(90.04deg,#268bfb -16.37%,#33e1ae 137.34%)',
+          // 'background-color': '#6da4f2',
+          'border-radius': '0px 0px 0 0',
+        },
+        approvals: [
+          {
+            name: '上级',
+            value: 1,
+          },
+          {
+            name: '部门负责人',
+            value: 2,
+            popovers: [
+              {
+                title: '什么是部门负责人审批？',
+                content: '这里指在管理后台 - 组织架构中所设置的部门负责人',
+              },
+              {
+                title: '什么是部门负责人审批？',
+                content:
+                  '部门负责人审批与上级审批的区别？一个部门内可能存在多层的上下级关系，但通常有指定的部门负责人。由部门负责人审批 ，则不涉及上下级关系，直接由该固定人员进行审批',
+              },
+            ],
+            href: 'https://www.feishu.cn/hc/zh-CN/articles/360044810913',
+            hrefName: '如何配置部门负责人？',
+          },
+          {
+            name: '角色',
+            value: 3,
+            popovers: [
+              {
+                title: '什么是角色？',
+                content: '角色指团队成员的专业分工类别，如人事、行政、财务等，每类角色可由 1 位或多位成员组成',
+              },
+              {
+                title: '如何使用？',
+                content: '用角色作为审批人，当有成员离职变动时，该角色中的其他成员可继续完成审批，从而避免审批流程失效的情况',
+              },
+              {
+                content: '提示：若选择的角色中包含多名成员，则按照设置“多人审批时采用的审批方式”来处理',
+              },
+            ],
+            href: 'https://www.feishu.cn/hc/zh-CN/articles/360044810913',
+            hrefName: '如何配置角色？',
+          },
+          {
+            name: '岗位',
+            value: 4,
+            popovers: [
+              {
+                title: '什么是角色？',
+                content: '角色指团队成员的专业分工类别，如人事、行政、财务等，每类角色可由 1 位或多位成员组成',
+              },
+              {
+                title: '如何使用？',
+                content: '用角色作为审批人，当有成员离职变动时，该角色中的其他成员可继续完成审批，从而避免审批流程失效的情况',
+              },
+              {
+                content: '提示：若选择的角色中包含多名成员，则按照设置“多人审批时采用的审批方式”来处理',
+              },
+            ],
+            href: 'https://www.feishu.cn/hc/zh-CN/articles/360044810913',
+            hrefName: '如何配置角色？',
+          },
+          {
+            name: '用户组',
+            value: 5,
+            popovers: [
+              {
+                title: '什么是用户组？',
+                content: '用户组主要用于权限管控，设置某个用户组作为审批人，则只有该用户组中的成员可进行审批。',
+              },
+              {
+                title: '如何使用？',
+                content: '用户组主要用于权限管控，设置某个用户组作为审批人，则只有该用户组中的成员可进行审批。',
+              },
+              {
+                content: '提示：若选择的用户组中包含多名成员，则按照设置“多人审批时采用的审批方式”来处理',
+              },
+            ],
+            href: 'https://www.feishu.cn/hc/zh-CN/articles/360044810913',
+            hrefName: '如何配置用户组？',
+          },
+          {
+            name: '指定成员',
+            value: 6,
+          },
+          {
+            name: '发起人自选',
+            value: 7,
+          },
+          {
+            name: '发起人本人',
+            value: 8,
+            popovers: [
+              {
+                title: '什么是发起人审批？',
+                content: '将发起人自己设置为审批人，可用于需要发起人进行信息复核的场景',
+              },
+            ],
+          },
+          {
+            name: '连续多级上级审批',
+            value: 9,
+            popovers: [
+              {
+                title: '什么是连续多级上级审批？',
+                content: '从发起人的直属上级开始，依次逐级向上审批，直到所设置的审批终点为止。是手动逐个添加多级上级审批的一种便捷设置',
+              },
+            ],
+            href: 'https://www.feishu.cn/hc/zh-CN/articles/360044810913',
+            hrefName: '查看和设置上级信息',
+          },
+          {
+            name: '表单内联系人',
+            value: 10,
+            popovers: [
+              {
+                title: '如何配置表单内联系人？',
+                content: '在表单设计中添加联系人控件后，该人员/其上级/部门负责人将可以配置为本节点的审批人。',
+              },
+            ],
+          },
+          {
+            name: '表单内部门',
+            value: 11,
+            popovers: [
+              {
+                title: '何配置表单内部门？',
+                content: '在表单设计中添加部门控件后，其部门负责人可以配置为本节点的审批人。',
+              },
+            ],
+          },
+        ],
+      };
+    },
+    methods: {
+      afterVisibleChange(val) {
+        console.log('visible', val);
+      },
+      showDrawer(node) {
+        this.visible = true;
+        this.node = node;
+      },
+      onClose() {
+        this.visible = false;
+        this.$emit('close');
+      },
+    },
+  };
+</script>
