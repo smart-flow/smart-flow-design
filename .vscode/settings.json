@@ -147,8 +147,10 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  // 设置ide保存时使用该插件自动美化
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
   },
   "[vue]": {
     "editor.codeActionsOnSave": {
@@ -190,6 +192,7 @@
     "styl",
     "stylelint",
     "tailwindcss",
+    "temmi",
     "tinymce",
     "vben",
     "vditor",

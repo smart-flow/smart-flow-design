@@ -70,11 +70,11 @@
     "postcss-html": "^1.4.1",
     "postcss-less": "^6.0.0",
     "prettier": "^1.18.2",
-    "stylelint": "^14.7.1",
+    "stylelint": "13.13.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended": "^7.0.0",
     "stylelint-config-recommended-vue": "^1.4.0",
-    "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-standard": "22.0.0",
     "stylelint-order": "^5.0.0",
     "vue-cli-plugin-axios": "0.0.4",
     "vue-template-compiler": "^2.6.14"

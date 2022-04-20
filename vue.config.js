@@ -1,14 +1,14 @@
-const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== 'production';
 module.exports = {
   pages: {
     index: {
       // 页面入口
-      entry: "examples/main.js",
+      entry: 'examples/main.js',
       // 模板来源
-      template: "pubilc/index.html",
+      template: 'pubilc/index.html',
       // 输出文件名
-      filename: "index.html"
-    }
+      filename: 'index.html',
+    },
   },
   productionSourceMap: false,
   css: {
@@ -16,19 +16,19 @@ module.exports = {
       less: {
         modifyVars: {
           // "primary-color": "#13c2c2",
-          "primary-color": "#ff8126",
-          "background-color":"#ff8126",
-          "layout-color": "#9867f7"
+          'primary-color': '#ff8126',
+          'background-color': '#ff8126',
+          'layout-color': '#9867f7',
           // "layout-color": "#ee88aa"
         },
-        javascriptEnabled: true
-      }
-    }
+        javascriptEnabled: true,
+      },
+    },
   },
-  configureWebpack: config => {
-     // 开发环境配置
+  configureWebpack: (config) => {
+    // 开发环境配置
     if (debug) {
-      config.devtool = 'source-map'
+      config.devtool = 'source-map';
     }
   },
   devServer: {
@@ -39,9 +39,9 @@ module.exports = {
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '' // 需要rewrite的,
-        }
-      }
-    }
+          '^/api': '', // 需要rewrite的,
+        },
+      },
+    },
   },
 };
