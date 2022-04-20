@@ -1,40 +1,40 @@
-﻿import Vue from 'vue'
-import axios from 'axios'
-import { message, Modal, notification } from 'ant-design-vue' /// es/notification
-import { VueAxios } from './axios'
-import { ACCESS_TOKEN } from './mutation-types'
+﻿import Vue from 'vue';
+import axios from 'axios';
+import { message, Modal, notification } from 'ant-design-vue'; /// es/notification
+import { VueAxios } from './axios';
+import { ACCESS_TOKEN } from './mutation-types';
 
 // 创建 axios 实例
 const service = axios.create({
   // baseURL: '/api', // api base_url
   baseURL: process.env.VUE_APP_API_BASE_URL,
-  timeout: 6000 // 请求超时时间
-})
+  timeout: 6000, // 请求超时时间
+});
 
 const err = (error) => {
   if (error.response) {
-    const data = error.response.data
-    const token = Vue.ls.get(ACCESS_TOKEN)
+    const data = error.response.data;
+    const token = Vue.ls.get(ACCESS_TOKEN);
 
     if (error.response.status === 403) {
-      console.log('服务器403啦，要重新登录！')
+      console.log('服务器403啦，要重新登录！');
       notification.error({
         message: 'Forbidden',
-        description: data.message
-      })
+        description: data.message,
+      });
     }
     if (error.response.status === 500) {
       if (data.message.length > 0) {
-        message.error(data.message)
+        message.error(data.message);
       }
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       notification.error({
         message: 'Unauthorized',
-        description: 'Authorization verification failed'
-      })
+        description: 'Authorization verification failed',
+      });
       if (token) {
-    /*     store.dispatch('Logout').then(() => {
+        /*     store.dispatch('Logout').then(() => {
           setTimeout(() => {
             window.location.reload()
           }, 1500)
@@ -42,17 +42,17 @@ const err = (error) => {
       }
     }
   }
-  return Promise.reject(error)
-}
+  return Promise.reject(error);
+};
 
 // request interceptor
-service.interceptors.request.use(config => {
-  const token = Vue.ls.get(ACCESS_TOKEN)
+service.interceptors.request.use((config) => {
+  const token = Vue.ls.get(ACCESS_TOKEN);
   if (token) {
-    config.headers['Authorization'] = 'Bearer ' + token
+    config.headers['Authorization'] = 'Bearer ' + token;
   }
-  return config
-}, err)
+  return config;
+}, err);
 
 /**
  * response interceptor
@@ -60,35 +60,32 @@ service.interceptors.request.use(config => {
  */
 service.interceptors.response.use((response) => {
   if (response.request.responseType === 'blob') {
-    return response
+    return response;
   }
-  const code = response.data.code
+  const code = response.data.code;
   if (code === 1011006 || code === 1011007 || code === 1011008 || code === 1011009) {
     Modal.error({
       title: '提示：',
       content: response.data.message,
       okText: '重新登录',
       onOk: () => {
-        Vue.ls.remove(ACCESS_TOKEN)
-        window.location.reload()
-      }
-    })
+        Vue.ls.remove(ACCESS_TOKEN);
+        window.location.reload();
+      },
+    });
   } else if (code === 1013002 || code === 1016002 || code === 1015002) {
-    message.error(response.data.message)
-    return response.data
+    message.error(response.data.message);
+    return response.data;
   } else {
-    return response.data
+    return response.data;
   }
-}, err)
+}, err);
 
 const installer = {
   vm: {},
-  install (Vue) {
-    Vue.use(VueAxios, service)
-  }
-}
+  install(Vue) {
+    Vue.use(VueAxios, service);
+  },
+};
 
-export {
-  installer as VueAxios,
-  service as axios
-}
+export { installer as VueAxios, service as axios };
