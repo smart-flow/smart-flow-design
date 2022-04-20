@@ -29,7 +29,8 @@
     "mini": "vue-cli-service build --target lib --name smart-flow-design-mini --dest lib packages/mini.js --no-clean",
     "lint": "vue-cli-service lint",
     "lint:lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf package.lock.json && rimraf node_modules && npm run bootstrap"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
