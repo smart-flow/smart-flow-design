@@ -5,7 +5,7 @@
   export default {
     data() {
       return {
-        childNode:{},
+        childNode: {},
       };
     },
     created() {},
@@ -13,10 +13,8 @@
       toReturn() {
         this.$router.push({ path: '/flow/model' });
       },
-      handleSave() {
-      },
+      handleSave() {},
     },
   };
 </script>
-<style>
-</style>
+<style></style>
