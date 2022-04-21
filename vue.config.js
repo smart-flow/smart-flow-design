@@ -29,6 +29,15 @@ module.exports = {
     // 开发环境配置
     if (debug) {
       config.devtool = 'source-map';
+    } else {
+      config.externals = {
+        axios: 'axios',
+        vue: 'Vue',
+        vuex: 'Vuex',
+        'vue-router': 'VueRouter',
+        html2canvas: 'html2canvas',
+        'vue-uuid': 'uuid',
+      };
     }
   },
   devServer: {
