@@ -12,7 +12,7 @@
   </a>
 </p>
 
-![图片](https://gitee.com/crowncloud/smart-flow-design/blob/master/demo.png)
+![图片](https://gitee.com/crowncloud/smart-flow-design/blob/master/demo.jpg)
 
 ## 简介
 
