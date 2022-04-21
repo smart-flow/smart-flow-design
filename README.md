@@ -13,6 +13,8 @@
 </p>
 
 ![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/demo.jpg)
+![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/setting.jpg)
+
 
 ## 简介
 
