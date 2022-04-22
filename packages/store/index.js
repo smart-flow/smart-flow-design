@@ -85,8 +85,8 @@ const mutations = {
       } else {
         state.node = {};
       }
-    } else if (node.type == 3 || node.type == 10) {
-      // 分支节点和并行节点
+    } else if (node.type == 3 || node.type == 8 || node.type == 10) {
+      // 条件(意见)分支节点和并行节点
       delBranchNode(state, state.node, node);
     } else {
       delNode(state.node, node);
