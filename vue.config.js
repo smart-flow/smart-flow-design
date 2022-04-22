@@ -30,14 +30,15 @@ module.exports = {
     if (debug) {
       config.devtool = 'source-map';
     } else {
-      config.externals = {
+      // lib时 vue配置externals(打包优化)
+      /* config.externals = {
         axios: 'axios',
         vue: 'Vue',
         vuex: 'Vuex',
         'vue-router': 'VueRouter',
         html2canvas: 'html2canvas',
         'vue-uuid': 'uuid',
-      };
+      }; */
     }
   },
   devServer: {
