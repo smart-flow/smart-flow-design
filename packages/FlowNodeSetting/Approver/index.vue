@@ -221,6 +221,14 @@
                   </a-select-option>
                 </a-select>
               </div>
+              <!-- 指定成员 -->
+              <div v-if="node.approvalSetting.approvalMode == 8">
+                <p class="flow-setting-item-title">
+                  <span>指定成员</span>
+                  <span class="light-text">(不能超过 25 人)</span>
+                </p>
+                <UserSelector type="button" />
+              </div>
             </div>
             <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
