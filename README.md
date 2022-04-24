@@ -7,8 +7,8 @@
   <a href="https://github.com/vueComponent/ant-design-vue">
     <img src="https://img.shields.io/badge/Ant%20Design%20Vue-1.7.8-blue" alt="ant-design-vue">
   </a>
-  <a href="https://github.com/Kchengz/k-form-design/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
+  <a href="https://gitee.com/crowncloud/smart-flow-design/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache-blue" alt="license">
   </a>
 </p>
 
