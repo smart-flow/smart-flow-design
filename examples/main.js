@@ -17,7 +17,7 @@ import VueStorage from 'vue-ls';
 import Crownboot from 'crownboot-antd-vue';
 import 'crownboot-antd-vue/lib/crownboot-antdv-mini.css';
 import CrownBootFlowVue from '../packages/index';
-import '../styles/flow-design.less';
+// import '../styles/flow-design.less';
 import store from './store';
 import { VueAxios } from './utils/request';
 import UUID from 'vue-uuid';
