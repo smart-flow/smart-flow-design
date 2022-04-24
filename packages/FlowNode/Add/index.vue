@@ -114,18 +114,36 @@
           nodeName: '审核人',
           type: type,
           status: -1,
-          // 审批类型
-          approveType: '1',
-          // 审批方式
-          approveMode: '1',
-          // 审批人模式
-          approvalMode: 1,
-          // 层级模式
-          levelMode: 1,
-          // 审批人与发起人为同一人时
-          sameMode: 2,
-          // 审批人为空时
-          noHander: null,
+          // 审批设置
+          approvalSetting: {
+            // 审批类型
+            approveType: '1',
+            // 审批方式
+            approveMode: '1',
+            // 审批人模式
+            approvalMode: 1,
+            // 层级模式
+            levelMode: 1,
+            // 审批人与发起人为同一人时
+            sameMode: 2,
+            // 审批人为空时
+            noHander: null,
+          },
+          // 表单权限
+          formPerm: {
+            // 表单ID
+            id: null,
+            // 表单名称
+            label: '姓名',
+            // 表单编辑
+            edit: false,
+            // 表单只读
+            isEdit: true,
+            // 表单隐藏
+            show: false,
+            // 表单必填
+            required: false,
+          },
           // 子节点
           childNode: null,
           // 显示添加按钮

@@ -20,7 +20,7 @@
         <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
-          <a-radio-group v-model="node.approveType" button-style="solid" class="w-full">
+          <a-radio-group v-model="node.approvalSetting.approveType" button-style="solid" class="w-full">
             <a-radio value="1">
               人工审批
             </a-radio>
@@ -39,13 +39,13 @@
         </div>
       </div>
 
-      <a-tabs v-if="node.approveType == 1">
+      <a-tabs v-if="node.approvalSetting.approveType == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
             <!-- 审批方式 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
-              <a-select v-model="node.approveMode" :size="size" class="w-fill">
+              <a-select v-model="node.approvalSetting.approveMode" :size="size" class="w-fill">
                 <a-select-option value="1">
                   依次审批(一人通过再到下一个人处理)
                 </a-select-option>
@@ -68,7 +68,7 @@
               <p class="flow-setting-item-title">
                 <span>审批人</span>
               </p>
-              <a-radio-group v-model="node.approvalMode" class="w-fill" :size="size">
+              <a-radio-group v-model="node.approvalSetting.approvalMode" class="w-fill" :size="size">
                 <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
                   <span>{{ approval.name }}</span>
                   <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -92,7 +92,7 @@
                 <p class="flow-setting-item-title">
                   <span>指定层级</span>
                 </p>
-                <a-radio-group :size="size" v-model="node.levelMode" class="w-fill">
+                <a-radio-group :size="size" v-model="node.approvalSetting.levelMode" class="w-fill">
                   <a-radio v-for="(higherLevel, i) in higherLevelModes" :key="i" :style="radioStyle" :value="higherLevel.value">
                     <span>{{ higherLevel.name }}</span>
                     <a-popover v-if="higherLevel.popovers && higherLevel.popovers.length > 0" placement="topLeft" trigger="click">
@@ -118,7 +118,7 @@
                 </a-select>
               </div>
               <!-- 部门负责人 -->
-              <div v-if="node.approvalMode == 2">
+              <div v-if="node.approvalSetting.approvalMode == 2">
                 <p class="flow-setting-item-title">
                   <span>指定层级</span>
                 </p>
@@ -148,7 +148,7 @@
                 </a-select>
               </div>
               <!-- 部门审批人 -->
-              <div v-if="node.approvalMode == 3">
+              <div v-if="node.approvalSetting.approvalMode == 3">
                 <p class="flow-setting-item-title">
                   <span>部门审批人</span>
                 </p>
@@ -159,11 +159,11 @@
                 </a-select>
               </div>
               <!-- 编码审批人 -->
-              <div v-if="node.approvalMode == 4">
+              <div v-if="node.approvalSetting.approvalMode == 4">
                 <p class="flow-setting-item-title">
                   <span>编码审批人</span>
                 </p>
-                <!-- <a-radio-group :size="size" v-model="node.approvalMode" class="w-fill">
+                <!-- <a-radio-group :size="size" v-model="node.approvalSetting.approvalMode" class="w-fill">
                   <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
                     <span>{{ departmentHead.name }}</span>
                     <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -189,7 +189,7 @@
                 </a-select>
               </div>
               <!-- 角色 -->
-              <div v-if="node.approvalMode == 5">
+              <div v-if="node.approvalSetting.approvalMode == 5">
                 <p class="flow-setting-item-title">
                   <span>选择角色</span>
                 </p>
@@ -200,7 +200,7 @@
                 </a-select>
               </div>
               <!-- 岗位 -->
-              <div v-if="node.approvalMode == 6">
+              <div v-if="node.approvalSetting.approvalMode == 6">
                 <p class="flow-setting-item-title">
                   <span>选择岗位</span>
                 </p>
@@ -211,7 +211,7 @@
                 </a-select>
               </div>
               <!-- 用户组 -->
-              <div v-if="node.approvalMode == 7">
+              <div v-if="node.approvalSetting.approvalMode == 7">
                 <p class="flow-setting-item-title">
                   <span>选择用户组</span>
                 </p>
@@ -227,7 +227,7 @@
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
-              <a-radio-group v-model="node.sameMode" :size="size">
+              <a-radio-group v-model="node.approvalSetting.sameMode" :size="size">
                 <a-radio v-for="(sameApproval, i) in sameApprovals" :key="i" :value="sameApproval.value" :style="radioStyle">
                   <span>{{ sameApproval.name }}</span>
                   <a-popover v-if="sameApproval.popovers && sameApproval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -265,7 +265,7 @@
                   <a-icon style="margin-left: 5px;" type="question-circle" />
                 </a-popover>
               </p>
-              <a-radio-group :size="size" v-model="node.noHander">
+              <a-radio-group v-model="node.approvalSetting.noHander" :size="size">
                 <a-radio v-for="(approvalWithNull, i) in approvalWithNulls" :key="i" :value="approvalWithNull.value" :style="radioStyle">
                   <span>{{ approvalWithNull.name }}</span>
                   <a-popover v-if="approvalWithNull.popovers && approvalWithNull.popovers.length > 0" placement="topLeft" trigger="click">
@@ -365,7 +365,7 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-    <!-- <p>{{ node }}</p> -->
+    <p>{{ node }}</p>
     <!-- 填写密码 -->
     <a-modal :visible="passwordVisible" :width="drawerWidth()" title="填写密码" @cancel="passwordVisible = false">
       <div class="flow-setting-module">
