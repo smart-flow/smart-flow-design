@@ -17,6 +17,7 @@
     </template>
     <div class="flow-setting-module">
       <div class="flow-setting-content">
+        <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
           <a-radio-group v-model="node.approveType" button-style="solid" class="w-full">
@@ -41,9 +42,10 @@
       <a-tabs v-if="node.approveType == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
+            <!-- 审批方式 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
-              <a-select :size="size" class="w-fill" default-value="1">
+              <a-select v-model="node.approveMode" :size="size" class="w-fill">
                 <a-select-option value="1">
                   依次审批(一人通过再到下一个人处理)
                 </a-select-option>
@@ -61,11 +63,12 @@
                 </a-select-option>
               </a-select>
             </div>
+            <!-- 审批人 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人</span>
               </p>
-              <a-radio-group class="w-fill" :size="size" v-model="node.settype">
+              <a-radio-group v-model="node.approvalMode" class="w-fill" :size="size">
                 <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
                   <span>{{ approval.name }}</span>
                   <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -85,11 +88,11 @@
                 </a-radio>
               </a-radio-group>
               <!-- 上级 -->
-              <div v-if="node.settype == 1">
+              <div v-if="node.approvalMode == 1">
                 <p class="flow-setting-item-title">
                   <span>指定层级</span>
                 </p>
-                <a-radio-group :size="size" v-model="node.settype" class="w-fill">
+                <a-radio-group :size="size" v-model="node.levelMode" class="w-fill">
                   <a-radio v-for="(higherLevel, i) in higherLevelModes" :key="i" :style="radioStyle" :value="higherLevel.value">
                     <span>{{ higherLevel.name }}</span>
                     <a-popover v-if="higherLevel.popovers && higherLevel.popovers.length > 0" placement="topLeft" trigger="click">
@@ -115,7 +118,7 @@
                 </a-select>
               </div>
               <!-- 部门负责人 -->
-              <div v-if="node.settype == 2">
+              <div v-if="node.approvalMode == 2">
                 <p class="flow-setting-item-title">
                   <span>指定层级</span>
                 </p>
@@ -145,7 +148,7 @@
                 </a-select>
               </div>
               <!-- 部门审批人 -->
-              <div v-if="node.settype == 3">
+              <div v-if="node.approvalMode == 3">
                 <p class="flow-setting-item-title">
                   <span>部门审批人</span>
                 </p>
@@ -156,11 +159,11 @@
                 </a-select>
               </div>
               <!-- 编码审批人 -->
-              <div v-if="node.settype == 4">
+              <div v-if="node.approvalMode == 4">
                 <p class="flow-setting-item-title">
                   <span>编码审批人</span>
                 </p>
-                <!-- <a-radio-group :size="size" v-model="node.settype" class="w-fill">
+                <!-- <a-radio-group :size="size" v-model="node.approvalMode" class="w-fill">
                   <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
                     <span>{{ departmentHead.name }}</span>
                     <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -186,7 +189,7 @@
                 </a-select>
               </div>
               <!-- 角色 -->
-              <div v-if="node.settype == 5">
+              <div v-if="node.approvalMode == 5">
                 <p class="flow-setting-item-title">
                   <span>选择角色</span>
                 </p>
@@ -197,7 +200,7 @@
                 </a-select>
               </div>
               <!-- 岗位 -->
-              <div v-if="node.settype == 6">
+              <div v-if="node.approvalMode == 6">
                 <p class="flow-setting-item-title">
                   <span>选择岗位</span>
                 </p>
@@ -208,7 +211,7 @@
                 </a-select>
               </div>
               <!-- 用户组 -->
-              <div v-if="node.settype == 7">
+              <div v-if="node.approvalMode == 7">
                 <p class="flow-setting-item-title">
                   <span>选择用户组</span>
                 </p>
@@ -219,12 +222,12 @@
                 </a-select>
               </div>
             </div>
-
+            <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
-              <a-radio-group :size="size">
+              <a-radio-group v-model="node.sameMode" :size="size">
                 <a-radio v-for="(sameApproval, i) in sameApprovals" :key="i" :value="sameApproval.value" :style="radioStyle">
                   <span>{{ sameApproval.name }}</span>
                   <a-popover v-if="sameApproval.popovers && sameApproval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -243,6 +246,7 @@
                 </a-radio>
               </a-radio-group>
             </div>
+            <!-- 审批人为空时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人为空时</span>
@@ -261,7 +265,7 @@
                   <a-icon style="margin-left: 5px;" type="question-circle" />
                 </a-popover>
               </p>
-              <a-radio-group :size="size" v-model="node.noHanderAction">
+              <a-radio-group :size="size" v-model="node.noHander">
                 <a-radio v-for="(approvalWithNull, i) in approvalWithNulls" :key="i" :value="approvalWithNull.value" :style="radioStyle">
                   <span>{{ approvalWithNull.name }}</span>
                   <a-popover v-if="approvalWithNull.popovers && approvalWithNull.popovers.length > 0" placement="topLeft" trigger="click">
@@ -294,97 +298,13 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">操作配置</p>
-              <div class="flow-setting-option">
+              <div class="flow-setting-option" v-for="(operation, i) in operations" :key="i">
                 <div class="flow-setting-option-item">
                   <div class="flow-setting-option-item-left">
                     <img :src="optionIcon" />
                     <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">转交</p>
-                      <p class="setting-option-desc">转交给他人办理，依然在当前节点</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">抄送</p>
-                      <p class="setting-option-desc">选择抄送给谁，可以在待阅和已阅中查看</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">退回</p>
-                      <p class="setting-option-desc">退回给申请人，申请人修改完成后，流程按节点开始走</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">撤回</p>
-                      <p class="setting-option-desc">允许申请人对未进入流程（第一个流程节点为待处理状态）的申请进行撤回</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">加签</p>
-                      <p class="setting-option-desc">这个事情我不能完全做主，需要某些人先处理，再右我处理</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">跟踪</p>
-                      <p class="setting-option-desc">流程实例所有的进度我要发短信和email给我，可在我的跟踪查看</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">拒绝</p>
-                      <p class="setting-option-desc">节点负责人可以拒绝该流程（拒绝后流程直接结束，标记为已拒绝）</p>
+                      <p class="setting-option-title">{{ operation.name }}</p>
+                      <p class="setting-option-desc">{{ operation.content }}</p>
                     </div>
                   </div>
                   <div class="flow-setting-option-item-switch">
@@ -1018,6 +938,51 @@
           {
             name: '资产组',
             value: '3',
+          },
+        ],
+        // 操作配置
+        operations: [
+          {
+            name: '转交',
+            value: '1',
+            content: '转交给他人办理，依然在当前节点',
+            code: 'turn',
+          },
+          {
+            name: '抄送',
+            value: '2',
+            content: '选择抄送给谁，可以在待阅和已阅中查看',
+            code: 'cc',
+          },
+          {
+            name: '退回',
+            value: '3',
+            content: '退回给申请人，申请人修改完成后，流程按节点开始走',
+            code: 'back',
+          },
+          {
+            name: '撤回',
+            value: '4',
+            content: '允许申请人对未进入流程（第一个流程节点为待处理状态）的申请进行撤回',
+            code: '',
+          },
+          {
+            name: '加签',
+            value: '5',
+            content: '这个事情我不能完全做主，需要某些人先处理，再右我处理',
+            code: 'addSign',
+          },
+          {
+            name: '跟踪',
+            value: '6',
+            content: '流程实例所有的进度我要发短信和email给我，可在我的跟踪查看',
+            code: 'trace',
+          },
+          {
+            name: '拒绝',
+            value: '6',
+            content: '节点负责人可以拒绝该流程（拒绝后流程直接结束，标记为已拒绝）',
+            code: 'end',
           },
         ],
       };

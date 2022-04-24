@@ -113,12 +113,19 @@
           uid: this.uuid(),
           nodeName: '审核人',
           type: type,
-          settype: 1,
           status: -1,
-          // 审批人为空时
-          noHanderAction: 1,
           // 审批类型
-          approveType: "1",
+          approveType: '1',
+          // 审批方式
+          approveMode: '1',
+          // 审批人模式
+          approvalMode: 1,
+          // 层级模式
+          levelMode: 1,
+          // 审批人与发起人为同一人时
+          sameMode: 2,
+          // 审批人为空时
+          noHander: null,
           // 子节点
           childNode: null,
           // 显示添加按钮
@@ -321,7 +328,7 @@
 </script>
 <style lang="less" scoped>
   .ant-menu-vertical {
-    border-right: 0px solid #e8e8e8 !important;
+    border-right: 0 solid #e8e8e8 !important;
     width: 130px;
   }
 </style>
