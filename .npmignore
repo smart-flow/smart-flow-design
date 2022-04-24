@@ -11,6 +11,14 @@ babel.config.js
 prettier.config.js
 *.map
 *.html
+.husky
+.prettierignore
+.stylelintignore
+LICENSE
+commitlint.config.js
+stylelint.config.js
+
+
 
 # local env files
 .env.local
