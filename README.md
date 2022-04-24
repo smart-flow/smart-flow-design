@@ -152,4 +152,4 @@ Vue.use(SmartFlowDesign);
 
 ## License
 
-[MIT](https://gitee.com/crowncloud/smart-flow-design/blob/master/LICENSE) Copyright (c) 2022 luocheng
+[Apache](https://gitee.com/crowncloud/smart-flow-design/blob/master/LICENSE) Copyright (c) 2022 luocheng
