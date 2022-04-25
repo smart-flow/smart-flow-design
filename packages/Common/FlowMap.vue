@@ -18,15 +18,17 @@
     },
     data() {
       return {
-        // 是否有滚动条
-        scroll: false,
+        // 流程设计窗口
         flowDesign: null,
+        // 地图窗口
         flowMap: null,
+        // 地图窗口占比窗口(红色窗口)
         flowMapMsk: null,
-
+        // 流程设计整体高度,包含滚动条隐藏高度
         wrapHeight: 0,
+        // 地图红色窗口top位置
         top: 0,
-
+        // 鼠标是否点击
         mouseDown: false,
       };
     },
@@ -49,6 +51,7 @@
         }
         return 0;
       },
+      // 地图窗口占比窗口(红色窗口)样式
       mapMask() {
         return {
           width: '100%',
