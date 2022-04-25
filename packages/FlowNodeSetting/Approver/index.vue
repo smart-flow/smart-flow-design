@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    v-if="node.approvalSetting"
+    v-if="node.approverGroup"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -21,7 +21,7 @@
         <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
-          <a-radio-group v-model="node.approvalSetting.approveType" button-style="solid" class="w-full">
+          <a-radio-group v-model="node.approvalMethod" button-style="solid" class="w-full">
             <a-radio value="1">
               人工审批
             </a-radio>
@@ -34,19 +34,19 @@
           </a-radio-group>
         </div>
         <div class="flow-setting-item">
-          <p class="flow-setting-item-title" v-if="node.approvalSetting.approveType == 1">人工审批设置</p>
-          <p class="flow-setting-item-title" v-if="node.approvalSetting.approveType == 2">自动通过设置</p>
-          <p class="flow-setting-item-title" v-if="node.approvalSetting.approveType == 3">自动拒绝设置</p>
+          <p class="flow-setting-item-title" v-if="node.approvalMethod == 1">人工审批设置</p>
+          <p class="flow-setting-item-title" v-if="node.approvalMethod == 2">自动通过设置</p>
+          <p class="flow-setting-item-title" v-if="node.approvalMethod == 3">自动拒绝设置</p>
         </div>
       </div>
 
-      <a-tabs v-if="node.approvalSetting.approveType == 1">
+      <a-tabs v-if="node.approvalMethod == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
             <!-- 审批方式 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
-              <a-select v-model="node.approvalSetting.approveMode" :size="size" class="w-fill">
+              <a-select v-model="node.approvalMode" :size="size" class="w-fill">
                 <a-select-option value="1">
                   依次审批(一人通过再到下一个人处理)
                 </a-select-option>
@@ -59,19 +59,19 @@
                 <a-select-option value="4">
                   多人或签(一人通过或否决)
                 </a-select-option>
-                <a-select-option value="5">
+                <!--  <a-select-option value="5">
                   逐级审批(一级一级领导审批,直至结束)
-                </a-select-option>
+                </a-select-option> -->
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval :node="node" />
+            <FlowNodeApproval v-for="(approverGroup, k) in node.approverGroup" :key="k" :node="approverGroup" />
             <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
-              <a-radio-group v-model="node.approvalSetting.sameMode" :size="size">
+              <a-radio-group v-model="node.sameMode" :size="size">
                 <a-radio v-for="(sameApproval, i) in sameApprovals" :key="i" :value="sameApproval.value" :style="radioStyle">
                   <span>{{ sameApproval.name }}</span>
                   <a-popover v-if="sameApproval.popovers && sameApproval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -109,7 +109,7 @@
                   <a-icon style="margin-left: 5px;" type="question-circle" />
                 </a-popover>
               </p>
-              <a-radio-group v-model="node.approvalSetting.noHander" :size="size">
+              <a-radio-group v-model="node.noHander" :size="size">
                 <a-radio v-for="(approvalWithNull, i) in approvalWithNulls" :key="i" :value="approvalWithNull.value" :style="radioStyle">
                   <span>{{ approvalWithNull.name }}</span>
                   <a-popover v-if="approvalWithNull.popovers && approvalWithNull.popovers.length > 0" placement="topLeft" trigger="click">
@@ -134,7 +134,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm isEdit />
+              <AuthForm readable />
             </div>
           </div>
         </a-tab-pane>

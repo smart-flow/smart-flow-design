@@ -1,26 +1,26 @@
 <template>
   <div class="flow-setting-auth-table">
     <div class="flow-setting-auth-table-header">
-      <div :class="{ 'flow-setting-auth-table-name-column-30': !isEdit, 'flow-setting-auth-table-name-column-25': isEdit }">
+      <div :class="{ 'flow-setting-auth-table-name-column-30': !readable, 'flow-setting-auth-table-name-column-25': readable }">
         <span>表单</span>
       </div>
-      <div class="flow-setting-auth-table-option-column" >
-        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }" v-if="isEdit">
-          <a-checkbox :checked="editChecked" @change="onAllEditChange">
+      <div class="flow-setting-auth-table-option-column">
+        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }" v-if="readable">
+          <a-checkbox :checked="writableChecked" @change="onAllWritableChange">
             编辑
           </a-checkbox>
         </div>
-        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }">
-          <a-checkbox :checked="isEditChecked" @change="onAllisEditChange">
+        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }">
+          <a-checkbox :checked="readableChecked" @change="onAllReadableChange">
             只读
           </a-checkbox>
         </div>
-        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }">
-          <a-checkbox :checked="showChecked" @change="onAllShowChange">
+        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }">
+          <a-checkbox :checked="displayableChecked" @change="onAllDisplayableChange">
             隐藏
           </a-checkbox>
         </div>
-        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }" v-if="isEdit">
+        <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }" v-if="readable">
           <a-checkbox :checked="requiredChecked" @change="onAllRequiredChange">
             必填
           </a-checkbox>
@@ -28,28 +28,28 @@
       </div>
     </div>
     <div class="flow-setting-auth-table-body">
-      <div class="flow-setting-auth-table-name-column-row" v-for="(item, i) in datas" :key="i">
-        <div :class="{ 'flow-setting-auth-table-name-column-30': !isEdit, 'flow-setting-auth-table-name-column-25': isEdit }">
-          <span>{{ item.label }}</span>
+      <div class="flow-setting-auth-table-name-column-row" v-for="(item, i) in fields" :key="i">
+        <div :class="{ 'flow-setting-auth-table-name-column-30': !readable, 'flow-setting-auth-table-name-column-25': readable }">
+          <span>{{ item.name }}</span>
         </div>
         <div class="flow-setting-auth-table-option-column">
-          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }" v-if="isEdit">
-            <a-checkbox :checked="item.edit" :v-model="item.edit" @change="editChange($event, item)">
+          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }" v-if="readable">
+            <a-checkbox :checked="item.writable" :v-model="item.writable" @change="writableChange($event, item)">
               编辑
             </a-checkbox>
           </div>
-          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }">
-            <a-checkbox :checked="item.isEdit" :v-model="item.isEdit" @change="isEditChange($event, item)">
+          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }">
+            <a-checkbox :checked="item.readable" :v-model="item.readable" @change="readableChange($event, item)">
               只读
             </a-checkbox>
           </div>
-          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }">
-            <a-checkbox :checked="item.show" :v-model="item.show" @change="showChange($event, item)">
+          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }">
+            <a-checkbox :checked="item.displayable" :v-model="item.displayable" @change="displayableChange($event, item)">
               隐藏
             </a-checkbox>
           </div>
-          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !isEdit, 'flow-setting-auth-table-option-column-item-25': isEdit }" v-if="isEdit">
-            <a-checkbox :checked="item.required" :v-model="item.required" @change="showRequired($event, item)">
+          <div :class="{ 'flow-setting-auth-table-option-column-item-50': !readable, 'flow-setting-auth-table-option-column-item-25': readable }" v-if="readable">
+            <a-checkbox :checked="item.required" :v-model="item.required" @change="displayableRequired($event, item)">
               必填
             </a-checkbox>
           </div>
@@ -62,182 +62,182 @@
   export default {
     name: 'FlowNodeSettingAuthForm',
     props: {
-      isEdit: {
+      readable: {
         type: Boolean,
         default: false,
       },
     },
     data() {
       return {
-        datas: [
+        fields: [
           {
-            label: '姓名',
-            edit: false,
-            isEdit: true,
-            show: false,
+            name: '姓名',
+            writable: false,
+            readable: true,
+            displayable: false,
             required: false,
           },
           {
-            label: '工号',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '工号',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '部门',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '部门',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '性别',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '性别',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '职位',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '职位',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '账号',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '账号',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '学历',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '学历',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '毕业证书',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '毕业证书',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '资格证书',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '资格证书',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '身份证正面',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '身份证正面',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '身份证反面',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '身份证反面',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '银行信息',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '银行信息',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
           {
-            label: '相关附件',
-            edit: false,
-            isEdit: false,
-            show: false,
+            name: '相关附件',
+            writable: false,
+            readable: false,
+            displayable: false,
             required: false,
           },
         ],
       };
     },
     computed: {
-      editChecked: function() {
+      writableChecked: function() {
         let me = this;
-        let checked = me.datas.filter((item) => item.edit == false).length == 0;
+        let checked = me.fields.filter((item) => item.writable == false).length == 0;
         return checked;
       },
-      isEditChecked: function() {
+      readableChecked: function() {
         let me = this;
-        return me.datas.filter((item) => item.isEdit == false).length == 0;
+        return me.fields.filter((item) => item.readable == false).length == 0;
       },
-      showChecked: function() {
+      displayableChecked: function() {
         let me = this;
-        return me.datas.filter((item) => item.show == false).length == 0;
+        return me.fields.filter((item) => item.displayable == false).length == 0;
       },
       requiredChecked: function() {
         let me = this;
-        return me.datas.filter((item) => item.required == false).length == 0;
+        return me.fields.filter((item) => item.required == false).length == 0;
       },
     },
-    mounted(){
-      console.log(this.isEdit)
+    mounted() {
+      console.log(this.readable);
     },
     methods: {
-      onAllEditChange(e) {
-        this.datas.forEach((item, i) => {
-          this.editChange(e, item);
+      onAllWritableChange(e) {
+        this.fields.forEach((item, i) => {
+          this.writableChange(e, item);
         });
       },
-      onAllisEditChange(e) {
-        for (let item of this.datas) {
-          this.isEditChange(e, item);
+      onAllReadableChange(e) {
+        for (let item of this.fields) {
+          this.readableChange(e, item);
         }
       },
-      onAllShowChange(e) {
-        this.datas.forEach((item, i) => {
-          this.showChange(e, item);
+      onAllDisplayableChange(e) {
+        this.fields.forEach((item, i) => {
+          this.displayableChange(e, item);
         });
       },
       onAllRequiredChange(e) {
-        this.datas.forEach((item, i) => {
-          this.showRequired(e, item);
+        this.fields.forEach((item, i) => {
+          this.displayableRequired(e, item);
         });
       },
-      editChange(e, item) {
-        item.edit = e.target.checked;
+      writableChange(e, item) {
+        item.writable = e.target.checked;
         if (e.target.checked) {
-          item.isEdit = !e.target.checked;
-          item.show = !e.target.checked;
+          item.readable = !e.target.checked;
+          item.displayable = !e.target.checked;
         } else {
           item.required = e.target.checked;
         }
       },
-      isEditChange(e, item) {
-        item.isEdit = e.target.checked;
+      readableChange(e, item) {
+        item.readable = e.target.checked;
         if (e.target.checked) {
-          item.edit = !e.target.checked;
-          item.show = !e.target.checked;
+          item.writable = !e.target.checked;
+          item.displayable = !e.target.checked;
           item.required = !e.target.checked;
         }
       },
-      showChange(e, item) {
-        item.show = e.target.checked;
+      displayableChange(e, item) {
+        item.displayable = e.target.checked;
         if (e.target.checked) {
-          item.edit = !e.target.checked;
-          item.isEdit = !e.target.checked;
+          item.writable = !e.target.checked;
+          item.readable = !e.target.checked;
           item.required = !e.target.checked;
         }
       },
-      showRequired(e, item) {
+      displayableRequired(e, item) {
         item.required = e.target.checked;
         if (e.target.checked) {
-          item.isEdit = !e.target.checked;
-          item.show = !e.target.checked;
-          item.edit = e.target.checked;
+          item.readable = !e.target.checked;
+          item.displayable = !e.target.checked;
+          item.writable = e.target.checked;
         }
       },
     },
