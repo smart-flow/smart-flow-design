@@ -117,7 +117,7 @@
           // 审批设置
           approvalSetting: {
             // 审批类型
-            approveType: '1',
+            approveType: 1,
             // 审批方式
             approveMode: '1',
             // 审批人模式
