@@ -88,7 +88,7 @@
                 </a-radio>
               </a-radio-group>
               <!-- 上级 -->
-              <div v-if="node.approvalMode == 1">
+              <div v-if="node.approvalSetting.approvalMode == 1">
                 <p class="flow-setting-item-title">
                   <span>指定层级</span>
                 </p>
@@ -226,8 +226,115 @@
                 <p class="flow-setting-item-title">
                   <span>指定成员</span>
                   <span class="light-text">(不能超过 25 人)</span>
+                  <UserSelector type="button" />
                 </p>
-                <UserSelector type="button" />
+              </div>
+              <!-- 发起人自选 -->
+              <div v-if="node.approvalSetting.approvalMode == 9">
+                <p class="flow-setting-item-title">
+                  <span>选择方式</span>
+                </p>
+                <a-radio-group :size="size" class="w-fill">
+                  <a-radio value="1">
+                    <span>多选</span>
+                  </a-radio>
+                  <a-radio value="2">
+                    <span>单选</span>
+                  </a-radio>
+                </a-radio-group>
+                <p class="flow-setting-item-title margin-top-10">
+                  <span>选择范围</span>
+                </p>
+                <a-radio-group :size="size" class="w-fill">
+                  <a-radio value="1">
+                    <span>全公司</span>
+                  </a-radio>
+                  <a-radio value="2">
+                    <span>指定成员</span>
+                  </a-radio>
+                  <a-radio value="3">
+                    <span>角色成员</span>
+                  </a-radio>
+                </a-radio-group>
+                <p class="flow-setting-item-title margin-top-10">
+                  <span>指定成员</span>
+                  <span class="light-text">(不能超过 25 人)</span>
+                  <UserSelector type="button" />
+                </p>
+              </div>
+              <!-- 连续多级上级审批 -->
+              <div v-if="node.approvalSetting.approvalMode == 11">
+                <p class="flow-setting-item-title">
+                  <span>审批终点</span>
+                </p>
+                <a-select :size="size" class="w-fill" default-value="1">
+                  <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+                    {{ higherLevel.name }}
+                  </a-select-option>
+                </a-select>
+              </div>
+              <!-- 表单内人员 -->
+              <div v-if="node.approvalSetting.approvalMode == 12">
+                <p class="flow-setting-item-title">
+                  <span>人员控件</span>
+                </p>
+                <a-select :size="size" class="w-fill" default-value="1">
+                  <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+                    {{ higherLevel.name }}
+                  </a-select-option>
+                </a-select>
+                <p class="flow-setting-item-title margin-top-10">
+                  <span>审批类型</span>
+                </p>
+                <a-radio-group :size="size" class="w-fill">
+                  <a-radio value="1">
+                    <span>人员自己</span>
+                  </a-radio>
+                  <a-radio value="2">
+                    <span>人员上级</span>
+                  </a-radio>
+                  <a-radio value="3">
+                    <span>人员部门负责人</span>
+                  </a-radio>
+                </a-radio-group>
+              </div>
+              <!-- 表单内部门 -->
+              <div v-if="node.approvalSetting.approvalMode == 13">
+                <p class="flow-setting-item-title">
+                  <span>部门控件</span>
+                </p>
+                <a-select :size="size" class="w-fill" default-value="1">
+                  <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+                    {{ higherLevel.name }}
+                  </a-select-option>
+                </a-select>
+                <p class="flow-setting-item-title margin-top-10">
+                  <span>指定层级</span>
+                </p>
+                <a-radio-group :size="size" v-model="node.settype" class="w-fill">
+                  <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
+                    <span>{{ departmentHead.name }}</span>
+                    <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
+                      <template slot="content">
+                        <div class="approver-tip-content">
+                          <div class="approver-tip-main-content">
+                            <div v-for="(popover, k) in departmentHead.popovers" :key="k">
+                              <p class="main-title">{{ popover.title }}</p>
+                              <p class="content">{{ popover.content }}</p>
+                            </div>
+                          </div>
+                          <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
+                        </div>
+                      </template>
+                      <a-icon style="margin-left: 5px;" type="question-circle" />
+                    </a-popover>
+                  </a-radio>
+                </a-radio-group>
+                <a-select :size="size" class="w-fill" default-value="1">
+                  <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
+                    {{ departmentHead.name }}
+                  </a-select-option>
+                </a-select>
               </div>
             </div>
             <!-- 审批人与发起人为同一人时 -->
@@ -548,12 +655,12 @@
             hrefName: '查看和设置上级信息',
           },
           {
-            name: '表单内联系人',
+            name: '表单内人员',
             value: 12,
             popovers: [
               {
-                title: '如何配置表单内联系人？',
-                content: '在表单设计中添加联系人控件后，该人员/其上级/部门负责人将可以配置为本节点的审批人。',
+                title: '如何配置表单内人员？',
+                content: '在表单设计中添加人员控件后，该人员/其上级/部门负责人将可以配置为本节点的审批人。',
               },
             ],
           },
