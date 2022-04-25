@@ -40,7 +40,7 @@
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.1.2",
-    "crownboot-antd-vue": "^0.0.17",
+    "crownboot-antd-vue": "^0.0.18",
     "html2canvas": "^1.4.1",
     "vue": "^2.6.14",
     "vue-ls": "^3.2.1",

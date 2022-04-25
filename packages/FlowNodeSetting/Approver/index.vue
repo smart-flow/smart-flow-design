@@ -65,7 +65,7 @@
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval v-for="(approverGroup, k) in node.approverGroup" :key="k" :node="approverGroup" />
+            <FlowNodeApproval v-for="(approverGroup, k) in node.approverGroup" :key="k" :group="approverGroup" />
             <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">

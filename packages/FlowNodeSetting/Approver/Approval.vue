@@ -7,7 +7,7 @@
       </p>
     </template>
     <div class="flow-setting-item">
-      <a-radio-group v-model="node.approverType" class="w-fill" :size="size">
+      <a-radio-group v-model="group.approverType" class="w-fill" :size="size">
         <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
           <span>{{ approval.name }}</span>
           <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -27,11 +27,11 @@
         </a-radio>
       </a-radio-group>
       <!-- 上级 -->
-      <div v-if="node.approverType == 1">
+      <div v-if="group.approverType == 1">
         <p class="flow-setting-item-title">
           <span>指定层级</span>
         </p>
-        <a-radio-group :size="size" v-model="node.levelMode" class="w-fill">
+        <a-radio-group :size="size" v-model="group.levelMode" class="w-fill">
           <a-radio v-for="(higherLevel, i) in higherLevelModes" :key="i" :style="radioStyle" :value="higherLevel.value">
             <span>{{ higherLevel.name }}</span>
             <a-popover v-if="higherLevel.popovers && higherLevel.popovers.length > 0" placement="topLeft" trigger="click">
@@ -50,18 +50,18 @@
             </a-popover>
           </a-radio>
         </a-radio-group>
-        <a-select :size="size" class="w-fill" :default-value="node.approverIds[0]">
+        <a-select :size="size" class="w-fill" :default-value="group.approverIds[0]">
           <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
             {{ higherLevel.name }}
           </a-select-option>
         </a-select>
       </div>
       <!-- 部门负责人 -->
-      <div v-if="node.approverType == 2">
+      <div v-if="group.approverType == 2">
         <p class="flow-setting-item-title">
           <span>指定层级</span>
         </p>
-        <a-radio-group :size="size" v-model="node.settype" class="w-fill">
+        <a-radio-group :size="size" v-model="group.settype" class="w-fill">
           <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
             <span>{{ departmentHead.name }}</span>
             <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -87,7 +87,7 @@
         </a-select>
       </div>
       <!-- 部门审批人 -->
-      <div v-if="node.approverType == 3">
+      <div v-if="group.approverType == 3">
         <p class="flow-setting-item-title">
           <span>部门审批人</span>
         </p>
@@ -98,11 +98,11 @@
         </a-select>
       </div>
       <!-- 编码审批人 -->
-      <div v-if="node.approverType == 4">
+      <div v-if="group.approverType == 4">
         <p class="flow-setting-item-title">
           <span>编码审批人</span>
         </p>
-        <!-- <a-radio-group :size="size" v-model="node.approverType" class="w-fill">
+        <!-- <a-radio-group :size="size" v-model="group.approverType" class="w-fill">
                   <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
                     <span>{{ departmentHead.name }}</span>
                     <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -128,7 +128,7 @@
         </a-select>
       </div>
       <!-- 角色 -->
-      <div v-if="node.approverType == 5">
+      <div v-if="group.approverType == 5">
         <p class="flow-setting-item-title">
           <span>选择角色</span>
         </p>
@@ -139,7 +139,7 @@
         </a-select>
       </div>
       <!-- 岗位 -->
-      <div v-if="node.approverType == 6">
+      <div v-if="group.approverType == 6">
         <p class="flow-setting-item-title">
           <span>选择岗位</span>
         </p>
@@ -150,7 +150,7 @@
         </a-select>
       </div>
       <!-- 用户组 -->
-      <div v-if="node.approverType == 7">
+      <div v-if="group.approverType == 7">
         <p class="flow-setting-item-title">
           <span>选择用户组</span>
         </p>
@@ -161,15 +161,15 @@
         </a-select>
       </div>
       <!-- 指定成员 -->
-      <div v-if="node.approverType == 8">
+      <div v-if="group.approverType == 8">
         <p class="flow-setting-item-title">
           <span>指定成员</span>
           <span class="light-text">(不能超过 25 人)</span>
-          <UserSelector type="button" />
+          <UserSelector v-model="group.approverIds" mode="multiple" type="button" />
         </p>
       </div>
       <!-- 发起人自选 -->
-      <div v-if="node.approverType == 9">
+      <div v-if="group.approverType == 9">
         <p class="flow-setting-item-title">
           <span>选择方式</span>
         </p>
@@ -202,7 +202,7 @@
         </p>
       </div>
       <!-- 连续多级上级审批 -->
-      <div v-if="node.approverType == 11">
+      <div v-if="group.approverType == 11">
         <p class="flow-setting-item-title">
           <span>审批终点</span>
         </p>
@@ -213,7 +213,7 @@
         </a-select>
       </div>
       <!-- 表单内人员 -->
-      <div v-if="node.approverType == 12">
+      <div v-if="group.approverType == 12">
         <p class="flow-setting-item-title">
           <span>人员控件</span>
         </p>
@@ -238,7 +238,7 @@
         </a-radio-group>
       </div>
       <!-- 表单内部门 -->
-      <div v-if="node.approverType == 13">
+      <div v-if="group.approverType == 13">
         <p class="flow-setting-item-title">
           <span>部门控件</span>
         </p>
@@ -284,7 +284,7 @@
     name: 'FlowNodeApproval',
     mixins: [flowMixin],
     props: {
-      node: {
+      group: {
         type: Object,
         default: function() {
           return {};
