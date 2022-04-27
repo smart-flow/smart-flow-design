@@ -1,6 +1,6 @@
 {
   "name": "smart-flow-design",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "private": false,
   "description": "基于vue、ant-design-vue的流程设计组件",
   "license": "Apache License",

@@ -2,7 +2,7 @@
   <div class="after-node-btn" @click="visible = true">
     <a-popover placement="right" v-model="visible">
       <template slot="content">
-        <a-menu mode="vertical">
+        <a-menu mode="vertical" class="flow-ant-menu-vertical">
           <a-menu-item key="1" @click="addType(1)">
             <img :src="approverIcon2" class="anticon" />
             <span>审批节点</span>
@@ -352,9 +352,3 @@
     },
   };
 </script>
-<style lang="less" scoped>
-  .ant-menu-vertical {
-    border-right: 0 solid #e8e8e8 !important;
-    width: 130px;
-  }
-</style>

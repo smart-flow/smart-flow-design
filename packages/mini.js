@@ -9,7 +9,7 @@
 // 解决Chrome控制台non-passive event listener输出问题
 // import "default-passive-events";
 // 导入样式
-import '../styles/flow-design.less';
+import '../styles/smart-flow-design.less';
 
 // 导出本地iconfont
 // import '../static/icons/iconfont';
@@ -17,6 +17,7 @@ import '../styles/flow-design.less';
 // 导入单个组件
 import FlowDesign from './FlowDesign/index';
 import FlowSetting from './FlowSetting/index';
+import flowStore from './store/index';
 
 const components = [FlowDesign, FlowSetting];
 
@@ -35,10 +36,11 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 // 这里可以用es6的解构语法导入组件
-export { install, FlowDesign, FlowSetting };
+export { install, FlowDesign, FlowSetting, flowStore };
 // 这里默认导入全部组件
 export default {
   install,
   FlowDesign,
-  FlowSetting
+  FlowSetting,
+  flowStore,
 };

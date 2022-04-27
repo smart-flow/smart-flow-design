@@ -7,9 +7,10 @@
  */
 
 // 导入ant组件
-import "./components_use";
-import * as all from "./mini";
+import './components_use';
+import * as all from './mini';
 
 export default all.default;
 export const FlowDesign = all.FlowDesign;
-
+export const FlowSetting = all.FlowSetting;
+export const flowStore = all.flowStore;
