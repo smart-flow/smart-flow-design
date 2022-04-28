@@ -1,5 +1,5 @@
 {
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "terminal.integrated.defaultProfile.windows": "Command Prompt",
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
@@ -13,8 +13,9 @@
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.fontFamily": "Operator Mono, Dank Mono, Fira Code Light, etBrains Mono, 'Courier New', monospace",
-  "editor.fontLigatures": true, // 这个控制是否启用字体连字，true启用，false不启用，这里选择启用
+  "editor.fontFamily": "Operator Mono, Dank Mono, Fira Code Light, jetBrains Mono, 'Courier New', monospace",
+  // 这个控制是否启用字体连字，true启用，false不启用，这里选择启用
+  "editor.fontLigatures": true, 
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {

@@ -222,6 +222,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
+  import FlowNodeApproval from './Approval.vue';
   import EditName from '../../Common/EditName.vue';
   import AuthForm from '../../Common/AuthForm.vue';
   export default {
@@ -229,7 +230,7 @@
     components: {
       FlowDrawerFooter,
       EditName,
-      FlowNodeApproval: () => import('./Approval.vue'),
+      FlowNodeApproval,
       AuthForm,
     },
     mixins: [flowMixin],
