@@ -110,7 +110,9 @@ Vue.use(SmartFlowDesign);
 
 ## 引入 mini 包
 
-默认包是集成了 antd ui 的，如果项目中也有使用 antd ui，可以选择引入 mini 包来达到减小最终项目的体积，当然要确认项目中已经引入 components_use.js 中的组件
+默认包是集成了 antd ui 的，如果项目中也有使用 antd ui，可以选择引入 mini 包来达到减小最终项目的体积，
+当然要确认项目中已经引入 components_use.js 中的组件
+使用可以参考 [smart-flow-design-demo](https://gitee.com/crowncloud/smart-flow-design-demo)
 
 ```javascript
 - import SmartFlowDesign from 'smart-flow-design';
