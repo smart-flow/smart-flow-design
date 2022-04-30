@@ -10,7 +10,7 @@ export function getId() {
 /**
  *   获取发起人节点
  */
- export function getStartNode() {
+export function getStartNode() {
   return {
     uid: getId(),
     nodeName: '发起人',
@@ -35,7 +35,6 @@ export function addCondition(node, len) {
     childNode: null,
   };
 }
-
 
 /**
  *   添加节点
@@ -160,6 +159,28 @@ export function updateNode(node, currNode, field, value) {
         updateNode(conditionNode, currNode, field, value);
       });
     }
+  }
+}
+
+/**
+ * 所有审批节点
+ * @param {*} node
+ * @param {*} approveNodes
+ */
+export function getApproveNodes(node, approveNodes) {
+  if (node.type == 1) {
+    approveNodes.push(node);
+  }
+  // 如果有孩子节点
+  const childNode = node.childNode;
+  if (childNode) {
+    getApproveNodes(childNode, approveNodes);
+  }
+  const conditionNodes = node.conditionNodes;
+  if (conditionNodes) {
+    conditionNodes.forEach((conditionNode, i) => {
+      getApproveNodes(conditionNode, approveNodes);
+    });
   }
 }
 

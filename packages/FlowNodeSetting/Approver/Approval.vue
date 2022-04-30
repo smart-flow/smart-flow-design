@@ -1,108 +1,110 @@
 <template>
   <!-- 审批人 -->
-  <a-card title="审批人" class="w-fill margin-bottom-20">
-    <template slot="title">
-      <p class="flow-setting-item-title">
-        <span>审批人</span>
-      </p>
-    </template>
-    <div class="flow-setting-item">
-      <a-radio-group v-model="group.approverType" class="w-fill" :size="size">
-        <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
-          <span>{{ approval.name }}</span>
-          <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
-            <template slot="content">
-              <div class="approver-tip-content">
-                <div class="approver-tip-main-content">
-                  <div v-for="(popover, k) in approval.popovers" :key="k">
-                    <p class="main-title">{{ popover.title }}</p>
-                    <p class="content">{{ popover.content }}</p>
-                  </div>
-                </div>
-                <a v-if="approval.href" :href="approval.href" target="_blank">{{ approval.hrefName }}</a>
-              </div>
-            </template>
-            <a-icon style="margin-left: 5px;" type="question-circle" />
-          </a-popover>
-        </a-radio>
-      </a-radio-group>
-      <!-- 上级 -->
-      <div v-if="group.approverType == 1">
-        <p class="flow-setting-item-title">
-          <span>指定层级</span>
-        </p>
-        <a-radio-group :size="size" v-model="group.levelMode" class="w-fill">
-          <a-radio v-for="(higherLevel, i) in higherLevelModes" :key="i" :style="radioStyle" :value="higherLevel.value">
-            <span>{{ higherLevel.name }}</span>
-            <a-popover v-if="higherLevel.popovers && higherLevel.popovers.length > 0" placement="topLeft" trigger="click">
+  <div>
+    <a-card v-for="(group, k) in groups" :key="k" :headStyle="headStyle" class="w-fill margin-bottom-20">
+      <template slot="title">
+        <span class="flow-setting-approval-title">
+          <span>审批人</span>
+          <a-icon type="delete" class="del-icon" @click="delApproval(group)" />
+        </span>
+      </template>
+      <div class="flow-setting-item">
+        <a-radio-group v-model="group.approverType" class="w-fill" :size="size">
+          <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value" :disabled="approval.disabled && groups.length > 1">
+            <span>{{ approval.name }}</span>
+            <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
               <template slot="content">
                 <div class="approver-tip-content">
                   <div class="approver-tip-main-content">
-                    <div v-for="(popover, k) in higherLevel.popovers" :key="k">
+                    <div v-for="(popover, k) in approval.popovers" :key="k">
                       <p class="main-title">{{ popover.title }}</p>
                       <p class="content">{{ popover.content }}</p>
                     </div>
                   </div>
-                  <a v-if="higherLevel.href" :href="higherLevel.href" target="_blank">{{ higherLevel.hrefName }}</a>
+                  <a v-if="approval.href" :href="approval.href" target="_blank">{{ approval.hrefName }}</a>
                 </div>
               </template>
               <a-icon style="margin-left: 5px;" type="question-circle" />
             </a-popover>
           </a-radio>
         </a-radio-group>
-        <a-select :size="size" class="w-fill" :default-value="group.approverIds[0]">
-          <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-            {{ higherLevel.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 部门负责人 -->
-      <div v-if="group.approverType == 2">
-        <p class="flow-setting-item-title">
-          <span>指定层级</span>
-        </p>
-        <a-radio-group :size="size" v-model="group.settype" class="w-fill">
-          <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
-            <span>{{ departmentHead.name }}</span>
-            <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
-              <template slot="content">
-                <div class="approver-tip-content">
-                  <div class="approver-tip-main-content">
-                    <div v-for="(popover, k) in departmentHead.popovers" :key="k">
-                      <p class="main-title">{{ popover.title }}</p>
-                      <p class="content">{{ popover.content }}</p>
+        <!-- 上级 -->
+        <div v-if="group.approverType == 1">
+          <p class="flow-setting-item-title">
+            <span>指定层级</span>
+          </p>
+          <a-radio-group :size="size" v-model="group.levelMode" class="w-fill">
+            <a-radio v-for="(higherLevel, i) in higherLevelModes" :key="i" :style="radioStyle" :value="higherLevel.value">
+              <span>{{ higherLevel.name }}</span>
+              <a-popover v-if="higherLevel.popovers && higherLevel.popovers.length > 0" placement="topLeft" trigger="click">
+                <template slot="content">
+                  <div class="approver-tip-content">
+                    <div class="approver-tip-main-content">
+                      <div v-for="(popover, k) in higherLevel.popovers" :key="k">
+                        <p class="main-title">{{ popover.title }}</p>
+                        <p class="content">{{ popover.content }}</p>
+                      </div>
                     </div>
+                    <a v-if="higherLevel.href" :href="higherLevel.href" target="_blank">{{ higherLevel.hrefName }}</a>
                   </div>
-                  <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
-                </div>
-              </template>
-              <a-icon style="margin-left: 5px;" type="question-circle" />
-            </a-popover>
-          </a-radio>
-        </a-radio-group>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
-            {{ departmentHead.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 部门审批人 -->
-      <div v-if="group.approverType == 3">
-        <p class="flow-setting-item-title">
-          <span>部门审批人</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="departmentApproval.value" v-for="(departmentApproval, i) in departmentApprovals" :key="i">
-            {{ departmentApproval.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 编码审批人 -->
-      <div v-if="group.approverType == 4">
-        <p class="flow-setting-item-title">
-          <span>编码审批人</span>
-        </p>
-        <!-- <a-radio-group :size="size" v-model="group.approverType" class="w-fill">
+                </template>
+                <a-icon style="margin-left: 5px;" type="question-circle" />
+              </a-popover>
+            </a-radio>
+          </a-radio-group>
+          <a-select :size="size" class="w-fill" :default-value="group.approverIds[0]">
+            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+              {{ higherLevel.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 部门负责人 -->
+        <div v-if="group.approverType == 2">
+          <p class="flow-setting-item-title">
+            <span>指定层级</span>
+          </p>
+          <a-radio-group :size="size" v-model="group.settype" class="w-fill">
+            <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
+              <span>{{ departmentHead.name }}</span>
+              <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
+                <template slot="content">
+                  <div class="approver-tip-content">
+                    <div class="approver-tip-main-content">
+                      <div v-for="(popover, k) in departmentHead.popovers" :key="k">
+                        <p class="main-title">{{ popover.title }}</p>
+                        <p class="content">{{ popover.content }}</p>
+                      </div>
+                    </div>
+                    <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
+                  </div>
+                </template>
+                <a-icon style="margin-left: 5px;" type="question-circle" />
+              </a-popover>
+            </a-radio>
+          </a-radio-group>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
+              {{ departmentHead.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 部门审批人 -->
+        <div v-if="group.approverType == 3">
+          <p class="flow-setting-item-title">
+            <span>部门审批人</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="departmentApproval.value" v-for="(departmentApproval, i) in departmentApprovals" :key="i">
+              {{ departmentApproval.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 编码审批人 -->
+        <div v-if="group.approverType == 4">
+          <p class="flow-setting-item-title">
+            <span>编码审批人</span>
+          </p>
+          <!-- <a-radio-group :size="size" v-model="group.approverType" class="w-fill">
                   <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
                     <span>{{ departmentHead.name }}</span>
                     <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -121,170 +123,195 @@
                     </a-popover>
                   </a-radio>
                 </a-radio-group> -->
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads.concat(departmentApprovals)" :key="i">
-            {{ departmentHead.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 角色 -->
-      <div v-if="group.approverType == 5">
-        <p class="flow-setting-item-title">
-          <span>选择角色</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="role.value" v-for="(role, i) in roles" :key="i">
-            {{ role.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 岗位 -->
-      <div v-if="group.approverType == 6">
-        <p class="flow-setting-item-title">
-          <span>选择岗位</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="post.value" v-for="(post, i) in posts" :key="i">
-            {{ post.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 用户组 -->
-      <div v-if="group.approverType == 7">
-        <p class="flow-setting-item-title">
-          <span>选择用户组</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="userGroup.value" v-for="(userGroup, i) in userGroups" :key="i">
-            {{ userGroup.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 指定成员 -->
-      <div v-if="group.approverType == 8">
-        <p class="flow-setting-item-title">
-          <span>指定成员</span>
-          <span class="light-text">(不能超过 25 人)</span>
-          <UserSelector v-model="group.approverIds" mode="multiple" type="button" />
-        </p>
-      </div>
-      <!-- 发起人自选 -->
-      <div v-if="group.approverType == 9">
-        <p class="flow-setting-item-title">
-          <span>选择方式</span>
-        </p>
-        <a-radio-group :size="size" class="w-fill">
-          <a-radio value="1">
-            <span>多选</span>
-          </a-radio>
-          <a-radio value="2">
-            <span>单选</span>
-          </a-radio>
-        </a-radio-group>
-        <p class="flow-setting-item-title margin-top-10">
-          <span>选择范围</span>
-        </p>
-        <a-radio-group :size="size" class="w-fill">
-          <a-radio value="1">
-            <span>全公司</span>
-          </a-radio>
-          <a-radio value="2">
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads.concat(departmentApprovals)" :key="i">
+              {{ departmentHead.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 角色 -->
+        <div v-if="group.approverType == 5">
+          <p class="flow-setting-item-title">
+            <span>选择角色</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="role.value" v-for="(role, i) in roles" :key="i">
+              {{ role.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 岗位 -->
+        <div v-if="group.approverType == 6">
+          <p class="flow-setting-item-title">
+            <span>选择岗位</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="post.value" v-for="(post, i) in posts" :key="i">
+              {{ post.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 用户组 -->
+        <div v-if="group.approverType == 7">
+          <p class="flow-setting-item-title">
+            <span>选择用户组</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="userGroup.value" v-for="(userGroup, i) in userGroups" :key="i">
+              {{ userGroup.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 指定成员 -->
+        <div v-if="group.approverType == 8">
+          <p class="flow-setting-item-title">
             <span>指定成员</span>
-          </a-radio>
-          <a-radio value="3">
-            <span>角色成员</span>
-          </a-radio>
-        </a-radio-group>
-        <p class="flow-setting-item-title margin-top-10">
-          <span>指定成员</span>
-          <span class="light-text">(不能超过 25 人)</span>
-          <UserSelector type="button" />
-        </p>
-      </div>
-      <!-- 连续多级上级审批 -->
-      <div v-if="group.approverType == 11">
-        <p class="flow-setting-item-title">
-          <span>审批终点</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-            {{ higherLevel.name }}
-          </a-select-option>
-        </a-select>
-      </div>
-      <!-- 表单内人员 -->
-      <div v-if="group.approverType == 12">
-        <p class="flow-setting-item-title">
-          <span>人员控件</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-            {{ higherLevel.name }}
-          </a-select-option>
-        </a-select>
-        <p class="flow-setting-item-title margin-top-10">
-          <span>审批类型</span>
-        </p>
-        <a-radio-group :size="size" class="w-fill">
-          <a-radio value="1">
-            <span>人员自己</span>
-          </a-radio>
-          <a-radio value="2">
-            <span>人员上级</span>
-          </a-radio>
-          <a-radio value="3">
-            <span>人员部门负责人</span>
-          </a-radio>
-        </a-radio-group>
-      </div>
-      <!-- 表单内部门 -->
-      <div v-if="group.approverType == 13">
-        <p class="flow-setting-item-title">
-          <span>部门控件</span>
-        </p>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-            {{ higherLevel.name }}
-          </a-select-option>
-        </a-select>
-        <p class="flow-setting-item-title margin-top-10">
-          <span>指定层级</span>
-        </p>
-        <a-radio-group :size="size" v-model="nodesettype" class="w-fill">
-          <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
-            <span>{{ departmentHead.name }}</span>
-            <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
-              <template slot="content">
-                <div class="approver-tip-content">
-                  <div class="approver-tip-main-content">
-                    <div v-for="(popover, k) in departmentHead.popovers" :key="k">
-                      <p class="main-title">{{ popover.title }}</p>
-                      <p class="content">{{ popover.content }}</p>
+            <span class="light-text">(不能超过 25 人)</span>
+            <UserSelector v-model="group.approverIds" mode="multiple" type="button" />
+          </p>
+        </div>
+        <!-- 发起人自选 -->
+        <div v-if="group.approverType == 9">
+          <p class="flow-setting-item-title">
+            <span>选择方式</span>
+          </p>
+          <a-radio-group :size="size" class="w-fill">
+            <a-radio value="1">
+              <span>多选</span>
+            </a-radio>
+            <a-radio value="2">
+              <span>单选</span>
+            </a-radio>
+          </a-radio-group>
+          <p class="flow-setting-item-title margin-top-10">
+            <span>选择范围</span>
+          </p>
+          <a-radio-group :size="size" class="w-fill">
+            <a-radio value="1">
+              <span>全公司</span>
+            </a-radio>
+            <a-radio value="2">
+              <span>指定成员</span>
+            </a-radio>
+            <a-radio value="3">
+              <span>角色成员</span>
+            </a-radio>
+          </a-radio-group>
+          <p class="flow-setting-item-title margin-top-10">
+            <span>指定成员</span>
+            <span class="light-text">(不能超过 25 人)</span>
+            <UserSelector type="button" />
+          </p>
+        </div>
+        <!-- 节点审批人 -->
+        <div v-if="group.approverType == 11">
+          <p class="flow-setting-item-title">
+            <span>选择节点</span>
+          </p>
+          <a-select v-model="group.approverIds" mode="multiple" :size="size" class="w-fill">
+            <a-select-option :value="approveNode.uid" v-for="(approveNode, i) in approveNodes" :key="i">
+              {{ approveNode.nodeName }}
+            </a-select-option>
+          </a-select>
+          <p class="flow-setting-item-title">
+            <span class="light-text">你可以选择前序节点名称，如果名称重复建议先修改审批节点的节点名称</span>
+          </p>
+        </div>
+        <!-- 连续多级上级审批 -->
+        <div v-if="group.approverType == 12">
+          <p class="flow-setting-item-title">
+            <span>审批终点</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+              {{ higherLevel.name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <!-- 表单内人员 -->
+        <div v-if="group.approverType == 13">
+          <p class="flow-setting-item-title">
+            <span>人员控件</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+              {{ higherLevel.name }}
+            </a-select-option>
+          </a-select>
+          <p class="flow-setting-item-title margin-top-10">
+            <span>审批类型</span>
+          </p>
+          <a-radio-group :size="size" class="w-fill">
+            <a-radio value="1">
+              <span>人员自己</span>
+            </a-radio>
+            <a-radio value="2">
+              <span>人员上级</span>
+            </a-radio>
+            <a-radio value="3">
+              <span>人员部门负责人</span>
+            </a-radio>
+          </a-radio-group>
+        </div>
+        <!-- 表单内部门 -->
+        <div v-if="group.approverType == 14">
+          <p class="flow-setting-item-title">
+            <span>部门控件</span>
+          </p>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
+              {{ higherLevel.name }}
+            </a-select-option>
+          </a-select>
+          <p class="flow-setting-item-title margin-top-10">
+            <span>指定层级</span>
+          </p>
+          <a-radio-group :size="size" v-model="nodesettype" class="w-fill">
+            <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
+              <span>{{ departmentHead.name }}</span>
+              <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
+                <template slot="content">
+                  <div class="approver-tip-content">
+                    <div class="approver-tip-main-content">
+                      <div v-for="(popover, k) in departmentHead.popovers" :key="k">
+                        <p class="main-title">{{ popover.title }}</p>
+                        <p class="content">{{ popover.content }}</p>
+                      </div>
                     </div>
+                    <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
                   </div>
-                  <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
-                </div>
-              </template>
-              <a-icon style="margin-left: 5px;" type="question-circle" />
-            </a-popover>
-          </a-radio>
-        </a-radio-group>
-        <a-select :size="size" class="w-fill" default-value="1">
-          <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
-            {{ departmentHead.name }}
-          </a-select-option>
-        </a-select>
+                </template>
+                <a-icon style="margin-left: 5px;" type="question-circle" />
+              </a-popover>
+            </a-radio>
+          </a-radio-group>
+          <a-select :size="size" class="w-fill" default-value="1">
+            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
+              {{ departmentHead.name }}
+            </a-select-option>
+          </a-select>
+        </div>
       </div>
-    </div>
-  </a-card>
+    </a-card>
+    <a-button v-if="show" type="link" icon="plus" block @click="addApproval">
+      添加审批人
+    </a-button>
+  </div>
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
+  import { getApproveNodes } from '../../util/nodeUtil';
   export default {
     name: 'FlowNodeApproval',
     mixins: [flowMixin],
     props: {
-      group: {
+      groups: {
+        type: Array,
+        default: function() {
+          return [];
+        },
+      },
+      node: {
         type: Object,
         default: function() {
           return {};
@@ -293,15 +320,26 @@
     },
     data() {
       return {
+        headStyle: {
+          background: '#f5f6f7',
+          'min-height': '40px',
+        },
         approvals: [
           {
             name: '上级',
             code: 'higherLevel',
             value: 1,
+            // 多个组时需要disabled
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
           },
           {
             name: '部门负责人',
             value: 2,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是部门负责人审批？',
@@ -319,6 +357,9 @@
           {
             name: '部门审批人',
             value: 3,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是部门负责人审批？',
@@ -353,6 +394,9 @@
           {
             name: '角色',
             value: 5,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是角色？',
@@ -372,6 +416,9 @@
           {
             name: '岗位',
             value: 6,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是角色？',
@@ -391,6 +438,9 @@
           {
             name: '用户组',
             value: 7,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是用户组？',
@@ -410,14 +460,24 @@
           {
             name: '指定成员',
             value: 8,
+            disabled: false,
+            // 是否可以多个组
+            showAdd: true,
           },
           {
             name: '发起人自选',
             value: 9,
+            // 多个组时需要disabled
+            disabled: true,
+            // 是否可以多个组
+            showAdd: false,
           },
           {
             name: '发起人本人',
             value: 10,
+            disabled: true,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是发起人审批？',
@@ -426,8 +486,34 @@
             ],
           },
           {
-            name: '连续多级上级审批',
+            name: '节点审批人',
             value: 11,
+            disabled: true,
+            // 是否可以多个组
+            showAdd: true,
+            popovers: [
+              {
+                title: '什么是节点审批人？',
+                content: '通过选择前面已经配置的节点进行关联，流程执行时自动获取所有关联审批节点中的实际审批人作为当前节点的审批人',
+              },
+              {
+                content: '节点审批人默认为多人审批，不会从关联的审批节点继承，需单独设置审批方式',
+              },
+              {
+                content: '当前节点为节点审批人时，同一审批人重复审批将不会触发自动通过',
+              },
+              {
+                title: '如何关联节点？',
+                content: '可以选择前序节点的名称进行关联',
+              },
+            ],
+          },
+          {
+            name: '连续多级上级审批',
+            value: 12,
+            disabled: true,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '什么是连续多级上级审批？',
@@ -439,7 +525,10 @@
           },
           {
             name: '表单内人员',
-            value: 12,
+            value: 13,
+            disabled: true,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '如何配置表单内人员？',
@@ -449,7 +538,10 @@
           },
           {
             name: '表单内部门',
-            value: 13,
+            value: 14,
+            disabled: true,
+            // 是否可以多个组
+            showAdd: true,
             popovers: [
               {
                 title: '何配置表单内部门？',
@@ -762,8 +854,46 @@
         ],
       };
     },
-    computed: {},
+    computed: {
+      /**
+       * 显示添加按钮
+       */
+      show: function() {
+        // 发起人自选/发起人本人只能一个组
+        return this.groups.filter((group) => [9, 10].includes(group.approverType)).length == 0;
+      },
+      approveNodes: function() {
+        // 审批人节点
+        const approveNodes = [];
+        getApproveNodes(this.$store.state.flow.node, approveNodes);
+        // 过滤自己
+        return approveNodes.filter((approveNode) => approveNode.uid != this.node.uid);
+      },
+    },
     mounted() {},
-    methods: {},
+    methods: {
+      // 添加审批人
+      addApproval() {
+        this.groups.push({
+          id: this.uuid(),
+          // 审批人模式
+          approverType: 1,
+          // 层级模式
+          levelMode: 1,
+          // 审批人ID
+          approverIds: [],
+          // 审批人名称
+          approverNames: [],
+        });
+      },
+      // 删除审批人
+      delApproval(group) {
+        this.groups.forEach((element, i) => {
+          if (element.id == group.id) {
+            this.groups.splice(i, 1);
+          }
+        });
+      },
+    },
   };
 </script>

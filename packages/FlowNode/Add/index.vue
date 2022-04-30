@@ -121,6 +121,7 @@
           // 审批设置
           approverGroup: [
             {
+              id: this.uuid(),
               // 审批人模式
               approverType: 1,
               // 层级模式
