@@ -52,11 +52,7 @@
               </a-popover>
             </a-radio>
           </a-radio-group>
-          <a-select :size="size" class="w-fill" :default-value="group.approverIds[0]">
-            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-              {{ higherLevel.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="higherLevels" />
         </div>
         <!-- 部门负责人 -->
         <div v-if="group.approverType == 2">
@@ -82,85 +78,42 @@
               </a-popover>
             </a-radio>
           </a-radio-group>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
-              {{ departmentHead.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="departmentHeads" />
         </div>
         <!-- 部门审批人 -->
         <div v-if="group.approverType == 3">
           <p class="flow-setting-item-title">
             <span>部门审批人</span>
           </p>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="departmentApproval.value" v-for="(departmentApproval, i) in departmentApprovals" :key="i">
-              {{ departmentApproval.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="departmentApprovals" />
         </div>
         <!-- 编码审批人 -->
         <div v-if="group.approverType == 4">
           <p class="flow-setting-item-title">
-            <span>编码审批人</span>
+            <span>编码对应部门审批人</span>
           </p>
-          <!-- <a-radio-group :size="size" v-model="group.approverType" class="w-fill">
-                  <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
-                    <span>{{ departmentHead.name }}</span>
-                    <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
-                      <template slot="content">
-                        <div class="approver-tip-content">
-                          <div class="approver-tip-main-content">
-                            <div v-for="(popover, k) in departmentHead.popovers" :key="k">
-                              <p class="main-title">{{ popover.title }}</p>
-                              <p class="content">{{ popover.content }}</p>
-                            </div>
-                          </div>
-                          <a v-if="departmentHead.href" :href="departmentHead.href" target="_blank">{{ departmentHead.hrefName }}</a>
-                        </div>
-                      </template>
-                      <a-icon style="margin-left: 5px;" type="question-circle" />
-                    </a-popover>
-                  </a-radio>
-                </a-radio-group> -->
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads.concat(departmentApprovals)" :key="i">
-              {{ departmentHead.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="departmentApprovals" />
         </div>
         <!-- 角色 -->
         <div v-if="group.approverType == 5">
           <p class="flow-setting-item-title">
             <span>选择角色</span>
           </p>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="role.value" v-for="(role, i) in roles" :key="i">
-              {{ role.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="roles" />
         </div>
         <!-- 岗位 -->
         <div v-if="group.approverType == 6">
           <p class="flow-setting-item-title">
             <span>选择岗位</span>
           </p>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="post.value" v-for="(post, i) in posts" :key="i">
-              {{ post.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="posts" />
         </div>
         <!-- 用户组 -->
         <div v-if="group.approverType == 7">
           <p class="flow-setting-item-title">
             <span>选择用户组</span>
           </p>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="userGroup.value" v-for="(userGroup, i) in userGroups" :key="i">
-              {{ userGroup.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="userGroups" />
         </div>
         <!-- 指定成员 -->
         <div v-if="group.approverType == 8">
@@ -208,11 +161,7 @@
           <p class="flow-setting-item-title">
             <span>选择节点</span>
           </p>
-          <a-select v-model="group.approverIds" mode="multiple" :size="size" class="w-fill">
-            <a-select-option :value="approveNode.uid" v-for="(approveNode, i) in approveNodes" :key="i">
-              {{ approveNode.nodeName }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="approveNodes" valueName="uid" labelName="nodeName" />
           <p class="flow-setting-item-title">
             <span class="light-text">你可以选择前序节点名称，如果名称重复建议先修改审批节点的节点名称</span>
           </p>
@@ -222,11 +171,7 @@
           <p class="flow-setting-item-title">
             <span>审批终点</span>
           </p>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="higherLevel.value" v-for="(higherLevel, i) in higherLevels" :key="i">
-              {{ higherLevel.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="higherLevels" />
         </div>
         <!-- 表单内人员 -->
         <div v-if="group.approverType == 13">
@@ -266,7 +211,7 @@
           <p class="flow-setting-item-title margin-top-10">
             <span>指定层级</span>
           </p>
-          <a-radio-group :size="size" v-model="nodesettype" class="w-fill">
+          <a-radio-group :size="size" class="w-fill">
             <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
               <span>{{ departmentHead.name }}</span>
               <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -285,11 +230,7 @@
               </a-popover>
             </a-radio>
           </a-radio-group>
-          <a-select :size="size" class="w-fill" default-value="1">
-            <a-select-option :value="departmentHead.value" v-for="(departmentHead, i) in departmentHeads" :key="i">
-              {{ departmentHead.name }}
-            </a-select-option>
-          </a-select>
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="departmentHeads" />
         </div>
       </div>
     </a-card>
@@ -301,8 +242,12 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import { getApproveNodes } from '../../util/nodeUtil';
+  import FlowSelect from '../../Common/FlowSelect.vue';
   export default {
     name: 'FlowNodeApproval',
+    components: {
+      FlowSelect,
+    },
     mixins: [flowMixin],
     props: {
       groups: {
