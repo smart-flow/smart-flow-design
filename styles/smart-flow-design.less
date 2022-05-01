@@ -281,7 +281,8 @@
               .flow-node-box {
                 cursor: pointer;
                 width: 220px;
-                height: 118px;
+                // height: 118px;
+                height: 100px;
                 background-color: #fff;
                 -webkit-box-shadow: 0 2px 6px 0 rgba(75, 82, 94, 0.2);
                 box-shadow: 0 2px 6px 0 rgba(75, 82, 94, 0.2);
@@ -414,9 +415,16 @@
                   -o-text-overflow: ellipsis;
                   text-overflow: ellipsis;
                   color: #575757;
+                  font-size: 14px;
+
+                  span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
 
                   .hint-title {
                     color: #ff6a00;
+                    font-size: 12px;
                   }
                 }
 

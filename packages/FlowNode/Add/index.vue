@@ -157,6 +157,10 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
+          // 显示内容
+          content: null,
         };
       },
       /**
@@ -168,9 +172,27 @@
           nodeName: '抄送人',
           type: type,
           status: -1,
+          // 抄送人设置
+          approverGroup: [
+            {
+              id: this.uuid(),
+              // 审批人模式
+              approverType: 1,
+              // 层级模式
+              levelMode: 1,
+              // 审批人ID
+              approverIds: [],
+              // 审批人名称
+              approverNames: [],
+            },
+          ],
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
+          // 显示内容
+          content: null,
         };
       },
       /**
@@ -185,6 +207,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
         };
       },
       /**
@@ -199,6 +223,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
         };
       },
       /**
@@ -213,6 +239,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
         };
       },
       /**
@@ -226,7 +254,10 @@
           type: type,
           status: -1,
           childNode: null,
+          // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
           conditionNodes: [
             {
               uid: this.uuid(),
@@ -272,6 +303,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 是否有错误
+          error: true,
           conditionNodes: [
             {
               uid: this.uuid(),
@@ -310,6 +343,10 @@
           nodeName: '并行',
           type: type,
           status: -1,
+          // 显示添加按钮
+          showAdd: true,
+          // 是否有错误
+          error: true,
           childNode: {
             uid: this.uuid(),
             pid: uid,
@@ -322,8 +359,6 @@
             // 显示添加按钮
             showAdd: true,
           },
-          // 显示添加按钮
-          showAdd: true,
           conditionNodes: [
             {
               uid: this.uuid(),

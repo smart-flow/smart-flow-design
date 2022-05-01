@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model="currentValue" :size="size" class="w-fill" @change="onChange">
+  <a-select v-model="currentValue" :size="size" allowClear class="w-fill" @change="onChange">
     <a-select-option :value="data[valueName]" v-for="(data, i) in datas" :key="i">
       {{ data[labelName] }}
     </a-select-option>
@@ -40,9 +40,20 @@
         currentValue: null,
       };
     },
+    watch: {
+      value(curVal, oldVal) {
+        if (curVal && curVal.length > 0) {
+          this.currentValue = curVal[0];
+        } else {
+          this.currentValue = null;
+        }
+      },
+    },
     mounted() {
       if (this.value && this.value.length > 0) {
         this.currentValue = this.value[0];
+      } else {
+        this.currentValue = null;
       }
     },
     methods: {

@@ -401,6 +401,20 @@
        */
       onSave() {
         // 更新节点显示信息
+        let content = '';
+        this.node.approverGroup.forEach((group) => {
+          if (group.approverNames.length > 0) {
+            content += group.approverNames.join(',');
+          }
+          if (content) {
+            content += ',';
+          }
+        });
+        if (content) {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+        }
+        this.onClose();
       },
     },
   };

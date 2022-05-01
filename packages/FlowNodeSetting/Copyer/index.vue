@@ -21,25 +21,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">抄送人</p>
-              <a-radio-group class="w-fill" :size="size" v-model="node.settype">
-                <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value">
-                  <span>{{ approval.name }}</span>
-                  <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
-                    <template slot="content">
-                      <div class="approver-tip-content">
-                        <div class="approver-tip-main-content">
-                          <div v-for="(popover, k) in approval.popovers" :key="k">
-                            <p class="main-title">{{ popover.title }}</p>
-                            <p class="content">{{ popover.content }}</p>
-                          </div>
-                        </div>
-                        <a v-if="approval.href" :href="approval.href" target="_blank">{{ approval.hrefName }}</a>
-                      </div>
-                    </template>
-                    <a-icon style="margin-left: 5px;" type="question-circle" />
-                  </a-popover>
-                </a-radio>
-              </a-radio-group>
+              <FlowNodeApproval :groups="node.approverGroup" :node="node" title="抄送人" />
             </div>
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">配置</p>
@@ -71,7 +53,8 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-    <FlowDrawerFooter @close="onClose" />
+    <p>{{ node }}</p>
+    <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
 <script>
@@ -79,9 +62,10 @@
   import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
   import EditName from '../../Common/EditName.vue';
   import AuthForm from '../../Common/AuthForm.vue';
+  import FlowNodeApproval from '../Approver/Approval.vue';
   export default {
     name: 'FlowCopyerSetting',
-    components: { FlowDrawerFooter, EditName, AuthForm },
+    components: { FlowDrawerFooter, FlowNodeApproval, EditName, AuthForm },
     mixins: [flowMixin],
     data() {
       return {
@@ -235,6 +219,26 @@
       onClose() {
         this.visible = false;
         this.$emit('close');
+      },
+      /**
+       * 保存配置
+       */
+      onSave() {
+        // 更新节点显示信息
+        let content = '';
+        this.node.approverGroup.forEach((group) => {
+          if (group.approverNames.length > 0) {
+            content += group.approverNames.join(',');
+          }
+          if (content) {
+            content += ',';
+          }
+        });
+        if (content) {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+        }
+        this.onClose();
       },
     },
   };

@@ -10,7 +10,18 @@
             <EditName v-model="node.nodeName" />
             <img :src="approverIcon" style="margin-left: 10px;" />
           </div>
-          <div class="node-main"><span class="hint-title">设置此节点</span></div>
+          <div class="node-main">
+            <span v-if="node.content">
+              审批人:
+              <a-tooltip placement="top">
+                <template slot="title">
+                  <span>{{ node.content }}</span>
+                </template>
+                {{ node.content }}
+              </a-tooltip>
+            </span>
+            <span v-else class="hint-title">设置此节点</span>
+          </div>
           <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div>
         </div>
       </div>

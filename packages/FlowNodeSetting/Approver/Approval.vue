@@ -4,12 +4,12 @@
     <a-card v-for="(group, k) in groups" :key="k" :headStyle="headStyle" class="w-fill margin-bottom-20">
       <template slot="title">
         <span class="flow-setting-approval-title">
-          <span>审批人</span>
+          <span>{{ title }}</span>
           <a-icon type="delete" class="del-icon" @click="delApproval(group)" />
         </span>
       </template>
       <div class="flow-setting-item">
-        <a-radio-group v-model="group.approverType" class="w-fill" :size="size">
+        <a-radio-group v-model="group.approverType" class="w-fill" :size="size" @change="changeApproverType(group)">
           <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value" :disabled="approval.disabled && groups.length > 1">
             <span>{{ approval.name }}</span>
             <a-popover v-if="approval.popovers && approval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -261,6 +261,10 @@
         default: function() {
           return {};
         },
+      },
+      title: {
+        type: String,
+        default: '审批人',
       },
     },
     data() {
@@ -817,6 +821,13 @@
     },
     mounted() {},
     methods: {
+      /**
+       * 改变审批人类型
+       */
+      changeApproverType(group) {
+        group.approverIds = [];
+        group.approverNames = [];
+      },
       // 添加审批人
       addApproval() {
         this.groups.push({
