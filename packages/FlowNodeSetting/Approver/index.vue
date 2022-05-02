@@ -22,21 +22,15 @@
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
           <a-radio-group v-model="node.approvalMethod" button-style="solid" class="w-full">
-            <a-radio value="1">
-              人工审批
-            </a-radio>
-            <a-radio value="2">
-              自动通过
-            </a-radio>
-            <a-radio value="3">
-              自动拒绝
+            <a-radio :value="approvalMethod.value" v-for="(approvalMethod, i) in approvalMethods" :key="i">
+              {{ approvalMethod.name }}
             </a-radio>
           </a-radio-group>
         </div>
         <div class="flow-setting-item">
-          <p class="flow-setting-item-title" v-if="node.approvalMethod == 1">人工审批设置</p>
-          <p class="flow-setting-item-title" v-if="node.approvalMethod == 2">自动通过设置</p>
-          <p class="flow-setting-item-title" v-if="node.approvalMethod == 3">自动拒绝设置</p>
+          <p class="flow-setting-item-title" v-for="(approvalMethod, i) in approvalMethods" :key="i">
+            <span v-if="node.approvalMethod == approvalMethod.value">{{ approvalMethod.name }}设置</span>
+          </p>
         </div>
       </div>
 
@@ -65,7 +59,7 @@
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval v-for="(approverGroup, k) in node.approverGroup" :key="k" :group="approverGroup" />
+            <FlowNodeApproval :groups="node.approverGroup" :node="node" />
             <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
@@ -216,7 +210,7 @@
         <a-input-password placeholder="输入密码" />
       </div>
     </a-modal>
-    <FlowDrawerFooter @close="onClose" />
+    <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
 <script>
@@ -245,6 +239,21 @@
           // 'background-color': '#ff8126',
           'border-radius': '0px 0px 0 0',
         },
+        // 审批类型
+        approvalMethods: [
+          {
+            name: '人工审批',
+            value: 1,
+          },
+          {
+            name: '自动通过',
+            value: 2,
+          },
+          {
+            name: '自动拒绝',
+            value: 3,
+          },
+        ],
         approvalWithNulls: [
           {
             name: '自动通过',
@@ -378,14 +387,34 @@
         this.node = node;
         this.visible = true;
       },
-      onClose() {
-        this.visible = false;
-        this.$emit('close');
-      },
       openPasswordModal(checked) {
         if (checked) {
           this.passwordVisible = true;
         }
+      },
+      onClose() {
+        this.visible = false;
+        this.$emit('close');
+      },
+      /**
+       * 保存配置
+       */
+      onSave() {
+        // 更新节点显示信息
+        let content = '';
+        this.node.approverGroup.forEach((group) => {
+          if (group.approverNames.length > 0) {
+            content += group.approverNames.join(',');
+          }
+          if (content) {
+            content += ',';
+          }
+        });
+        if (content) {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+        }
+        this.onClose();
       },
     },
   };
