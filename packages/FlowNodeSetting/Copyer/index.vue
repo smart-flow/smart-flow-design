@@ -237,6 +237,9 @@
         if (content) {
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+        } else {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: true });
         }
         this.onClose();
       },
