@@ -9,6 +9,7 @@
         </span>
       </template>
       <div class="flow-setting-item">
+        <!-- 审批人类型 -->
         <a-radio-group v-model="group.approverType" class="w-fill" :size="size" @change="changeApproverType(group)">
           <a-radio v-for="(approval, i) in approvals" :key="i" :style="approvalRadioStyle" :value="approval.value" :disabled="approval.disabled && groups.length > 1">
             <span>{{ approval.name }}</span>
@@ -59,7 +60,7 @@
           <p class="flow-setting-item-title">
             <span>指定层级</span>
           </p>
-          <a-radio-group :size="size" v-model="group.settype" class="w-fill">
+          <a-radio-group v-model="group.levelMode" :size="size" class="w-fill">
             <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
               <span>{{ departmentHead.name }}</span>
               <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">
@@ -211,7 +212,7 @@
           <p class="flow-setting-item-title margin-top-10">
             <span>指定层级</span>
           </p>
-          <a-radio-group :size="size" class="w-fill">
+          <a-radio-group v-model="group.levelMode" :size="size" class="w-fill">
             <a-radio v-for="(departmentHead, i) in departmentHeadModes" :key="i" :style="radioStyle" :value="departmentHead.value">
               <span>{{ departmentHead.name }}</span>
               <a-popover v-if="departmentHead.popovers && departmentHead.popovers.length > 0" placement="topLeft" trigger="click">

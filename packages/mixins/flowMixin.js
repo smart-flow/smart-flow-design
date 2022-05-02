@@ -79,7 +79,7 @@ export const flowMixin = {
     drawerWidth() {
       return (width) => {
         if (!width) {
-          width = '35%';
+          width = '40%';
         }
         return scale.isMobile() ? '100%' : width;
       };

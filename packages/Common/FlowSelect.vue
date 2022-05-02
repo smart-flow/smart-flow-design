@@ -42,21 +42,20 @@
     },
     watch: {
       value(curVal, oldVal) {
-        if (curVal && curVal.length > 0) {
-          this.currentValue = curVal[0];
+        this.initData(curVal);
+      },
+    },
+    mounted() {
+      this.initData(this.value);
+    },
+    methods: {
+      initData(value) {
+        if (value && value.length > 0) {
+          this.currentValue = value[0];
         } else {
           this.currentValue = null;
         }
       },
-    },
-    mounted() {
-      if (this.value && this.value.length > 0) {
-        this.currentValue = this.value[0];
-      } else {
-        this.currentValue = null;
-      }
-    },
-    methods: {
       onChange(value) {
         this.$emit('input', [value]);
         this.$emit(
