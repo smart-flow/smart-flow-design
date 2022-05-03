@@ -205,6 +205,20 @@
           type: type,
           status: -1,
           childNode: null,
+          // 审批设置
+          approverGroup: [
+            {
+              id: this.uuid(),
+              // 审批人模式
+              approverType: 1,
+              // 层级模式
+              levelMode: 1,
+              // 审批人ID
+              approverIds: [],
+              // 审批人名称
+              approverNames: [],
+            },
+          ],
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
