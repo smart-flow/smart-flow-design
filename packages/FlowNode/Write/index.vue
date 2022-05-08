@@ -2,7 +2,7 @@
   <div class="flow-row">
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowWriteSetting', node)">
-        <div class="flow-node-box">
+        <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
             :class="{ 'node-fill': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
@@ -11,6 +11,8 @@
             <img :src="writeIcon" style="margin-left: 10px;" />
           </div>
           <div class="node-main"><span class="hint-title">设置此节点</span></div>
+
+          <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <!-- 只有是填写节点才能删除，发起节点不能删除 -->
           <div v-if="node.type == 6" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
         </div>

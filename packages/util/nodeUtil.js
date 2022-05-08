@@ -16,6 +16,7 @@ export function getStartNode() {
     nodeName: '发起人',
     type: 0,
     status: -1,
+    error: false,
     childNode: null,
     // 显示添加按钮
     showAdd: true,
