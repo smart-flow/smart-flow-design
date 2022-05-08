@@ -11,7 +11,7 @@
         <div class="flow-row">
           <div class="flow-box">
             <div class="flow-item flow-node-branch" @click="!read && open('flowBranchSetting', conditionNode, node)">
-              <div class="flow-node-box">
+              <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
                   <EditName v-model="conditionNode.nodeName" @edit="(showPriorityLevel) => (conditionNode.showPriorityLevel = showPriorityLevel)" />
                   <span class="node-name-level" v-if="conditionNode.showPriorityLevel">优先{{ conditionNode.priorityLevel }}</span>
@@ -25,6 +25,8 @@
                     <span>配置筛选条件</span>
                   </div>
                 </div>
+                <!-- 错误提示 -->
+                <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
                 <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(conditionNode)" /></div>
               </div>
             </div>
@@ -63,9 +65,7 @@
       },
     },
     data() {
-      return {
-      
-      };
+      return {};
     },
     methods: {},
   };

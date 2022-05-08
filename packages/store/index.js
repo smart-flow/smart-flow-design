@@ -63,7 +63,8 @@ const mutations = {
     }
     // 更新地图
     updateMap(state);
-    console.log('node', state.node);
+    //console.log('node', state.node);
+    console.info(JSON.stringify(state.node));
   },
   /**
    * 添加分支

@@ -158,7 +158,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
           // 显示内容
           content: null,
         };
@@ -190,7 +190,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
           // 显示内容
           content: null,
         };
@@ -222,7 +222,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
         };
       },
       /**
@@ -238,7 +238,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
         };
       },
       /**
@@ -254,7 +254,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
         };
       },
       /**
@@ -271,7 +271,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
           conditionNodes: [
             {
               uid: this.uuid(),
@@ -280,7 +280,7 @@
               type: 3,
               priorityLevel: 1,
               status: -1,
-              error: true,
+              error: false,
               childNode: null,
               // 显示添加按钮
               showAdd: true,
@@ -293,7 +293,7 @@
               nodeName: '分支节点2',
               type: 3,
               priorityLevel: 2,
-              error: true,
+              error: false,
               status: -1,
               childNode: null,
               // 显示添加按钮
@@ -318,7 +318,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
           conditionNodes: [
             {
               uid: this.uuid(),
@@ -327,7 +327,7 @@
               type: 8,
               priorityLevel: 1,
               status: -1,
-              error: true,
+              error: false,
               childNode: null,
               // 显示添加按钮
               showAdd: true,
@@ -338,7 +338,7 @@
               nodeName: '不同意',
               type: 8,
               priorityLevel: 2,
-              error: true,
+              error: false,
               status: -1,
               childNode: null,
               // 显示添加按钮
@@ -360,7 +360,7 @@
           // 显示添加按钮
           showAdd: true,
           // 是否有错误
-          error: true,
+          error: false,
           childNode: {
             uid: this.uuid(),
             pid: uid,
@@ -380,7 +380,7 @@
               nodeName: '并行1',
               type: 10,
               status: -1,
-              error: true,
+              error: false,
               childNode: null,
               // 显示添加按钮
               showAdd: true,
@@ -390,7 +390,7 @@
               pid: uid,
               nodeName: '并行2',
               type: 10,
-              error: true,
+              error: false,
               status: -1,
               childNode: null,
               // 显示添加按钮

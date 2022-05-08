@@ -2,7 +2,7 @@
   <div class="flow-row">
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowNoticeSetting', node)">
-        <div class="flow-node-box">
+        <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
             :class="{ 'node-tz': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
@@ -11,6 +11,8 @@
             <img :src="noticeIcon" alt="" style="margin-left: 10px;" />
           </div>
           <div class="node-main"><span class="hint-title">设置此节点</span></div>
+          <!-- 错误提示 -->
+          <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div>
         </div>
       </div>

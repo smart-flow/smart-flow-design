@@ -32,14 +32,21 @@
               <div class="flow-setting-condition-group">
                 <div class="flow-setting-condition-item" v-for="(condition, k) in group.conditions" :key="k">
                   <a-select v-model="condition.columnValue" :size="size" style="width: 140px" placeholder="字段" @change="handleChange">
-                    <a-select-option :value="column.value" v-for="(column, i) in group.columns" :key="i">{{ column.label }}</a-select-option>
+                    <a-select-opt-group label="基础字段">
+                      <a-select-option :value="column.value" v-for="(column, i) in group.columns" :key="i">{{ column.label }}</a-select-option>
+                    </a-select-opt-group>
+                    <a-select-opt-group label="表单字段">
+                      <a-select-option :value="column.value" v-for="(column, i) in group.formColumns" :key="i">{{ column.label }}</a-select-option>
+                    </a-select-opt-group>
                   </a-select>
                   <div class="flow-setting-condition-option">
+                    <!-- 判断(操作)符 -->
                     <a-select v-model="condition.optType" :size="size" style="width: 30%;" placeholder="判断符" @change="handleChange">
                       <a-select-option :value="optType.value" v-for="(optType, t) in optTypes" :key="t">
                         {{ optType.label }}
                       </a-select-option>
                     </a-select>
+                    <!-- 值类型 -->
                     <a-select v-model="condition.valueType" :size="size" style="width: 30%;" placeholder="值类型" @change="condition.conditionValue = null">
                       <a-select-option :value="valueType.value" v-for="(valueType, u) in valueTypes" :key="u">
                         {{ valueType.label }}
@@ -122,6 +129,7 @@
               { label: '所属体系', value: '所属体系' },
               { label: '归属地', value: '归属地' },
             ],
+            formColumns: [{ label: '加班类型', value: '加班类型' }],
             conditions: [
               {
                 id: this.uuid(),
@@ -136,6 +144,7 @@
             ],
           },
         ],
+        // 判断(操作)符
         optTypes: [
           { label: '等于', value: 'eq' },
           { label: '不等于', value: 'ne' },
@@ -146,12 +155,14 @@
           { label: '为空', value: '7' },
           { label: '不为空', value: '8' },
         ],
+        // 值类型
         valueTypes: [
           { label: '固定', value: '1' },
           { label: '动态值', value: '2' },
           { label: '流程值', value: '3' },
           /* { label: '数据源', value: '4' }, */
         ],
+        // 动态值类型
         dynamicValueTypes: [
           { label: '当前员工', value: '1' },
           { label: '当前员工工号', value: '2' },
@@ -162,10 +173,12 @@
           { label: '当前日期', value: '7' },
           { label: '当前时间', value: '8' },
         ],
+        // 流程值类型
         flowValueTypes: [
           { label: '流程状态', value: '1' },
           { label: '流程创建人', value: '2' },
         ],
+        // 表单数据
         dataSourceOptions: [
           {
             value: '1',
