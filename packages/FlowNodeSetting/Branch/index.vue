@@ -28,52 +28,50 @@
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">分支条件</p>
           <div class="flow-setting-condition-box">
-            <div v-for="(group, i) in groups" :key="i">
+            <div v-for="(group, i) in node.conditionGroup" :key="i">
               <div class="flow-setting-condition-group">
                 <div class="flow-setting-condition-item" v-for="(condition, k) in group.conditions" :key="k">
                   <a-select v-model="condition.columnValue" :size="size" style="width: 40%;" placeholder="字段" @change="handleChange">
                     <a-select-opt-group label="基础字段">
-                      <a-select-option :value="column.value" v-for="(column, i) in group.columns" :key="i">{{ column.label }}</a-select-option>
+                      <a-select-option :value="column.value" v-for="(column, i) in columns" :key="i">{{ column.label }}</a-select-option>
                     </a-select-opt-group>
                     <a-select-opt-group label="表单字段">
-                      <a-select-option :value="column.value" v-for="(column, i) in group.formColumns" :key="i">{{ column.label }}</a-select-option>
+                      <a-select-option :value="column.value" v-for="(column, i) in formColumns" :key="i">{{ column.label }}</a-select-option>
                     </a-select-opt-group>
                   </a-select>
                   <div class="flow-setting-condition-option">
                     <!-- 判断(操作)符 -->
-                    <a-select v-model="condition.optType" :size="size" style="width: 26%;" placeholder="判断符" @change="handleChange">
-                      <a-select-option :value="optType.value" v-for="(optType, t) in optTypes" :key="t">
-                        {{ optType.label }}
-                      </a-select-option>
-                    </a-select>
+                    <FlowSimpleSelect v-model="condition.optType" :name.sync="condition.optTypeName" :datas="optTypes" labelName="label" style="width: 26%;" />
                     <!-- 值类型 -->
-                    <a-select v-model="condition.valueType" :size="size" style="width: 26%;" placeholder="值类型" @change="condition.conditionValue = null">
-                      <a-select-option :value="valueType.value" v-for="(valueType, u) in valueTypes" :key="u">
-                        {{ valueType.label }}
-                      </a-select-option>
-                    </a-select>
+                    <FlowSimpleSelect v-model="condition.valueType" :datas="valueTypes" labelName="label" style="width: 26%;" @change="condition.conditionValue = []" />
+                    <!-- 值 -->
                     <div class="flow-setting-condition-value">
                       <!-- 动态值 -->
-                      <a-select v-if="condition.valueType == 2" v-model="condition.conditionValue" :size="size" placeholder="数值" class="w-fill">
-                        <a-select-option :value="dynamic.value" v-for="(dynamic, j) in dynamicValueTypes" :key="j">
-                          {{ dynamic.label }}
-                        </a-select-option>
-                      </a-select>
+                      <FlowSelect
+                        v-if="condition.valueType == 2"
+                        v-model="condition.conditionValue"
+                        :name.sync="condition.conditionValueName"
+                        :datas="dynamicValueTypes"
+                        labelName="label"
+                      />
                       <!-- 流程值 -->
-                      <a-select v-else-if="condition.valueType == 3" v-model="condition.conditionValue" :size="size" placeholder="数值" class="w-fill">
-                        <a-select-option :value="flow.value" v-for="(flow, j) in flowValueTypes" :key="j">
-                          {{ flow.label }}
-                        </a-select-option>
-                      </a-select>
+                      <FlowSelect
+                        v-else-if="condition.valueType == 3"
+                        v-model="condition.conditionValue"
+                        :name.sync="condition.conditionValueName"
+                        :datas="flowValueTypes"
+                        labelName="label"
+                      />
                       <!-- 数据源 -->
-                      <a-select v-else-if="condition.valueType == 4" v-model="condition.conditionValue" :size="size" placeholder="数值" class="w-fill">
-                        <a-select-option :value="column.value" v-for="(column, k) in group.columns" :key="k">
-                          {{ column.label }}
-                        </a-select-option>
-                      </a-select>
+                      <FlowSelect
+                        v-else-if="condition.valueType == 4"
+                        v-model="condition.conditionValue"
+                        :name.sync="condition.conditionValueName"
+                        :datas="columns"
+                        labelName="label"
+                      />
                       <!-- 固定 -->
-                      <a-input v-else v-model="condition.conditionValue" :size="size" placeholder="数值" />
-                      <!-- <a-cascader v-if="condition.valueType == 4" v-model="condition.conditionValue" :options="dataSourceOptions" :size="size" placeholder="数值" class="w-fill"/> -->
+                      <FlowInput v-else v-model="condition.conditionValue" :name.sync="condition.conditionValueName" :size="size" />
                     </div>
                   </div>
                   <div class="flow-setting-condition-del" @click="delCondition(1, group, condition)">
@@ -85,7 +83,7 @@
                   <span style="margin-left: 5px;">且条件</span>
                 </div>
               </div>
-              <div v-if="groups.length > 1 && i != groups.length - 1" class="flow-setting-condition-group-connector">或</div>
+              <div v-if="node.conditionGroup.length > 1 && i != node.conditionGroup.length - 1" class="flow-setting-condition-group-connector">或</div>
             </div>
             <div class="flow-setting-condition-add" @click="addGroup(1)">
               <a-icon type="plus-circle" theme="filled" />
@@ -95,17 +93,20 @@
         </div>
       </div>
     </div>
-    <!-- {{ groups }} -->
+    {{ node.conditionGroup }}
     <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import EditName from '../../Common/EditName.vue';
+  import FlowSelect from '../../Component/FlowSelect.vue';
+  import FlowSimpleSelect from '../../Component/FlowSimpleSelect.vue';
+  import FlowInput from '../../Component/FlowInput.vue';
   import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
   export default {
     name: 'FlowBranchSetting',
-    components: { EditName, FlowDrawerFooter },
+    components: { EditName, FlowSelect, FlowSimpleSelect, FlowInput, FlowDrawerFooter },
     mixins: [flowMixin],
     data() {
       return {
@@ -117,34 +118,15 @@
         },
         // 等级
         levelOptions: [],
-        groups: [
-          {
-            id: this.uuid(),
-            condition: 'OR',
-            columns: [
-              { label: '姓名', value: '姓名' },
-              { label: '工号', value: '工号' },
-              { label: '部门', value: '部门' },
-              { label: 'Base地', value: 'Base地' },
-              { label: '所属体系', value: '所属体系' },
-              { label: '归属地', value: '归属地' },
-            ],
-            formColumns: [{ label: '加班类型', value: '加班类型' }],
-            conditions: [
-              {
-                id: this.uuid(),
-                columnId: '姓名',
-                columnName: '姓名',
-                columnValue: '姓名',
-                columnType: '',
-                optType: 'eq',
-                valueType: '1',
-                conditionValue: '',
-              },
-            ],
-          },
+        columns: [
+          { label: '姓名', value: '姓名' },
+          { label: '工号', value: '工号' },
+          { label: '部门', value: '部门' },
+          { label: 'Base地', value: 'Base地' },
+          { label: '所属体系', value: '所属体系' },
+          { label: '归属地', value: '归属地' },
         ],
-        // 判断(操作)符
+        formColumns: [{ label: '加班类型', value: '加班类型' }],
         optTypes: [
           { label: '等于', value: 'eq' },
           { label: '不等于', value: 'ne' },
@@ -216,17 +198,9 @@
       handleChange() {},
       addGroup(type) {
         if (type == 1) {
-          this.groups.push({
+          this.node.conditionGroup.push({
             id: this.uuid(),
             condition: 'OR',
-            columns: [
-              { label: '姓名', value: '姓名' },
-              { label: '工号', value: '工号' },
-              { label: '部门', value: '部门' },
-              { label: 'Base地', value: 'Base地' },
-              { label: '所属体系', value: '所属体系' },
-              { label: '归属地', value: '归属地' },
-            ],
             conditions: [
               {
                 id: this.uuid(),
@@ -235,8 +209,10 @@
                 columnValue: '姓名',
                 columnType: undefined,
                 optType: 'eq',
+                optTypeName: '等于',
                 valueType: '1',
-                conditionValue: '',
+                conditionValue: [],
+                conditionValueName: [],
               },
             ],
           });
@@ -244,7 +220,7 @@
       },
       addCondition(type, currGroup) {
         if (type == 1) {
-          this.groups.forEach((group) => {
+          this.node.conditionGroup.forEach((group) => {
             if (currGroup.id == group.id) {
               group.conditions.push({
                 id: this.uuid(),
@@ -253,8 +229,10 @@
                 columnValue: undefined,
                 columnType: undefined,
                 optType: undefined,
+                optTypeName: undefined,
                 valueType: undefined,
-                conditionValue: undefined,
+                conditionValue: [],
+                conditionValueName: [],
               });
             }
           });
@@ -262,14 +240,14 @@
       },
       delCondition(type, currGroup, CurrCondition) {
         if (type == 1) {
-          this.groups.forEach((group, k) => {
+          this.node.conditionGroup.forEach((group, k) => {
             if (currGroup.id == group.id) {
               group.conditions.forEach((condition, index) => {
                 if (CurrCondition.id == condition.id) {
                   group.conditions.splice(index, 1);
                   // 当前组没有条件了，当前组也需要删除
                   if (group.conditions.length == 0) {
-                    this.groups.splice(k, 1);
+                    this.node.conditionGroup.splice(k, 1);
                   }
                 }
               });
@@ -277,13 +255,38 @@
           });
         }
       },
-      onSave() {
-        if (this.groups.length > 0) {
-          this.node.error = false;
-        } else {
-          this.node.error = true;
-        }
+      onClose() {
         this.visible = false;
+        this.$emit('close');
+      },
+      /**
+       * 保存配置
+       */
+      onSave() {
+        // 更新节点显示信息
+        let content = '';
+        this.node.conditionGroup.forEach((group) => {
+          if (group.conditions.length > 0) {
+            group.conditions.forEach((condition) => {
+              content += condition.columnValue + ' ' + condition.optTypeName + ' ' + condition.conditionValueName[0];
+              if (group.conditions.length > 1) {
+                content += '\n且\n';
+              }
+            });
+          }
+          if (this.node.conditionGroup.length > 1) {
+            content += '或';
+          }
+        });
+        console.info(content);
+        if (content) {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+          this.onClose();
+        } else {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: true });
+        }
       },
     },
   };

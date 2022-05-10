@@ -7,7 +7,7 @@
 </template>
 <script>
   export default {
-    name: 'FlowSelect',
+    name: 'FlowSimpleSelect',
     props: {
       datas: {
         type: Array,
@@ -30,9 +30,9 @@
         default: 'large',
       },
       value: {
-        type: Array,
+        type: String,
         required: false,
-        default: () => [],
+        default: '',
       },
     },
     data() {
@@ -50,18 +50,19 @@
     },
     methods: {
       initData(value) {
-        if (value && value.length > 0) {
-          this.currentValue = value[0];
+        if (value) {
+          this.currentValue = value;
         } else {
           this.currentValue = null;
         }
       },
       onChange(value) {
-        this.$emit('input', [value]);
+        this.$emit('input', value);
         this.$emit(
           'update:name',
           this.datas.filter((data) => data[this.valueName] == value).map((data) => data[this.labelName]),
         );
+        this.$emit('change', value);
       },
     },
   };

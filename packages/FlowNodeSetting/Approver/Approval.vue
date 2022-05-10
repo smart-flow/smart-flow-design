@@ -243,7 +243,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import { getApproveNodes } from '../../util/nodeUtil';
-  import FlowSelect from '../../Common/FlowSelect.vue';
+  import FlowSelect from '../../Component/FlowSelect.vue';
   export default {
     name: 'FlowNodeApproval',
     components: {

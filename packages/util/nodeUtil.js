@@ -32,8 +32,12 @@ export function addCondition(node, len) {
     uid: uuid.v4(),
     nodeName: (node.type == 4 ? '条件' : '并行') + len,
     type: node.type == 4 ? 3 : 10,
+    // 优先级
     priorityLevel: len.toString(),
+    // 子节点
     childNode: null,
+    // 条件组
+    conditionGroup: [],
   };
 }
 
@@ -152,6 +156,7 @@ export function delBranchNode(state, node, currNode) {
  */
 export function updateNode(node, currNode, field, value) {
   if (node && currNode && node.uid == currNode.uid) {
+    debugger;
     node[field] = value;
   } else if (node && currNode) {
     updateNode(node.childNode, currNode, field, value);

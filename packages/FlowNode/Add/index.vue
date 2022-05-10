@@ -270,14 +270,13 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
-          // 是否有错误
-          error: false,
           conditionNodes: [
             {
               uid: this.uuid(),
               pid: uid,
               nodeName: '分支节点1',
               type: 3,
+              // 优先级
               priorityLevel: 1,
               status: -1,
               error: false,
@@ -286,12 +285,15 @@
               showAdd: true,
               // 显示优先级
               showPriorityLevel: true,
+              // 条件组
+              conditionGroup: [],
             },
             {
               uid: this.uuid(),
               pid: uid,
               nodeName: '分支节点2',
               type: 3,
+              // 优先级
               priorityLevel: 2,
               error: false,
               status: -1,
@@ -300,8 +302,14 @@
               showAdd: true,
               // 显示优先级
               showPriorityLevel: true,
+              // 条件组
+              conditionGroup: [],
             },
           ],
+          // 是否有错误
+          error: false,
+          // 显示内容
+          content: null,
         };
       },
       /**
