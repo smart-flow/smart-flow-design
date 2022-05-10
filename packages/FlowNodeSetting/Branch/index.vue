@@ -31,7 +31,7 @@
             <div v-for="(group, i) in groups" :key="i">
               <div class="flow-setting-condition-group">
                 <div class="flow-setting-condition-item" v-for="(condition, k) in group.conditions" :key="k">
-                  <a-select v-model="condition.columnValue" :size="size" style="width: 140px" placeholder="字段" @change="handleChange">
+                  <a-select v-model="condition.columnValue" :size="size" style="width: 40%;" placeholder="字段" @change="handleChange">
                     <a-select-opt-group label="基础字段">
                       <a-select-option :value="column.value" v-for="(column, i) in group.columns" :key="i">{{ column.label }}</a-select-option>
                     </a-select-opt-group>
@@ -41,13 +41,13 @@
                   </a-select>
                   <div class="flow-setting-condition-option">
                     <!-- 判断(操作)符 -->
-                    <a-select v-model="condition.optType" :size="size" style="width: 30%;" placeholder="判断符" @change="handleChange">
+                    <a-select v-model="condition.optType" :size="size" style="width: 26%;" placeholder="判断符" @change="handleChange">
                       <a-select-option :value="optType.value" v-for="(optType, t) in optTypes" :key="t">
                         {{ optType.label }}
                       </a-select-option>
                     </a-select>
                     <!-- 值类型 -->
-                    <a-select v-model="condition.valueType" :size="size" style="width: 30%;" placeholder="值类型" @change="condition.conditionValue = null">
+                    <a-select v-model="condition.valueType" :size="size" style="width: 26%;" placeholder="值类型" @change="condition.conditionValue = null">
                       <a-select-option :value="valueType.value" v-for="(valueType, u) in valueTypes" :key="u">
                         {{ valueType.label }}
                       </a-select-option>
