@@ -18,17 +18,17 @@
                   <img :src="branchIcon" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
-                  <div v-if="conditionNode.content" class="branch-filter-view">
+                  <span v-if="conditionNode.content" class="branch-filter-view">
                     <a-tooltip placement="top">
                       <template slot="title">
                         <span>{{ conditionNode.content }}</span>
                       </template>
                       {{ conditionNode.content }}
                     </a-tooltip>
-                  </div>
-                  <div v-else class="branch-filter-hint">
+                  </span>
+                  <span v-else class="branch-filter-hint">
                     <span>配置筛选条件</span>
-                  </div>
+                  </span>
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />

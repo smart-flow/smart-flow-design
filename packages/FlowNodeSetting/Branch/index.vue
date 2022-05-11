@@ -134,8 +134,8 @@
           { label: '大于等于', value: 'ge' },
           { label: '小于', value: 'lt' },
           { label: '小于等于', value: 'le' },
-          { label: '为空', value: '7' },
-          { label: '不为空', value: '8' },
+          /*  { label: '为空', value: '7' },
+          { label: '不为空', value: '8' }, */
         ],
         // 值类型
         valueTypes: [
@@ -265,27 +265,29 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.conditionGroup.forEach((group) => {
+        this.node.conditionGroup.forEach((group, j) => {
+          if (j != 0) {
+            content += ' 或 ';
+          }
           if (group.conditions.length > 0) {
-            group.conditions.forEach((condition) => {
-              content += condition.columnValue + ' ' + condition.optTypeName + ' ' + condition.conditionValueName[0];
-              if (group.conditions.length > 1) {
-                content += '\n且\n';
+            group.conditions.forEach((condition, i) => {
+              const conditionValueName = condition.conditionValueName[0];
+              if (conditionValueName) {
+                if (i != 0) {
+                  content += ' 且 ';
+                }
+                content += '[' + condition.columnValue + ' ' + condition.optTypeName + ' ' + conditionValueName + ']';
               }
             });
           }
-          if (this.node.conditionGroup.length > 1) {
-            content += '或';
-          }
         });
-        console.info(content);
+        this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
+        this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: true });
         if (content) {
-          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
+          console.info('content', content);
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
           this.onClose();
-        } else {
-          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
-          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: true });
         }
       },
     },

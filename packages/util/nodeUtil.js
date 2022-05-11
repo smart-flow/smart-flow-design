@@ -156,7 +156,6 @@ export function delBranchNode(state, node, currNode) {
  */
 export function updateNode(node, currNode, field, value) {
   if (node && currNode && node.uid == currNode.uid) {
-    debugger;
     node[field] = value;
   } else if (node && currNode) {
     updateNode(node.childNode, currNode, field, value);
