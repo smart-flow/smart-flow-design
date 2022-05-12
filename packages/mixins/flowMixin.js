@@ -133,7 +133,12 @@ export const flowMixin = {
      */
     delNode(node, fun) {
       const me = this;
-      this.$confirm({
+      me.$store.dispatch('flow/delNode', node);
+      // 回调
+      if (fun) {
+        fun();
+      }
+      /* this.$confirm({
         title: '删除提示!',
         content: '您确定要删除当前节点吗?',
         okText: '确认',
@@ -146,7 +151,7 @@ export const flowMixin = {
           }
         },
         onCancel() {},
-      });
+      }); */
     },
     /**
      * 删除分支节点

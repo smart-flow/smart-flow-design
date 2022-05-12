@@ -470,6 +470,32 @@
                     background: red;
                   }
                 }
+
+                /* 删除遮罩 */
+                .node-delete-layer {
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  left: 0;
+                  top: 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background: rgba(0, 0, 0, 0.7);
+
+                  button {
+                    margin-right: 10px;
+                  }
+
+                  .node-delete-cancel {
+                    color: #fff;
+                    border-color: #fff;
+                  }
+
+                  .ant-btn-ghost {
+                    background-color: initial;
+                  }
+                }
               }
 
               .flow-branch-suggest {

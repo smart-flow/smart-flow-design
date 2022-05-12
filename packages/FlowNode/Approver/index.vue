@@ -24,7 +24,11 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
+          <div v-if="!readable && !deleteable" class="close-icon"><a-icon type="close-circle" @click.stop="deleteable = true" /></div>
+          <div v-if="deleteable" class="node-delete-layer">
+            <a-button class="ant-btn-ghost node-delete-cancel" @click.stop="delNode(node)">删除</a-button>
+            <a-button @click.stop="deleteable = false">取消</a-button>
+          </div>
         </div>
       </div>
       <!-- 如果子节点是意见分支,则只能添加一个意见分支 -->
@@ -55,7 +59,9 @@
       },
     },
     data() {
-      return {};
+      return {
+        deleteable: false,
+      };
     },
     methods: {},
   };
