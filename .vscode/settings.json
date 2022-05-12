@@ -1,5 +1,5 @@
 {
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "vscode-icons",
   "terminal.integrated.defaultProfile.windows": "Command Prompt",
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
