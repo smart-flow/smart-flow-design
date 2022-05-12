@@ -13,7 +13,9 @@
           <div class="node-main"><span class="hint-title">设置此节点</span></div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
+          <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
+          <!-- 删除提示 -->
+          <DeleteConfirm :node="node" />
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="5" :readable="readable" />
@@ -26,9 +28,10 @@
   import FlowAddNode from '../Add/index.vue';
   import FlowNoticeSetting from '../../FlowNodeSetting/Notice/index.vue';
   import EditName from '../../Common/EditName.vue';
+  import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {
     name: 'NoticeNode',
-    components: { FlowAddNode, FlowNoticeSetting, EditName },
+    components: { FlowAddNode, FlowNoticeSetting, EditName, DeleteConfirm },
     mixins: [flowMixin],
     props: {
       node: {

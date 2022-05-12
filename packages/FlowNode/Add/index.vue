@@ -157,6 +157,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 可删除提示
+          deletable: false,
           // 是否有错误
           error: false,
           // 显示内容
@@ -189,6 +191,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 可删除提示
+          deletable: false,
           // 是否有错误
           error: false,
           // 显示内容
@@ -221,6 +225,8 @@
           ],
           // 显示添加按钮
           showAdd: true,
+          // 可删除提示
+          deletable: false,
           // 是否有错误
           error: false,
         };
@@ -237,6 +243,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 可删除提示
+          deletable: false,
           // 是否有错误
           error: false,
         };
@@ -253,6 +261,8 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 可删除提示
+          deletable: false,
           // 是否有错误
           error: false,
         };
@@ -270,6 +280,7 @@
           childNode: null,
           // 显示添加按钮
           showAdd: true,
+          // 条件节点
           conditionNodes: [
             {
               uid: this.uuid(),
@@ -283,6 +294,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
               // 显示优先级
               showPriorityLevel: true,
               // 条件组
@@ -300,6 +313,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
               // 显示优先级
               showPriorityLevel: true,
               // 条件组
@@ -339,6 +354,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
             },
             {
               uid: this.uuid(),
@@ -351,6 +368,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
             },
           ],
         };
@@ -380,6 +399,8 @@
             childNode: null,
             // 显示添加按钮
             showAdd: true,
+            // 可删除提示
+            deletable: false,
           },
           conditionNodes: [
             {
@@ -392,6 +413,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
             },
             {
               uid: this.uuid(),
@@ -403,6 +426,8 @@
               childNode: null,
               // 显示添加按钮
               showAdd: true,
+              // 可删除提示
+              deletable: false,
             },
           ],
         };

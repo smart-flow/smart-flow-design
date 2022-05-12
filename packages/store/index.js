@@ -104,6 +104,7 @@ const mutations = {
     } else {
       updateNode(state.node, currNode, field, value);
     }
+    console.info(JSON.stringify(state.node));
   },
   /**
    * 更新地图

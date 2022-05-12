@@ -14,7 +14,11 @@
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <!-- 只有是填写节点才能删除，发起节点不能删除 -->
-          <div v-if="!readable && node.type == 6" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
+          <div v-if="!readable && !node.deletable && node.type == 6" class="close-icon">
+            <a-icon type="close-circle" @click.stop="node.deletable = true" />
+          </div>
+          <!-- 删除提示 -->
+          <DeleteConfirm :node="node" />
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="6" />
@@ -27,9 +31,10 @@
   import FlowAddNode from '../Add/index.vue';
   import FlowWriteSetting from '../../FlowNodeSetting/Write/index.vue';
   import EditName from '../../Common/EditName.vue';
+  import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {
     name: 'WriteNode',
-    components: { FlowAddNode, EditName, FlowWriteSetting },
+    components: { FlowAddNode, EditName, FlowWriteSetting, DeleteConfirm },
     mixins: [flowMixin],
     props: {
       node: {

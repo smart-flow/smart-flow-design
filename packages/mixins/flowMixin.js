@@ -136,7 +136,7 @@ export const flowMixin = {
       me.$store.dispatch('flow/delNode', node);
       // 回调
       if (fun) {
-        fun();
+        fun(node);
       }
       /* this.$confirm({
         title: '删除提示!',

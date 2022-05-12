@@ -24,11 +24,9 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div v-if="!readable && !deleteable" class="close-icon"><a-icon type="close-circle" @click.stop="deleteable = true" /></div>
-          <div v-if="deleteable" class="node-delete-layer">
-            <a-button class="ant-btn-ghost node-delete-cancel" @click.stop="delNode(node)">删除</a-button>
-            <a-button @click.stop="deleteable = false">取消</a-button>
-          </div>
+          <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
+          <!-- 删除提示 -->
+          <DeleteConfirm :node="node" />
         </div>
       </div>
       <!-- 如果子节点是意见分支,则只能添加一个意见分支 -->
@@ -42,9 +40,10 @@
   import FlowAddNode from '../Add/index.vue';
   import FlowApproverSetting from '../../FlowNodeSetting/Approver/index.vue';
   import EditName from '../../Common/EditName.vue';
+  import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {
     name: 'FlowApproverNode',
-    components: { FlowAddNode, FlowApproverSetting, EditName },
+    components: { FlowAddNode, FlowApproverSetting, EditName, DeleteConfirm },
     mixins: [flowMixin],
     props: {
       node: {

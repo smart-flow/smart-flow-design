@@ -26,7 +26,9 @@
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
-                <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(conditionNode)" /></div>
+                <div v-if="!readable && !conditionNode.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="conditionNode.deletable = true" /></div>
+                <!-- 删除提示 -->
+                <DeleteConfirm :node="conditionNode" />
               </div>
             </div>
             <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :readable="readable" />
@@ -47,9 +49,10 @@
   import FlowAddNode from '../Add/index.vue';
   import FlowBranchSetting from '../../FlowNodeSetting/Branch/index.vue';
   import EditName from '../../Common/EditName.vue';
+  import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {
     name: 'BranchNode',
-    components: { FlowNode, FlowAddNode, FlowBranchSetting, EditName },
+    components: { FlowNode, FlowAddNode, FlowBranchSetting, EditName, DeleteConfirm },
     mixins: [flowMixin],
     props: {
       node: {

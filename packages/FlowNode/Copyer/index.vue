@@ -27,7 +27,9 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
+          <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
+          <!-- 删除提示 -->
+          <DeleteConfirm :node="node" />
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="2" :readable="readable" />
@@ -40,9 +42,10 @@
   import FlowAddNode from '../Add/index.vue';
   import FlowCopyerSetting from '../../FlowNodeSetting/Copyer/index.vue';
   import EditName from '../../Common/EditName.vue';
+  import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {
     name: 'FlowCopyerNode',
-    components: { FlowAddNode, FlowCopyerSetting, EditName },
+    components: { FlowAddNode, FlowCopyerSetting, EditName, DeleteConfirm },
     mixins: [flowMixin],
     props: {
       node: {
