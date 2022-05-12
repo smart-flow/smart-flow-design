@@ -42,15 +42,21 @@
           <a-select :size="size" style="width: 100%;margin-bottom: 20px;" placeholder="请选择模板"></a-select>
           <a-textarea v-model="noticeContext" :size="size" :rows="4" placeholder="通知内容" higth />
         </div>
-        <div class="flow-setting-item" v-if="noticeType.includes(2)">
+        <div class="flow-setting-item">
+          <p class="flow-setting-item-title">发送通知人</p>
+          <FlowNodeApproval :groups="node.approverGroup" :node="node" title="通知人" />
+        </div>
+        <div v-if="noticeType.includes(2)" class="flow-setting-item">
           <p class="flow-setting-item-title">手机号</p>
           <a-button type="link" icon="plus" block>
             添加手机号
           </a-button>
         </div>
-        <div class="flow-setting-item">
-          <p class="flow-setting-item-title">发送通知人</p>
-          <FlowNodeApproval :groups="node.approverGroup" :node="node" title="通知人" />
+        <div v-if="noticeType.includes(3)" class="flow-setting-item">
+          <p class="flow-setting-item-title">邮箱</p>
+          <a-button type="link" icon="plus" block>
+            添加邮箱
+          </a-button>
         </div>
       </div>
     </div>
