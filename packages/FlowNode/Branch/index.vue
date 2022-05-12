@@ -32,7 +32,7 @@
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
-                <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(conditionNode)" /></div>
+                <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(conditionNode)" /></div>
               </div>
             </div>
             <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :readable="readable" />

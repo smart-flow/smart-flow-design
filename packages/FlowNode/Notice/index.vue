@@ -13,7 +13,7 @@
           <div class="node-main"><span class="hint-title">设置此节点</span></div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
+          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="5" :readable="readable" />

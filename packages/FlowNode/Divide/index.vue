@@ -4,7 +4,7 @@
       <div class="flow-item">
         <div class="node-name node-temmi">
           分隔
-          <div class="close-icon"><a-icon type="close-circle" /></div>
+          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" /></div>
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="7" :readable="readable" />

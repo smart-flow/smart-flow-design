@@ -24,7 +24,7 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
+          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
         </div>
       </div>
       <!-- 如果子节点是意见分支,则只能添加一个意见分支 -->

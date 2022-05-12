@@ -7,7 +7,7 @@
           :class="{ 'node-temmi': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
         >
           事件
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
+          <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
         </div>
       </div>
       <FlowAddNode :node.sync="node" :nodeType="5" :readable="readable" />
