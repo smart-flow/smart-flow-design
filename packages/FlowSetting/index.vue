@@ -35,6 +35,10 @@
     mixins: [flowMixin],
     components: { FlowNav, MenuShot, Advanced, Exhibition, Remind, Print },
     props: {
+      navable: {
+        type: Boolean,
+        default: true,
+      },
       readable: {
         type: Boolean,
         default: false,
