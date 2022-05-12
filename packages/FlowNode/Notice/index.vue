@@ -1,7 +1,7 @@
 <template>
   <div class="flow-row">
     <div class="flow-box">
-      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowNoticeSetting', node)">
+      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowNoticeSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
@@ -13,10 +13,10 @@
           <div class="node-main"><span class="hint-title">设置此节点</span></div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div>
+          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
         </div>
       </div>
-      <FlowAddNode :node.sync="node" :nodeType="5" :read="read" />
+      <FlowAddNode :node.sync="node" :nodeType="5" :readable="readable" />
     </div>
     <FlowNoticeSetting ref="flowNoticeSetting" @close="isActive = false" />
   </div>
@@ -37,7 +37,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

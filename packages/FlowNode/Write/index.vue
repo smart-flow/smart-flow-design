@@ -1,7 +1,7 @@
 <template>
   <div class="flow-row">
     <div class="flow-box">
-      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowWriteSetting', node)">
+      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowWriteSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
@@ -38,7 +38,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

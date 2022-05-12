@@ -4,7 +4,7 @@
       <div class="flow-item">
         <div class="node-name node-start">开始</div>
       </div>
-      <FlowAddNode :node="node" :nodeType="0" :read="read" />
+      <FlowAddNode :node="node" :nodeType="0" :readable="readable" />
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: true,
       },

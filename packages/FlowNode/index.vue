@@ -1,15 +1,15 @@
 <template>
   <div class="flow-row-container">
-    <FlowApproverNode v-if="node && node.type == 1" :node="node" :read="read" />
-    <FlowCopyerNode v-if="node && node.type == 2" :node="node" :read="read" />
-    <BranchNode v-if="node && node.type == 4" :node="node" :read="read" />
-    <EventNode v-if="node && node.type == 5" :node="node" :read="read" />
-    <WriteNode v-if="node && (node.type == 0 || node.type == 6)" :node="node" :read="read" />
-    <SuggestNode v-if="node && node.type == 7" :node="node" :read="read" />
-    <ParallelNode v-if="node && node.type == 9" :node="node" :read="read" />
-    <PolymerizeNode v-if="node && node.type == 11" :node="node" :read="read"/>
-    <NoticeNode v-if="node && node.type == 20" :node="node" :read="read" />
-    <FlowNode v-if="node && node.childNode && node.childNode.hasOwnProperty('nodeName')" :node="node.childNode" :read="read" />
+    <FlowApproverNode v-if="node && node.type == 1" :node="node" :readable="readable" />
+    <FlowCopyerNode v-if="node && node.type == 2" :node="node" :readable="readable" />
+    <BranchNode v-if="node && node.type == 4" :node="node" :readable="readable" />
+    <EventNode v-if="node && node.type == 5" :node="node" :readable="readable" />
+    <WriteNode v-if="node && (node.type == 0 || node.type == 6)" :node="node" :readable="readable" />
+    <SuggestNode v-if="node && node.type == 7" :node="node" :readable="readable" />
+    <ParallelNode v-if="node && node.type == 9" :node="node" :readable="readable" />
+    <PolymerizeNode v-if="node && node.type == 11" :node="node" :readable="readable" />
+    <NoticeNode v-if="node && node.type == 20" :node="node" :readable="readable" />
+    <FlowNode v-if="node && node.childNode && node.childNode.hasOwnProperty('nodeName')" :node="node.childNode" :readable="readable" />
   </div>
 </template>
 <script>
@@ -46,7 +46,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

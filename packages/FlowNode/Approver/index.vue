@@ -1,7 +1,7 @@
 <template>
   <div class="flow-row">
     <div class="flow-box">
-      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowApproverSetting', node)">
+      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowApproverSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
@@ -24,11 +24,11 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div>
+          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
         </div>
       </div>
       <!-- 如果子节点是意见分支,则只能添加一个意见分支 -->
-      <FlowAddNode :node.sync="node" :nodeType="node.type" :read="read" />
+      <FlowAddNode :node.sync="node" :nodeType="node.type" :readable="readable" />
     </div>
     <FlowApproverSetting ref="flowApproverSetting" @close="isActive = false" />
   </div>
@@ -49,7 +49,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

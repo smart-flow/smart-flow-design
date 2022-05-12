@@ -1,6 +1,6 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="!read" :currentNav="2" :buttonName="buttonName" @change="change" />
+    <FlowNav v-if="navable && !readable" :currentNav="2" :buttonName="buttonName" @change="change" />
     <MenuShot :menus="menus" @change="changeMenu" />
     <div class="designer-content-box">
       <div class="flowSetting-box">
@@ -35,7 +35,7 @@
     mixins: [flowMixin],
     components: { FlowNav, MenuShot, Advanced, Exhibition, Remind, Print },
     props: {
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

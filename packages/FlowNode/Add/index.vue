@@ -38,7 +38,7 @@
         </a-menu>
       </template>
       <!-- 当审批节点下添加意见分支,就不允许添加其他类型的节点了 -->
-      <img :src="plusIcon" v-if="!read && (nodeType != 1 || (nodeType == 1 && node.showAdd))" />
+      <img :src="plusIcon" v-if="!readable && (nodeType != 1 || (nodeType == 1 && node.showAdd))" />
     </a-popover>
   </div>
 </template>
@@ -65,7 +65,7 @@
         type: String,
         default: '',
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

@@ -1,7 +1,7 @@
 <template>
   <div class="flow-row">
     <div class="flow-box">
-      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!read && open('flowCopyerSetting', node)">
+      <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowCopyerSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
           <div
             class="node-name"
@@ -27,10 +27,10 @@
           </div>
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
-          <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div>
+          <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(node)" /></div>
         </div>
       </div>
-      <FlowAddNode :node.sync="node" :nodeType="2" :read="read" />
+      <FlowAddNode :node.sync="node" :nodeType="2" :readable="readable" />
     </div>
     <FlowCopyerSetting ref="flowCopyerSetting" @close="isActive = false" />
   </div>
@@ -51,7 +51,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

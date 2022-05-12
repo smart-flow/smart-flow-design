@@ -1,7 +1,7 @@
 <template>
   <div class="flow-row">
     <div class="flow-branch">
-      <div class="branch-node" @click="!read && addBranch(node)">
+      <div class="branch-node" @click="!readable && addBranch(node)">
         <img :src="branchPlusIcon" />
       </div>
       <div class="meet-node"></div>
@@ -10,7 +10,7 @@
         <div class="clear-right-border" v-if="node.conditionNodes.length - 1 == index"></div>
         <div class="flow-row">
           <div class="flow-box">
-            <div class="flow-item flow-node-branch" @click="!read && open('flowBranchSetting', conditionNode)">
+            <div class="flow-item flow-node-branch" @click="!readable && open('flowBranchSetting', conditionNode)">
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
                   <EditName v-model="conditionNode.nodeName" />
@@ -26,13 +26,13 @@
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
-                <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(conditionNode)" /></div>
+                <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && delNode(conditionNode)" /></div>
               </div>
             </div>
-            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :read="read" />
+            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :readable="readable" />
           </div>
         </div>
-        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :read="read" />
+        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :readable="readable" />
       </div>
     </div>
     <div class="after-branch-btn">
@@ -58,7 +58,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

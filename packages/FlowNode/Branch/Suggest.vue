@@ -16,17 +16,17 @@
                     <a-icon v-if="node.conditionNodes.length - 1 == index" type="close-circle" theme="filled" style="color: red;" />
                   </span>
                 </div>
-                <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && del(conditionNode)" /></div>
+                <div class="close-icon"><a-icon type="close-circle" @click.stop="!readable && del(conditionNode)" /></div>
               </div>
             </div>
-            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :read="read" />
+            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.uid" :readable="readable" />
           </div>
         </div>
-        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :read="read" />
+        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :readable="readable" />
       </div>
     </div>
     <div class="after-branch-btn">
-      <FlowAddNode :node.sync="node" :nodeType="4" :read="read" />
+      <FlowAddNode :node.sync="node" :nodeType="4" :readable="readable" />
     </div>
     <FlowBranchSetting ref="flowBranchSetting" @close="isActive = false" />
   </div>
@@ -48,7 +48,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },

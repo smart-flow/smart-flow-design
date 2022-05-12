@@ -1,17 +1,17 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="!read" @click="publish" @change="change" />
-    <div class="designer-content-box">
+    <FlowNav v-if="navable && !readable" @click="publish" @change="change" />
+    <div class="designer-content-box" :style="{ height: readable ? '100vh' : 'calc(100vh - 50px)' }">
       <div class="flow-design-wrap">
         <div id="flow-design" class="flow-design-container" :style="zoomStyle">
           <div id="flow-design-content" class="flow-design-content">
-            <FlowStartNode :node="nodeData"/>
-            <FlowNode :node="nodeData" :read="read" />
-            <FlowEndNode :node="nodeData" :read="read" />
+            <FlowStartNode :node="nodeData" />
+            <FlowNode :node="nodeData" :readable="readable" />
+            <FlowEndNode :node="nodeData" :readable="readable" />
           </div>
         </div>
-        <FlowHelper v-if="!read" />
-        <FlowTips v-if="read" />
+        <FlowHelper v-if="!readable" />
+        <FlowTips v-if="readable" />
         <FlowZoom v-model="zoomValue" />
         <FlowMap v-if="!isMobile" />
       </div>
@@ -40,7 +40,11 @@
           return getStartNode();
         },
       },
-      read: {
+      navable: {
+        type: Boolean,
+        default: true,
+      },
+      readable: {
         type: Boolean,
         default: false,
       },

@@ -7,7 +7,7 @@
           <div class="close-icon"><a-icon type="close-circle" /></div>
         </div>
       </div>
-      <FlowAddNode :node.sync="node" :nodeType="7" :read="read" />
+      <FlowAddNode :node.sync="node" :nodeType="7" :readable="readable" />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@
           return {};
         },
       },
-      read: {
+      readable: {
         type: Boolean,
         default: false,
       },
