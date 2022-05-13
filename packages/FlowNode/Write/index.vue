@@ -21,7 +21,7 @@
           <DeleteConfirm :node="node" />
         </div>
       </div>
-      <FlowAddNode :node.sync="node" :nodeType="6" />
+      <FlowAddNode :node.sync="node" :nodeType="6" :readable="readable" />
     </div>
     <FlowWriteSetting ref="flowWriteSetting" @close="isActive = false" />
   </div>

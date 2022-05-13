@@ -15,8 +15,11 @@ export function getStartNode() {
     uid: getId(),
     nodeName: '发起人',
     type: 0,
+    // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
     status: -1,
+    // 是否有错误
     error: false,
+    // 子节点
     childNode: null,
     // 显示添加按钮
     showAdd: true,
@@ -32,8 +35,16 @@ export function addCondition(node, len) {
     uid: uuid.v4(),
     nodeName: (node.type == 4 ? '分支' : '并行') + len,
     type: node.type == 4 ? 3 : 10,
+    // 显示添加按钮
+    showAdd: true,
+    // 可删除提示
+    deletable: false,
+    // 显示优先级
+    showPriorityLevel: node.type == 4 ? true : false,
     // 优先级
     priorityLevel: len.toString(),
+    // 分支类型
+    branchType: node.type == 4 ? '1' : '2',
     // 子节点
     childNode: null,
     // 条件组

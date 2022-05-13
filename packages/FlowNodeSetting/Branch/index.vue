@@ -188,11 +188,13 @@
         this.visible = true;
         this.node = node;
         // 等级
-        this.levelOptions = [];
-        routeNode.conditionNodes.forEach((item, index) => {
-          let priorityLevel = index + 1;
-          this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
-        });
+        if (node.showPriorityLevel) {
+          this.levelOptions = [];
+          routeNode.conditionNodes.forEach((item, index) => {
+            let priorityLevel = index + 1;
+            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
+          });
+        }
       },
       onClose() {
         this.visible = false;

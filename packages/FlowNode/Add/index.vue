@@ -300,8 +300,11 @@
               type: 3,
               // 优先级
               priorityLevel: 1,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
+              // 是否有错误
               error: false,
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
@@ -321,8 +324,11 @@
               type: 3,
               // 优先级
               priorityLevel: 2,
-              error: false,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
+              // 是否有错误
+              error: false,
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
