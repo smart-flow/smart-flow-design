@@ -235,9 +235,7 @@
         </div>
       </div>
     </a-card>
-    <a-button v-if="show" type="link" icon="plus" block @click="addApproval">
-      添加审批人
-    </a-button>
+    <a-button v-if="show" type="link" icon="plus" block @click="addApproval">添加{{ title }}</a-button>
   </div>
 </template>
 <script>
