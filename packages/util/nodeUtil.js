@@ -30,7 +30,7 @@ export function addCondition(node, len) {
   return {
     pid: node.uid,
     uid: uuid.v4(),
-    nodeName: (node.type == 4 ? '条件' : '并行') + len,
+    nodeName: (node.type == 4 ? '分支' : '并行') + len,
     type: node.type == 4 ? 3 : 10,
     // 优先级
     priorityLevel: len.toString(),

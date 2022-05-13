@@ -113,6 +113,7 @@
           uid: this.uuid(),
           nodeName: '审核人',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
           // 审批类型
           approvalMethod: 1,
@@ -173,7 +174,10 @@
           uid: this.uuid(),
           nodeName: '抄送人',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
+          childNode: null,
           // 抄送人设置
           approverGroup: [
             {
@@ -188,7 +192,6 @@
               approverNames: [],
             },
           ],
-          childNode: null,
           // 显示添加按钮
           showAdd: true,
           // 可删除提示
@@ -207,7 +210,9 @@
           uid: this.uuid(),
           nodeName: '通知',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
           childNode: null,
           // 审批设置
           approverGroup: [
@@ -239,7 +244,9 @@
           uid: this.uuid(),
           nodeName: '事件',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
           childNode: null,
           // 显示添加按钮
           showAdd: true,
@@ -257,7 +264,9 @@
           uid: this.uuid(),
           nodeName: '填写',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
           childNode: null,
           // 显示添加按钮
           showAdd: true,
@@ -276,7 +285,9 @@
           uid: uid,
           nodeName: '路由',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
           childNode: null,
           // 显示添加按钮
           showAdd: true,
@@ -285,7 +296,7 @@
             {
               uid: this.uuid(),
               pid: uid,
-              nodeName: '分支节点1',
+              nodeName: '分支1',
               type: 3,
               // 优先级
               priorityLevel: 1,
@@ -298,13 +309,15 @@
               deletable: false,
               // 显示优先级
               showPriorityLevel: true,
+              // 分支类型
+              branchType: '1',
               // 条件组
               conditionGroup: [],
             },
             {
               uid: this.uuid(),
               pid: uid,
-              nodeName: '分支节点2',
+              nodeName: '分支2',
               type: 3,
               // 优先级
               priorityLevel: 2,
@@ -317,6 +330,8 @@
               deletable: false,
               // 显示优先级
               showPriorityLevel: true,
+              // 分支类型
+              branchType: '1',
               // 条件组
               conditionGroup: [],
             },
@@ -336,7 +351,9 @@
           uid: uid,
           nodeName: '意见',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
+          // 子节点
           childNode: null,
           // 显示添加按钮
           showAdd: true,
@@ -348,28 +365,36 @@
               pid: uid,
               nodeName: '同意',
               type: 8,
+              // 优先级
               priorityLevel: 1,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
-              error: false,
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
               // 可删除提示
               deletable: false,
+              // 是否有错误
+              error: false,
             },
             {
               uid: this.uuid(),
               pid: uid,
               nodeName: '不同意',
               type: 8,
+              // 优先级
               priorityLevel: 2,
-              error: false,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
               // 可删除提示
               deletable: false,
+              // 是否有错误
+              error: false,
             },
           ],
         };
@@ -383,11 +408,11 @@
           uid: uid,
           nodeName: '并行',
           type: type,
+          // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
           // 显示添加按钮
           showAdd: true,
-          // 是否有错误
-          error: false,
+          // 聚合节点
           childNode: {
             uid: this.uuid(),
             pid: uid,
@@ -408,26 +433,48 @@
               pid: uid,
               nodeName: '并行1',
               type: 10,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
+              // 是否有错误
               error: false,
+              // 显示内容
+              content: '任意(其他)',
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
               // 可删除提示
               deletable: false,
+              // 显示优先级
+              showPriorityLevel: false,
+              // 分支类型
+              branchType: '2',
+              // 条件组
+              conditionGroup: [],
             },
             {
               uid: this.uuid(),
               pid: uid,
               nodeName: '并行2',
               type: 10,
-              error: false,
+              // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
+              // 是否有错误
+              error: false,
+              // 显示内容
+              content: '任意(其他)',
+              // 子节点
               childNode: null,
               // 显示添加按钮
               showAdd: true,
               // 可删除提示
               deletable: false,
+              // 显示优先级
+              showPriorityLevel: false,
+              // 分支类型
+              branchType: '2',
+              // 条件组
+              conditionGroup: [],
             },
           ],
         };

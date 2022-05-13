@@ -54,13 +54,6 @@ export const flowMixin = {
       bodyStyle: {
         height: 'calc(100vh - 114px)',
         'overflow-y': 'auto',
-        /* '-webkit-box-shadow': '-2px 0 6px 0 rgb(75 82 94 / 20%)',
-        'box-shadow': '-2px 0 6px 0 rgb(75 82 94 / 20%)',
-        '-webkit-box-sizing': 'border-box',
-        'box-sizing': 'border-box',
-        '-webkit-transition': 'all .3s ease',
-        '-o-transition': 'all ease .3s',
-        transition: 'all .3s ease', */
       },
     };
   },

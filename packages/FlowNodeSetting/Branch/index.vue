@@ -17,15 +17,18 @@
     </template>
     <div class="flow-setting-module">
       <div class="flow-setting-content">
-        <div class="flow-setting-item">
+        <div v-if="node.showPriorityLevel" class="flow-setting-item">
           <p class="flow-setting-item-title">分支等级</p>
           <a-select v-model="node.priorityLevel" :size="size" style="width: 100%" placeholder="请选择等级" :options="levelOptions"></a-select>
         </div>
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">分支类型</p>
-          <a-radio checked>规则</a-radio>
+          <a-radio-group v-model="node.branchType">
+            <a-radio value="1">规则</a-radio>
+            <a-radio value="2">任意</a-radio>
+          </a-radio-group>
         </div>
-        <div class="flow-setting-item">
+        <div v-if="node.branchType == 1" class="flow-setting-item">
           <p class="flow-setting-item-title">分支条件</p>
           <div class="flow-setting-condition-box">
             <div v-for="(group, i) in node.conditionGroup" :key="i">
@@ -93,7 +96,7 @@
         </div>
       </div>
     </div>
-    {{ node.conditionGroup }}
+    {{ node }}
     <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
@@ -265,22 +268,26 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.conditionGroup.forEach((group, j) => {
-          if (j != 0) {
-            content += ' 或 ';
-          }
-          if (group.conditions.length > 0) {
-            group.conditions.forEach((condition, i) => {
-              const conditionValueName = condition.conditionValueName[0];
-              if (conditionValueName) {
-                if (i != 0) {
-                  content += ' 且 ';
+        if (this.node.branchType == 1) {
+          this.node.conditionGroup.forEach((group, j) => {
+            if (j != 0) {
+              content += ' 或 ';
+            }
+            if (group.conditions.length > 0) {
+              group.conditions.forEach((condition, i) => {
+                const conditionValueName = condition.conditionValueName[0];
+                if (conditionValueName) {
+                  if (i != 0) {
+                    content += ' 且 ';
+                  }
+                  content += '[' + condition.columnValue + ' ' + condition.optTypeName + ' ' + conditionValueName + ']';
                 }
-                content += '[' + condition.columnValue + ' ' + condition.optTypeName + ' ' + conditionValueName + ']';
-              }
-            });
-          }
-        });
+              });
+            }
+          });
+        } else {
+          content += '任意(其他)';
+        }
         this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
         this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: true });
         if (content) {

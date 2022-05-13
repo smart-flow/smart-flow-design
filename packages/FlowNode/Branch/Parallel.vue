@@ -17,12 +17,17 @@
                   <img :src="childflowIcon2" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
-                  <div v-if="!conditionNode.error" class="branch-filter-view">
-                    <span>已有配置条件</span>
-                  </div>
-                  <div class="branch-filter-hint">
+                  <span v-if="conditionNode.content" class="branch-filter-view">
+                    <a-tooltip placement="top">
+                      <template slot="title">
+                        <span>{{ conditionNode.content }}</span>
+                      </template>
+                      {{ conditionNode.content }}
+                    </a-tooltip>
+                  </span>
+                  <span v-else class="branch-filter-hint">
                     <span>配置筛选条件</span>
-                  </div>
+                  </span>
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
