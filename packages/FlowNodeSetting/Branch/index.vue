@@ -192,7 +192,7 @@
           this.levelOptions = [];
           routeNode.conditionNodes.forEach((item, index) => {
             let priorityLevel = index + 1;
-            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
+            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel.toString() });
           });
         }
       },

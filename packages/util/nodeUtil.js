@@ -45,6 +45,10 @@ export function addCondition(node, len) {
     priorityLevel: len.toString(),
     // 分支类型
     branchType: node.type == 4 ? '1' : '2',
+    // 是否有错误
+    error: false,
+    // 显示内容
+    content: node.type == 4 ? null : '任意(其他)',
     // 子节点
     childNode: null,
     // 条件组
