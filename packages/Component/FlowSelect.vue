@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model="currentValue" :size="size" allowClear class="w-fill" @change="onChange">
+  <a-select v-model="currentValue" :size="size" :mode="mode" allowClear class="w-fill" @change="onChange">
     <a-select-option :value="data[valueName]" v-for="(data, i) in datas" :key="i">
       {{ data[labelName] }}
     </a-select-option>
@@ -29,6 +29,11 @@
         required: false,
         default: 'large',
       },
+      mode: {
+        type: String,
+        required: false,
+        default: 'default',
+      },
       value: {
         type: Array,
         required: false,
@@ -37,7 +42,7 @@
     },
     data() {
       return {
-        currentValue: null,
+        currentValue: this.mode == 'multiple' ? [] : null,
       };
     },
     watch: {
@@ -50,17 +55,19 @@
     },
     methods: {
       initData(value) {
-        if (value && value.length > 0) {
+        if (value && value.length > 0 && this.mode == 'default') {
           this.currentValue = value[0];
+        } else if (value && value.length > 0 && this.mode == 'multiple') {
+          this.currentValue = value;
         } else {
-          this.currentValue = null;
+          this.currentValue = this.mode == 'multiple' ? [] : null;
         }
       },
       onChange(value) {
-        this.$emit('input', [value]);
+        this.$emit('input', this.mode == 'multiple' ? value : [value]);
         this.$emit(
           'update:name',
-          this.datas.filter((data) => data[this.valueName] == value).map((data) => data[this.labelName]),
+          this.datas.filter((data) => (this.mode == 'multiple' ? value.includes(data[this.valueName]) : data[this.valueName] == value)).map((data) => data[this.labelName]),
         );
         this.$emit('change', value);
       },

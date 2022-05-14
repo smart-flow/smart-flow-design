@@ -8,16 +8,26 @@
             <a-avatar shape="square" size="large" icon="red-envelope" />
           </a-form-item>
           <a-form-item label="名称">
-            <a-input placeholder="请输入名称" :size="size" />
+            <a-input v-model="flowName" placeholder="请输入名称" :size="size" />
           </a-form-item>
           <a-form-item label="分组">
-            <FlowSimpleSelect :datas="flowGroups" labelName="label" placeholder="请选择分组" />
+            <FlowSimpleSelect v-model="flowGroup" :datas="flowGroups" labelName="label" placeholder="请选择分组" />
           </a-form-item>
-          <a-form-item label="全局表单">
-            <FlowSimpleSelect :datas="forms" labelName="label" placeholder="请选择表单" />
+          <a-form-item label="绑定表单">
+            <FlowSelect v-model="bindForm" :datas="forms" mode="multiple" labelName="label" placeholder="请选择表单" />
+          </a-form-item>
+          <a-form-item v-if="bindForm.length > 1" label="多表单显示模式">
+            <a-radio-group :size="size" class="w-fill">
+              <a-radio value="1">
+                <span>标签栏</span>
+              </a-radio>
+              <a-radio value="2">
+                <span>步进式</span>
+              </a-radio>
+            </a-radio-group>
           </a-form-item>
           <a-form-item label="谁可以管理这个审批">
-            <UserSelector type="button" />
+            <!-- <UserSelector type="button" /> -->
           </a-form-item>
           <a-form-item label="说明">
             <a-textarea :size="size" :rows="4" placeholder="说明" />
@@ -30,11 +40,12 @@
 <script>
   import { flowMixin } from '../mixins/flowMixin';
   import FlowNav from '../Common/FlowNav.vue';
+  import FlowSelect from '../Component/FlowSelect.vue';
   import FlowSimpleSelect from '../Component/FlowSimpleSelect.vue';
   export default {
     name: 'BasicInfo',
     mixins: [flowMixin],
-    components: { FlowNav, FlowSimpleSelect },
+    components: { FlowNav, FlowSelect, FlowSimpleSelect },
     props: {
       navable: {
         type: Boolean,
@@ -49,6 +60,9 @@
       return {
         buttonName: '保存',
         formLayout: 'vertical',
+        flowName: '',
+        flowGroup: '',
+        bindForm: [],
         flowGroups: [
           { label: '人事', value: '人事' },
           { label: '考勤', value: '考勤' },
@@ -58,12 +72,12 @@
           { label: '资产', value: '资产' },
         ],
         forms: [
-          { label: '请假', value: '人事' },
-          { label: '加班', value: '考勤' },
-          { label: '调休', value: '调休' },
-          { label: '补卡', value: '补卡' },
-          { label: '出差', value: '出差' },
-          { label: '销假', value: '销假' },
+          { label: '请假表单', value: '人事表单' },
+          { label: '加班表单', value: '考勤表单' },
+          { label: '调休表单', value: '调休表单' },
+          { label: '补卡表单', value: '补卡表单' },
+          { label: '出差表单', value: '出差表单' },
+          { label: '销假表单', value: '销假表单' },
         ],
       };
     },
