@@ -4,10 +4,11 @@
  *
  * 当需要更多组件依赖时，在该文件加入即可
  */
-import Vue from "vue";
+import Vue from 'vue';
 import {
   ConfigProvider,
   Layout,
+  Avatar,
   Input,
   Rate,
   Slider,
@@ -45,7 +46,7 @@ import {
   Dropdown,
   Menu,
   Affix,
-} from "ant-design-vue";
+} from 'ant-design-vue';
 
 export default {
   input: Input,
@@ -66,6 +67,7 @@ Vue.use(Empty);
 Vue.use(FormModel);
 Vue.use(Collapse);
 Vue.use(Layout);
+Vue.use(Avatar);
 Vue.use(Input);
 Vue.use(Rate);
 Vue.use(Slider);
@@ -87,8 +89,7 @@ Vue.use(Steps);
 Vue.use(Alert);
 Vue.use(Tag);
 Vue.use(Popover);
-Vue.use(Drawer),
-Vue.use(Divider);
+Vue.use(Drawer), Vue.use(Divider);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
 Vue.use(Upload);
@@ -96,7 +97,7 @@ Vue.use(Spin);
 Vue.use(Dropdown);
 Vue.use(Menu);
 Vue.use(Affix);
-Vue.use(Cascader)
+Vue.use(Cascader);
 
 Vue.prototype.$confirm = Modal.confirm;
 Vue.prototype.$message = message;

@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model="currentValue" :size="size" allowClear class="w-fill" @change="onChange">
+  <a-select v-model="currentValue" :size="size" allowClear class="w-fill" :placeholder="placeholder" @change="onChange">
     <a-select-option :value="data[valueName]" v-for="(data, i) in datas" :key="i">
       {{ data[labelName] }}
     </a-select-option>
@@ -28,6 +28,11 @@
         type: String,
         required: false,
         default: 'large',
+      },
+      placeholder: {
+        type: String,
+        required: false,
+        default: '请选择',
       },
       value: {
         type: String,

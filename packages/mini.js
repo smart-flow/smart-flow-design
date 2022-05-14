@@ -15,11 +15,12 @@ import '../styles/smart-flow-design.less';
 // import '../static/icons/iconfont';
 
 // 导入单个组件
+import BasicInfo from './BasicInfo/index';
 import FlowDesign from './FlowDesign/index';
 import FlowSetting from './FlowSetting/index';
 import flowStore from './store/index';
 
-const components = [FlowDesign, FlowSetting];
+const components = [BasicInfo, FlowDesign, FlowSetting];
 
 const install = function(Vue) {
   // use ant组件
@@ -36,10 +37,11 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 // 这里可以用es6的解构语法导入组件
-export { install, FlowDesign, FlowSetting, flowStore };
+export { install, BasicInfo, FlowDesign, FlowSetting, flowStore };
 // 这里默认导入全部组件
 export default {
   install,
+  BasicInfo,
   FlowDesign,
   FlowSetting,
   flowStore,

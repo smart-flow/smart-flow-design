@@ -78,7 +78,7 @@
 
         .designer-nav-center-wrap-item {
           display: inline-block;
-          margin-right: 40px;
+          margin-right: 35px;
           font-size: 16px;
           font-weight: 700;
           color: #575757;
@@ -111,6 +111,23 @@
     }
   }
 
+  .designer-base-info {
+    margin: 0 auto;
+    padding: 24px 0;
+    height: 100%;
+    text-align: center;
+    overflow-y: auto;
+    background-color: #f2f3f5;
+
+    .base-info-panel {
+      display: inline-block;
+      width: 1128px;
+      padding: 24px 288px;
+      background-color: #fff;
+      text-align: left;
+    }
+  }
+
   .designer-content-box {
     width: 100%;
     height: calc(100vh - 50px);
@@ -135,22 +152,6 @@
         height: 100%;
         overflow: scroll;
 
-        /* &::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
-          background-color: rgba(0, 0, 0, 0);
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: hsla(0, 0%, 79.2%, 0.5);
-          cursor: pointer;
-          border-radius: 10px;
-        }
-        &::-webkit-scrollbar-thumb {
-          border-radius: 0 !important;
-        }
-        &::-webkit-scrollbar-track {
-          background-color: rgba(0, 0, 0, 0);
-        } */
         .flow-design-content {
           margin: 30px auto;
 
@@ -1208,6 +1209,28 @@
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
         justify-content: space-between;
+      }
+
+      // 提示
+      .hint-info {
+        line-height: 22px;
+        color: #646a73;
+
+        p {
+          position: relative;
+          padding-left: 10px;
+
+          &::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            top: 9px;
+            left: 0;
+            border-radius: 2px;
+            background: @primary-color;
+          }
+        }
       }
     }
 

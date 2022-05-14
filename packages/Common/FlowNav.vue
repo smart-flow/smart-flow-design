@@ -2,21 +2,16 @@
   <div class="designer-nav-box">
     <div class="designer-nav-return">
       <img :src="backIcon" />
-      <div class="select-version-box">
+      <div v-if="!isMobile" class="select-version-box">
         <span class="title">test</span>
         <span class="version">&nbsp;V1</span>
         <i class="el-icon-caret-bottom selec-down"></i>
       </div>
     </div>
     <div class="designer-nav-center">
-      <div class="designer-nav-center-wrap">
-        <div class="designer-nav-center-wrap-item" @click="onChange(1)">
-          <span :class="{ 'act-item': currentNav == 1 }">流程</span>
-        </div>
-      </div>
-      <div class="designer-nav-center-wrap">
-        <div class="designer-nav-center-wrap-item" @click="onChange(2)">
-          <span :class="{ 'act-item': currentNav == 2 }">配置</span>
+      <div v-for="(item, i) in navItems" :key="i" class="designer-nav-center-wrap">
+        <div class="designer-nav-center-wrap-item" @click="onChange(item)">
+          <span :class="{ 'act-item': currentNav == item.value }">{{ isMobile ? item.shortName : item.name }}</span>
         </div>
       </div>
     </div>
@@ -44,11 +39,39 @@
       },
     },
     data() {
-      return {};
+      return {
+        navItems: [
+          {
+            name: '基础信息',
+            shortName: '基础',
+            value: 1,
+            path: '/basicInfo',
+          },
+          /* {
+            name: '表单设计',
+            shortName: '表单',
+            value: 2,
+            path: '/formDesign',
+          }, */
+          {
+            name: '流程设计',
+            shortName: '流程',
+            value: 3,
+            path: '/flowDesign',
+          },
+          {
+            name: '更多配置',
+            shortName: '配置',
+            value: 4,
+            path: '/flowSetting',
+          },
+        ],
+      };
     },
     methods: {
-      onChange(type) {
-        this.$emit('change', type);
+      onChange(item) {
+        this.$router.push({ path: item.path });
+        this.$emit('change', item);
       },
       onClick() {
         this.$emit('click');

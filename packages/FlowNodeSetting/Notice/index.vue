@@ -40,7 +40,7 @@
             </a-button>
           </div>
           <a-select :size="size" style="width: 100%;margin-bottom: 20px;" placeholder="请选择模板"></a-select>
-          <a-textarea v-model="noticeContext" :size="size" :rows="4" placeholder="通知内容" higth />
+          <a-textarea v-model="noticeContext" :size="size" :rows="4" placeholder="通知内容" />
         </div>
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">发送通知人</p>

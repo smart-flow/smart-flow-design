@@ -122,6 +122,13 @@
                 </a-radio>
               </a-radio-group>
             </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">提示：</p>
+              <div class="hint-info">
+                <p>若审批人离职，会自动转交给审批人的上级代为处理</p>
+                <p>抄送的人数最多支持100人以内</p>
+              </div>
+            </div>
           </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="表单权限">

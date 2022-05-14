@@ -41,6 +41,12 @@
               </div>
               <span></span>
             </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">提示：</p>
+              <div class="hint-info">
+                <p>抄送的人数最多支持100人以内</p>
+              </div>
+            </div>
           </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="表单权限">

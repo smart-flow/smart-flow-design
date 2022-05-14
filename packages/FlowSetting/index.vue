@@ -1,6 +1,6 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="navable && !readable" :currentNav="2" :buttonName="buttonName" @change="change" />
+    <FlowNav v-if="navable && !readable" :currentNav="4" :buttonName="buttonName" @change="change" />
     <MenuShot :menus="menus" @change="changeMenu" />
     <div class="designer-content-box">
       <div class="flowSetting-box">
@@ -43,10 +43,6 @@
         type: Boolean,
         default: false,
       },
-      designPath: {
-        type: String,
-        default: '/design',
-      },
     },
     data() {
       return {
@@ -84,19 +80,15 @@
     },
     computed: {
       isActivate() {
-        return function(meun) {
-          return meun.activate;
+        return function(menu) {
+          return menu.activate;
         };
       },
     },
     mounted() {},
     methods: {
       toReturn() {},
-      change(type) {
-        if (type == 1) {
-          this.$router.push({ path: this.designPath });
-        }
-      },
+      change(type) {},
       changeMenu(menu) {
         this.currentContext = menu.code;
         this.menus.forEach((m) => {
@@ -113,4 +105,3 @@
     },
   };
 </script>
-<style lang="less"></style>

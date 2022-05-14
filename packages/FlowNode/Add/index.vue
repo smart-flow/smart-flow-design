@@ -136,7 +136,7 @@
           // 审批人与发起人为同一人时
           sameMode: 2,
           // 审批人为空时
-          noHander: null,
+          noHander: 4,
           // 表单权限
           privilege: [
             {

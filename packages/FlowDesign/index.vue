@@ -1,6 +1,6 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="navable && !readable" @click="publish" @change="change" />
+    <FlowNav v-if="navable && !readable" :currentNav="3" @click="publish" @change="change" />
     <div class="designer-content-box" :style="{ height: readable ? '100vh' : 'calc(100vh - 50px)' }">
       <div class="flow-design-wrap">
         <div id="flow-design" class="flow-design-container" :style="zoomStyle">
@@ -48,10 +48,6 @@
         type: Boolean,
         default: false,
       },
-      settingPath: {
-        type: String,
-        default: '/setting',
-      },
     },
     data() {
       return {
@@ -75,11 +71,7 @@
     },
     methods: {
       toReturn() {},
-      change(type) {
-        if (type == 2) {
-          this.$router.push({ path: this.settingPath });
-        }
-      },
+      change(type) {},
       handleSave() {},
       getData() {
         return this.nodeData;
