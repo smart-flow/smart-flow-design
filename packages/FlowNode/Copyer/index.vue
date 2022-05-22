@@ -3,10 +3,7 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowCopyerSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div
-            class="node-name"
-            :class="{ 'node-cc': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
-          >
+          <div class="node-name" :class="nodeNameClass(node, 'node-cc')">
             <EditName v-model="node.nodeName" />
             <div class="search-input el-input" style="display: none;">
               <input type="text" autocomplete="off" id="1460664942574174208" class="el-input__inner" />

@@ -2,10 +2,7 @@
   <div class="flow-row">
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowEventSetting', node)">
-        <div
-          class="node-name"
-          :class="{ 'node-temmi': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
-        >
+        <div class="node-name" :class="nodeNameClass(node, 'node-temmi')">
           事件
           <div v-if="!readable" class="close-icon"><a-icon type="close-circle" @click.stop="delNode(node)" /></div>
         </div>

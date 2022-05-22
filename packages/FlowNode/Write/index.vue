@@ -3,10 +3,7 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowWriteSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div
-            class="node-name"
-            :class="{ 'node-fill': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
-          >
+          <div class="node-name" :class="nodeNameClass(node, 'node-fill')">
             <EditName v-model="node.nodeName" />
             <img :src="writeIcon" style="margin-left: 10px;" />
           </div>

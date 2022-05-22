@@ -3,10 +3,7 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowApproverSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div
-            class="node-name"
-            :class="{ 'node-sp': node.status == -1, 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 }"
-          >
+          <div class="node-name" :class="nodeNameClass(node, 'node-sp')">
             <EditName v-model="node.nodeName" />
             <img :src="approverIcon" style="margin-left: 10px;" />
           </div>

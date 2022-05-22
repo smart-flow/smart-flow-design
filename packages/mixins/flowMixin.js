@@ -66,6 +66,18 @@ export const flowMixin = {
       return scale.isMobile();
     },
     /**
+     * 节点头部样式
+     * @returns
+     */
+    nodeNameClass() {
+      return (node, defaultStyle) => {
+        if (node.status == -1) {
+          return defaultStyle;
+        }
+        return { 'node-status-not': node.status == 0, 'node-status-current': node.status == 1, 'node-status-complete': node.status == 2 };
+      };
+    },
+    /**
      * 侧边宽度
      * @returns
      */
