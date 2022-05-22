@@ -1,7 +1,7 @@
 <template>
   <!-- 审批人 -->
-  <div>
-    <a-card v-for="(group, k) in groups" :key="k" :headStyle="headStyle" class="w-fill margin-bottom-20">
+  <a-space direction="vertical">
+    <a-card v-for="(group, k) in groups" :key="k" :headStyle="headStyle" class="w-fill">
       <template slot="title">
         <span class="flow-setting-approval-title">
           <span>{{ title }}</span>
@@ -236,7 +236,7 @@
       </div>
     </a-card>
     <a-button v-if="show" type="link" icon="plus" block @click="addApproval">添加{{ title }}</a-button>
-  </div>
+  </a-space>
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
