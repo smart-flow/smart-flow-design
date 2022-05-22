@@ -17,12 +17,30 @@
     </template>
     <div class="flow-setting-module">
       <a-tabs>
-        <a-tab-pane key="1" tab="审批设置">
+        <a-tab-pane key="1" tab="抄送设置">
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">抄送人</p>
               <FlowNodeApproval :groups="node.approverGroup" :node="node" title="抄送人" />
             </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">提示：</p>
+              <div class="hint-info">
+                <p>抄送的人数最多支持100人以内</p>
+              </div>
+            </div>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="表单权限">
+          <div class="flow-setting-content">
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">表单权限</p>
+              <AuthForm />
+            </div>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="高级设置">
+          <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">配置</p>
               <div class="flow-setting-option">
@@ -40,20 +58,6 @@
                 </div>
               </div>
               <span></span>
-            </div>
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">提示：</p>
-              <div class="hint-info">
-                <p>抄送的人数最多支持100人以内</p>
-              </div>
-            </div>
-          </div>
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="表单权限">
-          <div class="flow-setting-content">
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm />
             </div>
           </div>
         </a-tab-pane>

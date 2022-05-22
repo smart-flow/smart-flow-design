@@ -47,16 +47,33 @@
           <FlowNodeApproval :groups="node.approverGroup" :node="node" title="通知人" />
         </div>
         <div v-if="noticeType.includes(2)" class="flow-setting-item">
-          <p class="flow-setting-item-title">手机号</p>
+          <p class="flow-setting-item-title">外部手机号</p>
           <a-button type="link" icon="plus" block>
             添加手机号
           </a-button>
         </div>
         <div v-if="noticeType.includes(3)" class="flow-setting-item">
-          <p class="flow-setting-item-title">邮箱</p>
+          <p class="flow-setting-item-title">外部邮箱账号</p>
           <a-button type="link" icon="plus" block>
             添加邮箱
           </a-button>
+        </div>
+        <div v-if="noticeType.includes(3)" class="flow-setting-item">
+          <a-checkbox-group v-model="emailExt">
+            <a-row :gutter="[12, 12]">
+              <a-col :span="12" v-for="(item, i) in emailItems" :key="i">
+                <a-checkbox :value="item.value">{{ item.name }}</a-checkbox>
+              </a-col>
+            </a-row>
+          </a-checkbox-group>
+        </div>
+        <div v-if="noticeType.includes(3) && emailExt.includes(1)" class="flow-setting-item">
+          <p class="flow-setting-item-title">抄送人</p>
+          <FlowNodeApproval :groups="node.approverGroup" :node="node" title="抄送人" />
+        </div>
+        <div v-if="noticeType.includes(3) && emailExt.includes(2)" class="flow-setting-item">
+          <p class="flow-setting-item-title">密送人</p>
+          <FlowNodeApproval :groups="node.approverGroup" :node="node" title="密送人" />
         </div>
       </div>
     </div>
@@ -82,6 +99,8 @@
         },
         noticeContext: '',
         noticeType: [],
+        // 邮件选择项
+        emailExt: [],
         notices: [
           {
             name: '站内通信',
@@ -106,6 +125,16 @@
           {
             name: 'WeLink',
             value: 6,
+          },
+        ],
+        emailItems: [
+          {
+            name: '添加抄送',
+            value: 1,
+          },
+          {
+            name: '添加密送',
+            value: 2,
           },
         ],
       };
