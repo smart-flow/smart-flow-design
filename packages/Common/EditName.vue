@@ -1,8 +1,8 @@
 <template>
-  <span>
+  <div class="node-name-title">
     <span v-if="!isInput" @click.stop="clickEvent()">{{ value }}</span>
     <a-input v-if="isInput" type="text" @blur="blurEvent()" @focus="$event.currentTarget.select()" v-focus v-model="value" :style="{ width: width }" />
-  </span>
+  </div>
 </template>
 <script>
   import { flowMixin } from '../mixins/flowMixin';

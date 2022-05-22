@@ -25,11 +25,12 @@
           <p class="flow-setting-item-title">分支类型</p>
           <a-radio-group v-model="node.branchType">
             <a-radio value="1">规则</a-radio>
-            <a-radio value="2">任意</a-radio>
+            <a-radio value="2">公式</a-radio>
+            <a-radio value="3">其他</a-radio>
           </a-radio-group>
         </div>
         <div v-if="node.branchType == 1" class="flow-setting-item">
-          <p class="flow-setting-item-title">分支条件</p>
+          <p class="flow-setting-item-title">条件规则</p>
           <div class="flow-setting-condition-box">
             <div v-for="(group, i) in node.conditionGroup" :key="i">
               <div class="flow-setting-condition-group">

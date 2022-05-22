@@ -44,7 +44,7 @@ export function addCondition(node, len) {
     // 优先级
     priorityLevel: len.toString(),
     // 分支类型
-    branchType: node.type == 4 ? '1' : '2',
+    branchType: node.type == 4 ? '1' : '3',
     // 是否有错误
     error: false,
     // 显示内容

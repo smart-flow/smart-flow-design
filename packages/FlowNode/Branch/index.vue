@@ -10,11 +10,12 @@
         <div class="clear-right-border" v-if="node.conditionNodes.length - 1 == index"></div>
         <div class="flow-row">
           <div class="flow-box">
-            <div class="flow-item flow-node-branch" @click="!readable && open('flowBranchSetting', conditionNode, node)">
+            <!-- 其他情况不支持配置 -->
+            <div class="flow-item flow-node-branch" @click="!readable && node.conditionNodes.length - 1 != index && open('flowBranchSetting', conditionNode, node)">
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
                   <EditName v-model="conditionNode.nodeName" @edit="(showPriorityLevel) => (conditionNode.showPriorityLevel = showPriorityLevel)" />
-                  <span class="node-name-level" v-if="conditionNode.showPriorityLevel">优先{{ conditionNode.priorityLevel }}</span>
+                  <div class="node-name-level" v-if="conditionNode.showPriorityLevel">优先{{ conditionNode.priorityLevel }}</div>
                   <img :src="branchIcon" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
@@ -32,7 +33,10 @@
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
-                <div v-if="!readable && !conditionNode.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="conditionNode.deletable = true" /></div>
+                <!-- 删除按钮,其他情况不支持删除 -->
+                <div v-if="!readable && !conditionNode.deletable && node.conditionNodes.length - 1 != index" class="close-icon">
+                  <a-icon type="close-circle" @click.stop="conditionNode.deletable = true" />
+                </div>
                 <!-- 删除提示 -->
                 <DeleteConfirm :node="conditionNode" />
               </div>

@@ -320,14 +320,12 @@
             {
               uid: this.uuid(),
               pid: uid,
-              nodeName: '分支2',
+              nodeName: '其他情况',
               type: 3,
               // 优先级
               priorityLevel: '2',
               // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
               status: -1,
-              // 是否有错误
-              error: false,
               // 子节点
               childNode: null,
               // 显示添加按钮
@@ -337,15 +335,15 @@
               // 显示优先级
               showPriorityLevel: true,
               // 分支类型
-              branchType: '1',
+              branchType: '3',
               // 条件组
               conditionGroup: [],
+              // 是否有错误
+              error: false,
+              // 显示内容
+              content: '其他情况进入此流程',
             },
           ],
-          // 是否有错误
-          error: false,
-          // 显示内容
-          content: null,
         };
       },
       /**
@@ -454,7 +452,7 @@
               // 显示优先级
               showPriorityLevel: false,
               // 分支类型
-              branchType: '2',
+              branchType: '3',
               // 条件组
               conditionGroup: [],
             },
@@ -478,7 +476,7 @@
               // 显示优先级
               showPriorityLevel: false,
               // 分支类型
-              branchType: '2',
+              branchType: '3',
               // 条件组
               conditionGroup: [],
             },

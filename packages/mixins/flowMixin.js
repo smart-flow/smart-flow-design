@@ -159,7 +159,7 @@ export const flowMixin = {
       }); */
     },
     /**
-     * 删除分支节点
+     * 添加分支节点
      * @param {*} node
      */
     addBranch(node) {

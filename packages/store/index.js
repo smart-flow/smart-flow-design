@@ -70,8 +70,11 @@ const mutations = {
    * 添加分支
    */
   [ADD_BRANCH](state, { node }) {
-    let len = node.conditionNodes.length + 1;
-    node.conditionNodes.push(addCondition(node, len));
+    let len = node.conditionNodes.length;
+    let conditionNode = node.conditionNodes[len - 1];
+    conditionNode.priorityLevel = len + 1 + '';
+    node.conditionNodes.splice(len - 1, 0, addCondition(node, len));
+    // node.conditionNodes.push(addCondition(node, len));
     addBranch(state.node, node);
     // 更新地图
     updateMap(state);
