@@ -71,14 +71,20 @@
         <a-tab-pane key="2" tab="内容设置">
           <div class="flow-setting-content">
             <div class="flow-setting-item">
-              <p class="flow-setting-item-title">通知内容</p>
+              <p class="flow-setting-item-title">选择已审核模板</p>
               <div class="tpl-flex-box">
-                <div>选择已审核模板</div>
                 <a-button type="link" icon="plus-circle">
                   创建新模板
                 </a-button>
               </div>
               <a-select :size="size" style="width: 100%;margin-bottom: 20px;" placeholder="请选择模板"></a-select>
+            </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">主题</p>
+              <a-input v-model="noticeTitle" :size="size" :rows="4" placeholder="主题" />
+            </div>
+            <div class="flow-setting-item">
+              <p class="flow-setting-item-title">通知内容</p>
               <a-textarea v-model="noticeContext" :size="size" :rows="4" placeholder="通知内容" />
             </div>
           </div>
