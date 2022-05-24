@@ -37,15 +37,7 @@
         <!-- 办理人设置 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">办理人设置</p>
-          <div class="hint-info">
-            <p>当流程中某个节点不需要审批，但需要对审批单进行业务办理时，可设置办理人节点，场景如财务打款、处理盖章等</p>
-            <a-popover placement="right">
-              <template slot="content">
-                <img class="flow-helper-drawer-item-popover-img" />
-              </template>
-              <p>与审批人的区别？</p>
-            </a-popover>
-          </div>
+          <a-alert message="当流程中某个节点不需要审批，但需要对审批单进行业务办理时，可设置办理人节点，场景如财务打款、处理盖章等" type="info" />
         </div>
       </div>
 
