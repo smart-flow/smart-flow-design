@@ -8,15 +8,25 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      redirect: 'design',
+      redirect: 'flowDesign',
     },
     {
-      path: '/design',
-      name: 'design',
-      component: () => import('../views/design.vue'),
+      path: '/basicInfo',
+      name: 'basic',
+      component: () => import('../views/basic.vue'),
     },
     {
-      path: '/setting',
+      path: '/formDesign',
+      name: 'form',
+      component: () => import('../views/form.vue'),
+    },
+    {
+      path: '/flowDesign',
+      name: 'flow',
+      component: () => import('../views/flow.vue'),
+    },
+    {
+      path: '/flowSetting',
       name: 'setting',
       component: () => import('../views/setting.vue'),
     },
