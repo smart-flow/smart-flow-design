@@ -73,8 +73,13 @@ const mutations = {
     let len = node.conditionNodes.length;
     let conditionNode = node.conditionNodes[len - 1];
     conditionNode.priorityLevel = len + 1 + '';
-    node.conditionNodes.splice(len - 1, 0, addCondition(node, len));
-    // node.conditionNodes.push(addCondition(node, len));
+    if (conditionNode.type == 3) {
+      // 分支
+      node.conditionNodes.splice(len - 1, 0, addCondition(node, len));
+    } else {
+      // 并行
+      node.conditionNodes.push(addCondition(node, len + 1));
+    }
     addBranch(state.node, node);
     // 更新地图
     updateMap(state);
