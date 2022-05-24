@@ -1,10 +1,10 @@
 <template>
   <div class="flow-row-container">
-    <FlowApproverNode v-if="node && node.type == 1" :node="node" :readable="readable" />
+    <FlowApproverNode v-if="node && (node.type == 1 || node.type == 6)" :node="node" :readable="readable" />
     <FlowCopyerNode v-if="node && node.type == 2" :node="node" :readable="readable" />
     <BranchNode v-if="node && node.type == 4" :node="node" :readable="readable" />
     <EventNode v-if="node && node.type == 5" :node="node" :readable="readable" />
-    <WriteNode v-if="node && (node.type == 0 || node.type == 6)" :node="node" :readable="readable" />
+    <WriteNode v-if="node && node.type == 0" :node="node" :readable="readable" />
     <SuggestNode v-if="node && node.type == 7" :node="node" :readable="readable" />
     <ParallelNode v-if="node && node.type == 9" :node="node" :readable="readable" />
     <PolymerizeNode v-if="node && node.type == 11" :node="node" :readable="readable" />

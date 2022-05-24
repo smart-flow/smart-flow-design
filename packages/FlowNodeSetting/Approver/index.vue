@@ -17,7 +17,7 @@
       </span>
     </template>
     <div class="flow-setting-module">
-      <div class="flow-setting-content">
+      <div v-if="node.type == 1" class="flow-setting-content">
         <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
@@ -33,12 +33,27 @@
           </p>
         </div>
       </div>
+      <div v-if="node.type == 6" class="flow-setting-content">
+        <!-- 办理人设置 -->
+        <div class="flow-setting-item">
+          <p class="flow-setting-item-title">办理人设置</p>
+          <div class="hint-info">
+            <p>当流程中某个节点不需要审批，但需要对审批单进行业务办理时，可设置办理人节点，场景如财务打款、处理盖章等</p>
+            <a-popover placement="right">
+              <template slot="content">
+                <img class="flow-helper-drawer-item-popover-img" />
+              </template>
+              <p>与审批人的区别？</p>
+            </a-popover>
+          </div>
+        </div>
+      </div>
 
       <a-tabs v-if="node.approvalMethod == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
             <!-- 审批方式 -->
-            <div class="flow-setting-item">
+            <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
               <a-select v-model="node.approvalMode" :size="size" class="w-fill">
                 <a-select-option value="1">
@@ -59,9 +74,9 @@
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval :groups="node.approverGroups" :node="node" />
+            <FlowNodeApproval :groups="node.approverGroups" :node="node" :title="node.type == 1 ? '审批人' : '办理人'" />
             <!-- 审批人与发起人为同一人时 -->
-            <div class="flow-setting-item">
+            <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
@@ -87,12 +102,12 @@
             <!-- 审批人为空时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
-                <span>审批人为空时</span>
+                <span>{{ node.type == 1 ? '审批人' : '办理人' }}为空时</span>
                 <a-popover placement="topLeft" trigger="click">
                   <template slot="content">
                     <div class="approver-tip-content">
                       <div class="approver-tip-main-content">
-                        <p class="main-title">什么情况下会出现审批人为空？</p>
+                        <p class="main-title">什么情况下会出现{{ node.type == 1 ? '审批人' : '办理人' }}为空？</p>
                         <p class="content">设置了“上级”审批，但申请人在飞书管理后台 - 组织架构中没有上级</p>
                         <p class="content">设置了“部门负责人”审批，但申请人在飞书管理后台 - 组织架构中没有部门负责人</p>
                         <p class="content">设置了“角色”审批，但该角色在飞书管理后台 - 组织架构中没有任何成员</p>
@@ -125,6 +140,7 @@
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">提示：</p>
               <div class="hint-info">
+                <p v-if="node.type == 6">办理人不涉及审批人去重设置，不同节点相同的办理人仍需要执行。</p>
                 <p>若审批人离职，会自动转交给审批人的上级代为处理</p>
                 <p>抄送的人数最多支持100人以内</p>
               </div>
@@ -171,7 +187,6 @@
         visible: false,
         headerStyle: {
           background: 'linear-gradient(89.96deg,#fa6f32 .05%,#fb9337 79.83%)',
-          // 'background-color': '#ff8126',
           'border-radius': '0px 0px 0 0',
         },
         // 审批类型

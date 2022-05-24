@@ -3,13 +3,13 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowApproverSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div class="node-name" :class="nodeNameClass(node, 'node-sp')">
+          <div class="node-name" :class="nodeNameClass(node, node.type == 1 ? 'node-sp' : 'node-transact')">
             <EditName v-model="node.nodeName" />
             <img :src="approverIcon" style="margin-left: 10px;" />
           </div>
           <div class="node-main">
             <span v-if="node.content">
-              审批人:
+              {{ node.type == 1 ? '审批人' : '办理人' }}:
               <a-tooltip placement="top">
                 <template slot="title">
                   <span>{{ node.content }}</span>

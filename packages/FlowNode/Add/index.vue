@@ -23,6 +23,10 @@
             <img :src="ccIcon2" class="anticon" />
             <span>抄送节点</span>
           </a-menu-item>
+          <a-menu-item key="6" @click="addType(6)">
+            <img :src="writeIcon" class="anticon" />
+            <span>办理节点</span>
+          </a-menu-item>
           <a-menu-item key="20" @click="addType(20)">
             <img :src="noticeIcon2" class="anticon" />
             <span>通知节点</span>
@@ -30,10 +34,6 @@
           <a-menu-item key="5" @click="addType(5)">
             <img :src="webhookIcon2" class="anticon" />
             <span>事件节点</span>
-          </a-menu-item>
-          <a-menu-item key="6" @click="addType(6)">
-            <img :src="writeIcon" class="anticon" />
-            <span>填写节点</span>
           </a-menu-item>
         </a-menu>
       </template>
@@ -78,7 +78,7 @@
     methods: {
       addType(type) {
         var addNode = null;
-        if (type == 1) {
+        if (type == 1 || type == 6) {
           addNode = this.addApproverNode(type);
         } else if (type == 2) {
           addNode = this.addCcNode(type);
@@ -86,8 +86,6 @@
           addNode = this.addBranchNode(type);
         } else if (type == 5) {
           addNode = this.addEventNode(type);
-        } else if (type == 6) {
-          addNode = this.addWriteNode(type);
         } else if (type == 7) {
           addNode = this.addSuggestNode(type);
         } else if (type == 9) {
@@ -111,7 +109,7 @@
       addApproverNode(type) {
         return {
           id: this.uuid(),
-          nodeName: '审核人',
+          nodeName: type == 1 ? '审批人' : '办理人',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
@@ -248,12 +246,12 @@
         };
       },
       /**
-       * 添加填写节点
+       * 添加办理节点
        */
       addWriteNode(type) {
         return {
           id: this.uuid(),
-          nodeName: '填写',
+          nodeName: '办理',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
