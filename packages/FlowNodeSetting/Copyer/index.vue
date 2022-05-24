@@ -1,5 +1,6 @@
 <template>
   <a-drawer
+    v-if="node.approverGroup"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -35,7 +36,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm />
+              <AuthForm v-model="node.privilege" />
             </div>
           </div>
         </a-tab-pane>
@@ -52,12 +53,12 @@
                       <p class="setting-option-desc">允许发起人添加抄送人</p>
                     </div>
                   </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" />
+                  <!-- 抄送人没有配置，才能设置发起人填写 -->
+                  <div v-if="node.approverGroup.length == 0" class="flow-setting-option-item-switch">
+                    <a-switch v-model="node.customCc" checked-children="开" un-checked-children="关" />
                   </div>
                 </div>
               </div>
-              <span></span>
             </div>
           </div>
         </a-tab-pane>
@@ -244,6 +245,10 @@
             content += ',';
           }
         });
+        if (!content && this.node.customCc) {
+          //  是否设置发起人填写
+          content += '发起人填写';
+        }
         if (content) {
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });

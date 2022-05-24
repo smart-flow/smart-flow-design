@@ -135,7 +135,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm readable />
+              <AuthForm v-model="node.privilege" readable />
             </div>
           </div>
         </a-tab-pane>
