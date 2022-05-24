@@ -41,26 +41,7 @@
           </div>
         </a-tab-pane>
         <a-tab-pane key="3" tab="高级设置">
-          <div class="flow-setting-content">
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">配置</p>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">发起人填写</p>
-                      <p class="setting-option-desc">允许发起人添加抄送人</p>
-                    </div>
-                  </div>
-                  <!-- 抄送人没有配置，才能设置发起人填写 -->
-                  <div v-if="node.approverGroups.length == 0" class="flow-setting-option-item-switch">
-                    <a-switch v-model="node.customCc" checked-children="开" un-checked-children="关" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FlowNodeCopyerConfigure v-model="node.configure" />
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -74,9 +55,10 @@
   import EditName from '../../Common/EditName.vue';
   import AuthForm from '../../Common/AuthForm.vue';
   import FlowNodeApproval from '../Approver/Approval.vue';
+  import FlowNodeCopyerConfigure from './Configure.vue';
   export default {
     name: 'FlowCopyerSetting',
-    components: { FlowDrawerFooter, FlowNodeApproval, EditName, AuthForm },
+    components: { FlowDrawerFooter, FlowNodeApproval, FlowNodeCopyerConfigure, EditName, AuthForm },
     mixins: [flowMixin],
     data() {
       return {

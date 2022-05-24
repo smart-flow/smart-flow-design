@@ -119,6 +119,10 @@
           approvalMethod: 1,
           // 审批方式
           approvalMode: '1',
+          // 审批人与发起人为同一人时
+          sameMode: 2,
+          // 审批人为空时
+          noHander: 4,
           // 审批设置
           approverGroups: [
             {
@@ -133,12 +137,10 @@
               approverNames: [],
             },
           ],
-          // 审批人与发起人为同一人时
-          sameMode: 2,
-          // 审批人为空时
-          noHander: 4,
           // 表单权限
           privileges: [],
+          // 高级配置
+          configure: {},
           // 子节点
           childNode: null,
           // 显示添加按钮
@@ -179,6 +181,8 @@
           ],
           // 表单权限
           privileges: [],
+          // 高级配置
+          configure: {},
           // 显示添加按钮
           showAdd: true,
           // 可删除提示
