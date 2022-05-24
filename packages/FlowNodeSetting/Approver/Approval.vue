@@ -815,7 +815,7 @@
         const approveNodes = [];
         getApproveNodes(this.$store.state.flow.node, approveNodes);
         // 过滤自己
-        return approveNodes.filter((approveNode) => approveNode.uid != this.node.uid);
+        return approveNodes.filter((approveNode) => approveNode.id != this.node.id);
       },
     },
     mounted() {},

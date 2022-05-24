@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    v-if="node.approverGroup"
+    v-if="node.approverGroups"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -59,7 +59,7 @@
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval :groups="node.approverGroup" :node="node" />
+            <FlowNodeApproval :groups="node.approverGroups" :node="node" />
             <!-- 审批人与发起人为同一人时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
@@ -135,7 +135,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm v-model="node.privilege" readable />
+              <AuthForm v-model="node.privileges" readable />
             </div>
           </div>
         </a-tab-pane>
@@ -409,7 +409,7 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.approverGroup.forEach((group) => {
+        this.node.approverGroups.forEach((group) => {
           if (group.approverNames.length > 0) {
             content += group.approverNames.join(',');
           }

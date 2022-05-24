@@ -19,7 +19,7 @@
       <div class="flow-setting-content">
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">表单权限</p>
-          <AuthForm v-model="node.privilege" readable />
+          <AuthForm v-model="node.privileges" readable />
         </div>
       </div>
     </div>

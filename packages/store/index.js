@@ -40,18 +40,18 @@ const mutations = {
         // 如果添加的是并行节点
         if (data.addNode.type == 9) {
           data.addNode.childNode.childNode = state.node;
-          data.addNode.childNode.childNode.pid = data.addNode.childNode.uid;
+          data.addNode.childNode.childNode.pid = data.addNode.childNode.id;
         } else {
           data.addNode.childNode = state.node;
-          data.addNode.childNode.pid = data.addNode.uid;
+          data.addNode.childNode.pid = data.addNode.id;
         }
         data.addNode.pid = 0;
       }
       state.node = data.addNode;
     } else {
-      if (data.uid) {
+      if (data.id) {
         data.currNode.conditionNodes.forEach((conditionNode, i) => {
-          if (conditionNode.uid == data.uid) {
+          if (conditionNode.id == data.id) {
             // 获取当前操作节点
             addNode(state.node, conditionNode, data.addNode);
           }
@@ -88,7 +88,7 @@ const mutations = {
    * 删除节点
    */
   [DEL_NODE](state, { node }) {
-    if (node.uid == state.node.uid) {
+    if (node.id == state.node.id) {
       if (node.childNode) {
         state.node = node.childNode;
       } else {
@@ -107,7 +107,7 @@ const mutations = {
    * 更新节点
    */
   [UP_NODE](state, { currNode, field, value }) {
-    if (currNode.uid == state.node.uid) {
+    if (currNode.id == state.node.id) {
       state.node[field] = value;
     } else {
       updateNode(state.node, currNode, field, value);

@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    v-if="node.approverGroup"
+    v-if="node.approverGroups"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -22,7 +22,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">抄送人</p>
-              <FlowNodeApproval :groups="node.approverGroup" :node="node" title="抄送人" />
+              <FlowNodeApproval :groups="node.approverGroups" :node="node" title="抄送人" />
             </div>
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">提示：</p>
@@ -36,7 +36,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm v-model="node.privilege" />
+              <AuthForm v-model="node.privileges" />
             </div>
           </div>
         </a-tab-pane>
@@ -54,7 +54,7 @@
                     </div>
                   </div>
                   <!-- 抄送人没有配置，才能设置发起人填写 -->
-                  <div v-if="node.approverGroup.length == 0" class="flow-setting-option-item-switch">
+                  <div v-if="node.approverGroups.length == 0" class="flow-setting-option-item-switch">
                     <a-switch v-model="node.customCc" checked-children="开" un-checked-children="关" />
                   </div>
                 </div>
@@ -237,7 +237,7 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.approverGroup.forEach((group) => {
+        this.node.approverGroups.forEach((group) => {
           if (group.approverNames.length > 0) {
             content += group.approverNames.join(',');
           }
