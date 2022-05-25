@@ -14,7 +14,7 @@
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
                   <EditName v-model="conditionNode.nodeName" />
-                  <img :src="childflowIcon2" style="margin-left: 10px;" />
+                  <img :src="parallelIcon" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
                   <span v-if="conditionNode.content" class="branch-filter-view">

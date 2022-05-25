@@ -16,7 +16,7 @@
             <span>意见分支</span>
           </a-menu-item>
           <a-menu-item v-if="nodeType != 10 && $store.state.flow.parallelBranchEnable" key="9" @click="addType(9)">
-            <img :src="childflowIcon2" class="anticon" />
+            <img :src="parallelIcon" class="anticon" />
             <span>并行分支</span>
           </a-menu-item>
           <a-menu-item key="2" @click="addType(2)">
@@ -24,7 +24,7 @@
             <span>抄送节点</span>
           </a-menu-item>
           <a-menu-item key="6" @click="addType(6)">
-            <img :src="writeIcon" class="anticon" />
+            <img :src="writeIcon2" class="anticon" />
             <span>办理节点</span>
           </a-menu-item>
           <a-menu-item key="20" @click="addType(20)">
