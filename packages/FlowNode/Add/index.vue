@@ -448,7 +448,7 @@
               conditionGroup: [],
             },
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '并行2',
               type: 10,
