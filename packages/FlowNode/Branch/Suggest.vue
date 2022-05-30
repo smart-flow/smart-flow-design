@@ -21,7 +21,7 @@
                 <DeleteConfirm :node="conditionNode" @callback="delCallback" />
               </div>
             </div>
-            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.id" :readable="readable" />
+            <FlowAddNode :node.sync="node" :nodeType="3" :id="conditionNode.id" :readable="readable" />
           </div>
         </div>
         <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('name')" :node="conditionNode.childNode" :readable="readable" />
@@ -62,7 +62,7 @@
     methods: {
       delCallback(conditionNode) {
         let currNode = {
-          uid: this.node.pid,
+          id: this.node.pid,
         };
         // 将对应的审批节点的添加按钮开启
         this.$store.dispatch('flow/updateNode', { currNode, field: 'addable', value: true });

@@ -162,7 +162,7 @@
           <p class="flow-setting-item-title">
             <span>选择节点</span>
           </p>
-          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="approveNodes" valueName="uid" labelName="name" />
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="approveNodes" valueName="id" labelName="name" />
           <p class="flow-setting-item-title">
             <span class="light-text">你可以选择前序节点名称，如果名称重复建议先修改审批节点的节点名称</span>
           </p>

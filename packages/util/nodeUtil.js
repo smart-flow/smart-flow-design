@@ -12,7 +12,7 @@ export function getId() {
  */
 export function getStartNode() {
   return {
-    uid: getId(),
+    id: getId(),
     name: '发起人',
     type: 0,
     // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -32,7 +32,7 @@ export function getStartNode() {
 export function addCondition(node, len) {
   return {
     pid: node.id,
-    uid: uuid.v4(),
+    id: uuid.v4(),
     name: (node.type == 4 ? '分支' : '并行') + len,
     type: node.type == 4 ? 3 : 10,
     // 显示添加按钮
