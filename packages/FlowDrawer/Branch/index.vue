@@ -20,14 +20,14 @@
       <div class="flow-setting-content">
         <div v-if="node.attr.showPriorityLevel" class="flow-setting-item">
           <p class="flow-setting-item-title">分支等级</p>
-          <a-select v-model="node.attr.priorityLevel" :size="size" style="width: 100%" placeholder="请选择等级" :options="levelOptions"></a-select>
+          <a-select v-model="node.attr.priorityLevel" :size="size" placeholder="请选择等级" :options="levelOptions" class="w-fill"></a-select>
         </div>
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">分支类型</p>
           <a-radio-group v-model="node.attr.branchType">
-            <a-radio value="1">规则</a-radio>
-            <a-radio value="2">公式</a-radio>
-            <a-radio value="3">其他</a-radio>
+            <a-radio :value="branchType.value" v-for="(branchType, i) in branchTypes" :key="i">
+              {{ branchType.label }}
+            </a-radio>
           </a-radio-group>
         </div>
         <div v-if="node.attr.branchType == 1" class="flow-setting-item">
@@ -123,6 +123,11 @@
         },
         // 等级
         levelOptions: [],
+        branchTypes: [
+          { label: '规则', value: 1 },
+          { label: '公式', value: 2 },
+          { label: '其他', value: 3 },
+        ],
         columns: [
           { label: '姓名', value: '姓名' },
           { label: '工号', value: '工号' },
@@ -194,7 +199,7 @@
           this.levelOptions = [];
           routeNode.conditionNodes.forEach((item, index) => {
             let priorityLevel = index + 1;
-            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel.toString() });
+            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
           });
         }
       },

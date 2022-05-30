@@ -33,8 +33,8 @@
           </p>
         </div>
       </div>
+      <!-- 办理人设置 -->
       <div v-if="node.type == 6" class="flow-setting-content">
-        <!-- 办理人设置 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">办理人设置</p>
           <a-alert message="当流程中某个节点不需要审批，但需要对审批单进行业务办理时，可设置办理人节点，场景如财务打款、处理盖章等" type="info" />
@@ -47,23 +47,7 @@
             <!-- 审批方式 -->
             <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
-              <a-select v-model="node.attr.approvalMode" :size="size" class="w-fill">
-                <a-select-option value="1">
-                  依次审批(一人通过再到下一个人处理)
-                </a-select-option>
-                <a-select-option value="2">
-                  多人会签(所有人都通过才到下一个环节)
-                </a-select-option>
-                <a-select-option value="3">
-                  多人会签(通过只需一人,否决需全员)
-                </a-select-option>
-                <a-select-option value="4">
-                  多人或签(一人通过或否决)
-                </a-select-option>
-                <!--  <a-select-option value="5">
-                  逐级审批(一级一级领导审批,直至结束)
-                </a-select-option> -->
-              </a-select>
+              <FlowSimpleSelect v-model="node.attr.approvalMode" :datas="approvalModes" placeholder="请选择审批方式" />
             </div>
             <!-- 审批人 -->
             <FlowNodeApproval :groups="node.approverGroups" :node="node" :title="node.type == 1 ? '审批人' : '办理人'" />
@@ -86,7 +70,7 @@
                         </div>
                       </div>
                     </template>
-                    <a-icon style="margin-left: 5px;" type="question-circle" />
+                    <a-icon style="margin-left: 5px" type="question-circle" />
                   </a-popover>
                 </a-radio>
               </a-radio-group>
@@ -107,7 +91,7 @@
                       </div>
                     </div>
                   </template>
-                  <a-icon style="margin-left: 5px;" type="question-circle" />
+                  <a-icon style="margin-left: 5px" type="question-circle" />
                 </a-popover>
               </p>
               <a-radio-group v-model="node.attr.noHander" :size="size">
@@ -124,7 +108,7 @@
                         </div>
                       </div>
                     </template>
-                    <a-icon style="margin-left: 5px;" type="question-circle" />
+                    <a-icon style="margin-left: 5px" type="question-circle" />
                   </a-popover>
                 </a-radio>
               </a-radio-group>
@@ -159,6 +143,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
+  import FlowSimpleSelect from '../../Component/FlowSimpleSelect.vue';
   import FlowNodeApproval from './Approval.vue';
   import FlowNodeApprovalConfigure from './Configure.vue';
   import EditName from '../../Common/EditName.vue';
@@ -168,6 +153,7 @@
     components: {
       FlowDrawerFooter,
       EditName,
+      FlowSimpleSelect,
       FlowNodeApproval,
       FlowNodeApprovalConfigure,
       AuthForm,
@@ -194,6 +180,25 @@
           {
             name: '自动拒绝',
             value: 3,
+          },
+        ],
+        // 审批方式
+        approvalModes: [
+          {
+            name: '依次审批(一人通过再到下一个人处理)',
+            value: 1,
+          },
+          {
+            name: '多人会签(所有人都通过才到下一个环节)',
+            value: 2,
+          },
+          {
+            name: '多人会签(通过只需一人,否决需全员)',
+            value: 3,
+          },
+          {
+            name: '多人或签(一人通过或否决)',
+            value: 4,
           },
         ],
         approvalWithNulls: [

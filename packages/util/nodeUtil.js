@@ -43,9 +43,9 @@ export function addCondition(node, len) {
       // 显示优先级
       showPriorityLevel: node.type == 4 ? true : false,
       // 优先级
-      priorityLevel: len.toString(),
+      priorityLevel: len,
       // 分支类型
-      branchType: node.type == 4 ? '1' : '3',
+      branchType: node.type == 4 ? 1 : 3,
     },
     // 是否有错误
     error: false,

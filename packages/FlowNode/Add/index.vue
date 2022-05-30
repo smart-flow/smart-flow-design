@@ -118,7 +118,7 @@
             // 审批类型
             approvalMethod: 1,
             // 审批方式
-            approvalMode: '1',
+            approvalMode: 1,
             // 审批人与发起人为同一人时
             sameMode: 2,
             // 审批人为空时
@@ -307,9 +307,9 @@
               // 流程基础配置属性
               attr: {
                 // 分支类型
-                branchType: '1',
+                branchType: 1,
                 // 优先级
-                priorityLevel: '1',
+                priorityLevel: 1,
                 // 显示优先级
                 showPriorityLevel: true,
               },
@@ -332,9 +332,9 @@
               // 流程基础配置属性
               attr: {
                 // 分支类型
-                branchType: '1',
+                branchType: 1,
                 // 优先级
-                priorityLevel: '1',
+                priorityLevel: 2,
                 // 显示优先级
                 showPriorityLevel: true,
               },
@@ -456,7 +456,7 @@
               // 流程基础配置属性
               attr: {
                 // 分支类型
-                branchType: '3',
+                branchType: 3,
               },
               // 条件组
               conditionGroup: [],
@@ -481,7 +481,7 @@
               // 流程基础配置属性
               attr: {
                 // 分支类型
-                branchType: '3',
+                branchType: 3,
               },
               // 条件组
               conditionGroup: [],
