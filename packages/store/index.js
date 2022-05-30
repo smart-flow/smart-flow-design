@@ -72,7 +72,7 @@ const mutations = {
   [ADD_BRANCH](state, { node }) {
     let len = node.conditionNodes.length;
     let conditionNode = node.conditionNodes[len - 1];
-    conditionnode.attr.priorityLevel = len + 1 + '';
+    conditionNode.attr.priorityLevel = len + 1 + '';
     if (conditionNode.type == 3) {
       // 分支
       node.conditionNodes.splice(len - 1, 0, addCondition(node, len));
