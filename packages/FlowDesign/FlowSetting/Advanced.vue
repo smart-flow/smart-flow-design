@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
+  import { flowMixin } from '../../mixins/flowMixin';
   export default {
     name: 'Advanced',
     mixins: [flowMixin],

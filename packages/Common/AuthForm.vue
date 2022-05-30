@@ -61,7 +61,7 @@
 <script>
   import { flowMixin } from '../mixins/flowMixin';
   export default {
-    name: 'FlowNodeSettingAuthForm',
+    name: 'FlowDrawerAuthForm',
     mixins: [flowMixin],
     props: {
       readable: {

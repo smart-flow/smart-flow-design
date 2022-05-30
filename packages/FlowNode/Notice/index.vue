@@ -23,7 +23,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowNoticeSetting from '../../FlowNodeSetting/Notice/index.vue';
+  import FlowNoticeSetting from '../../FlowDrawer/Notice/index.vue';
   import EditName from '../../Common/EditName.vue';
   import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {

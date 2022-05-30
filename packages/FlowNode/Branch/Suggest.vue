@@ -37,7 +37,7 @@
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowNode from '../index.vue';
   import FlowAddNode from '../Add/index.vue';
-  import FlowBranchSetting from '../../FlowNodeSetting/Branch/index.vue';
+  import FlowBranchSetting from '../../FlowDrawer/Branch/index.vue';
   import EditName from '../../Common/EditName.vue';
   import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {

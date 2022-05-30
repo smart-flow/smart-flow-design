@@ -22,6 +22,9 @@
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
+          <div class="flow-node-toolbar">
+            <a-icon type="copy" @click.stop="node.deletable = true" />
+          </div>
           <!-- 删除提示 -->
           <DeleteConfirm :node="node" />
         </div>
@@ -35,7 +38,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowApproverSetting from '../../FlowNodeSetting/Approver/index.vue';
+  import FlowApproverSetting from '../../FlowDrawer/Approver/index.vue';
   import EditName from '../../Common/EditName.vue';
   import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {

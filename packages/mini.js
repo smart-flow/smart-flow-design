@@ -15,9 +15,9 @@ import '../styles/smart-flow-design.less';
 // import '../static/icons/iconfont';
 
 // 导入单个组件
-import BasicInfo from './BasicInfo/index';
 import FlowDesign from './FlowDesign/index';
-import FlowSetting from './FlowSetting/index';
+import BasicInfo from './FlowDesign/BasicInfo/index';
+import FlowSetting from './FlowDesign/FlowSetting/index';
 import flowStore from './store/index';
 
 const components = [BasicInfo, FlowDesign, FlowSetting];

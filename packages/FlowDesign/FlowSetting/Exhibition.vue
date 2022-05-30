@@ -44,13 +44,13 @@
               </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
+  import { flowMixin } from '../../mixins/flowMixin';
   export default {
     name: 'Exhibition',
     mixins: [flowMixin],

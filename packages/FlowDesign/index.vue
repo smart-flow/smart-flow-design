@@ -21,7 +21,7 @@
 <script>
   import { flowMixin } from '../mixins/flowMixin';
   import { getStartNode } from '../util/nodeUtil';
-  import FlowZoom from '../FlowZoom/index';
+  import FlowZoom from '../Common/FlowZoom.vue';
   import FlowMap from '../Common/FlowMap.vue';
   import FlowNav from '../Common/FlowNav.vue';
   import FlowHelper from '../Common/FlowHelper.vue';

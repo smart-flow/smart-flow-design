@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
+  import { flowMixin } from '../../mixins/flowMixin';
   let body = document.querySelectorAll('body')[0];
   export default {
     name: 'MenuShot',
@@ -148,9 +148,9 @@
 
         return false;
       },
-      changeMenu(menu){
+      changeMenu(menu) {
         this.$emit('change', menu);
-      }
+      },
     },
   };
 </script>

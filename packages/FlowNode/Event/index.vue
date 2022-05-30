@@ -15,7 +15,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowEventSetting from '../../FlowNodeSetting/Event/index.vue';
+  import FlowEventSetting from '../../FlowDrawer/Event/index.vue';
   export default {
     name: 'EventNode',
     components: { FlowAddNode, FlowEventSetting },

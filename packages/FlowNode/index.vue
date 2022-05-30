@@ -20,7 +20,7 @@
   import WriteNode from './Write/index.vue';
   import EventNode from './Event/index.vue';
   import FlowAddNode from './Add/index.vue';
-  import FlowBranchSetting from '../FlowNodeSetting/Branch/index.vue';
+  import FlowBranchSetting from '../FlowDrawer/Branch/index.vue';
   import EditName from '../Common/EditName.vue';
   export default {
     name: 'FlowNode',

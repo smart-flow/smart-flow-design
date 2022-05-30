@@ -19,7 +19,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowApproverSetting from '../../FlowNodeSetting/Approver/index.vue';
+  import FlowApproverSetting from '../../FlowDrawer/Approver/index.vue';
   import EditName from '../../Common/EditName.vue';
   export default {
     name: 'FlowPolymerizeNode',
