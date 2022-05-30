@@ -14,10 +14,10 @@
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
                   <EditName v-model="conditionNode.name" />
-                  <img :src="parallelIcon" style="margin-left: 10px;" />
+                  <img :src="parallelIcon" style="margin-left: 10px" />
                 </div>
-                <div class="branch-main">
-                  <span v-if="conditionNode.content" class="branch-filter-view">
+                <div class="node-main">
+                  <span v-if="conditionNode.content">
                     <a-tooltip placement="top">
                       <template slot="title">
                         <span>{{ conditionNode.content }}</span>
@@ -25,9 +25,7 @@
                       {{ conditionNode.content }}
                     </a-tooltip>
                   </span>
-                  <span v-else class="branch-filter-hint">
-                    <span>配置筛选条件</span>
-                  </span>
+                  <span v-else class="hint-title">配置筛选条件</span>
                 </div>
                 <!-- 错误提示 -->
                 <a-icon v-if="conditionNode.error" type="exclamation-circle" theme="filled" class="node-error" />
