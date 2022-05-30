@@ -41,7 +41,7 @@
                 <DeleteConfirm :node="conditionNode" />
               </div>
             </div>
-            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.id" :readable="readable" />
+            <FlowAddNode :node.sync="node" :nodeType="3" :id="conditionNode.id" :readable="readable" />
           </div>
         </div>
         <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('name')" :node="conditionNode.childNode" :readable="readable" />
