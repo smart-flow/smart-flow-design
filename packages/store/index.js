@@ -36,7 +36,7 @@ const mutations = {
   [ADD_NODE](state, { data }) {
     if (data.nodeType == 0) {
       //  开始
-      if (state.node.hasOwnProperty('nodeName')) {
+      if (state.node.hasOwnProperty('name')) {
         // 如果添加的是并行节点
         if (data.addNode.type == 9) {
           data.addNode.childNode.childNode = state.node;
@@ -72,7 +72,7 @@ const mutations = {
   [ADD_BRANCH](state, { node }) {
     let len = node.conditionNodes.length;
     let conditionNode = node.conditionNodes[len - 1];
-    conditionNode.priorityLevel = len + 1 + '';
+    conditionnode.attr.priorityLevel = len + 1 + '';
     if (conditionNode.type == 3) {
       // 分支
       node.conditionNodes.splice(len - 1, 0, addCondition(node, len));

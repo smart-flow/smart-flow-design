@@ -13,7 +13,7 @@
             <div class="flow-item flow-node-branch" @click="!readable && open('flowBranchSetting', conditionNode)">
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
-                  <EditName v-model="conditionNode.nodeName" />
+                  <EditName v-model="conditionNode.name" />
                   <img :src="parallelIcon" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
@@ -39,7 +39,7 @@
             <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.id" :readable="readable" />
           </div>
         </div>
-        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :readable="readable" />
+        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('name')" :node="conditionNode.childNode" :readable="readable" />
       </div>
     </div>
     <div class="after-branch-btn">

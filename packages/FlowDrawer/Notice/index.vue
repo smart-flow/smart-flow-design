@@ -12,7 +12,7 @@
     <template slot="title">
       <img :src="noticeIcon" class="anticon" />
       <span class="flow-ant-drawer-title">
-        <EditName v-model="node.nodeName" />
+        <EditName v-model="node.name" />
       </span>
     </template>
     <div class="flow-setting-module">
@@ -21,7 +21,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">节点名称</p>
-              <a-input v-model="node.nodeName" :size="size" class="w-full" placeholder="节点名称" />
+              <a-input v-model="node.name" :size="size" class="w-full" placeholder="节点名称" />
             </div>
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">通知类型</p>

@@ -14,8 +14,8 @@
             <div class="flow-item flow-node-branch" @click="!readable && node.conditionNodes.length - 1 != index && open('flowBranchSetting', conditionNode, node)">
               <div class="flow-node-box" :class="{ 'has-error': conditionNode.error }">
                 <div class="node-name">
-                  <EditName v-model="conditionNode.nodeName" @edit="(showPriorityLevel) => (conditionNode.showPriorityLevel = showPriorityLevel)" />
-                  <div class="node-name-level" v-if="conditionNode.showPriorityLevel">优先{{ conditionNode.priorityLevel }}</div>
+                  <EditName v-model="conditionNode.name" @edit="(showPriorityLevel) => (conditionNode.attr.showPriorityLevel = showPriorityLevel)" />
+                  <div class="node-name-level" v-if="conditionNode.attr.showPriorityLevel">优先{{ conditionNode.attr.priorityLevel }}</div>
                   <img :src="branchIcon" style="margin-left: 10px;" />
                 </div>
                 <div class="branch-main">
@@ -44,7 +44,7 @@
             <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.id" :readable="readable" />
           </div>
         </div>
-        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :readable="readable" />
+        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('name')" :node="conditionNode.childNode" :readable="readable" />
       </div>
     </div>
     <div class="after-branch-btn">

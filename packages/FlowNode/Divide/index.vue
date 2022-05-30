@@ -2,7 +2,7 @@
   <div class="flow-row">
     <div class="flow-box">
       <div class="flow-item">
-        <div class="node-name" :class="nodeNameClass(node, 'node-temmi')">
+        <div class="node-name" :class="nameClass(node, 'node-temmi')">
           分隔
           <div v-if="!readable" class="close-icon"><a-icon type="close-circle" /></div>
         </div>

@@ -13,7 +13,7 @@
     <template slot="title">
       <img :src="approverIcon" class="anticon" />
       <span class="flow-ant-drawer-title">
-        <EditName v-model="node.nodeName" />
+        <EditName v-model="node.name" />
       </span>
     </template>
     <div class="flow-setting-module">
@@ -21,7 +21,7 @@
         <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
-          <a-radio-group v-model="node.approvalMethod" button-style="solid" class="w-full">
+          <a-radio-group v-model="node.attr.approvalMethod" button-style="solid" class="w-full">
             <a-radio :value="approvalMethod.value" v-for="(approvalMethod, i) in approvalMethods" :key="i">
               {{ approvalMethod.name }}
             </a-radio>
@@ -29,7 +29,7 @@
         </div>
         <div class="flow-setting-item">
           <p class="flow-setting-item-title" v-for="(approvalMethod, i) in approvalMethods" :key="i">
-            <span v-if="node.approvalMethod == approvalMethod.value">{{ approvalMethod.name }}设置</span>
+            <span v-if="node.attr.approvalMethod == approvalMethod.value">{{ approvalMethod.name }}设置</span>
           </p>
         </div>
       </div>
@@ -41,13 +41,13 @@
         </div>
       </div>
 
-      <a-tabs v-if="node.approvalMethod == 1">
+      <a-tabs v-if="node.attr.approvalMethod == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
             <!-- 审批方式 -->
             <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
-              <a-select v-model="node.approvalMode" :size="size" class="w-fill">
+              <a-select v-model="node.attr.approvalMode" :size="size" class="w-fill">
                 <a-select-option value="1">
                   依次审批(一人通过再到下一个人处理)
                 </a-select-option>
@@ -72,7 +72,7 @@
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
-              <a-radio-group v-model="node.sameMode" :size="size">
+              <a-radio-group v-model="node.attr.sameMode" :size="size">
                 <a-radio v-for="(sameApproval, i) in sameApprovals" :key="i" :value="sameApproval.value" :style="radioStyle">
                   <span>{{ sameApproval.name }}</span>
                   <a-popover v-if="sameApproval.popovers && sameApproval.popovers.length > 0" placement="topLeft" trigger="click">
@@ -110,7 +110,7 @@
                   <a-icon style="margin-left: 5px;" type="question-circle" />
                 </a-popover>
               </p>
-              <a-radio-group v-model="node.noHander" :size="size">
+              <a-radio-group v-model="node.attr.noHander" :size="size">
                 <a-radio v-for="(approvalWithNull, i) in approvalWithNulls" :key="i" :value="approvalWithNull.value" :style="radioStyle">
                   <span>{{ approvalWithNull.name }}</span>
                   <a-popover v-if="approvalWithNull.popovers && approvalWithNull.popovers.length > 0" placement="topLeft" trigger="click">

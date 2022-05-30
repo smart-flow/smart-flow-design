@@ -1,5 +1,6 @@
 <template>
   <a-drawer
+    v-if="node.attr"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -12,30 +13,30 @@
     <template slot="title">
       <img :src="branchIcon2" class="anticon" />
       <span class="flow-ant-drawer-title">
-        <EditName v-model="node.nodeName" />
+        <EditName v-model="node.name" />
       </span>
     </template>
     <div class="flow-setting-module">
       <div class="flow-setting-content">
-        <div v-if="node.showPriorityLevel" class="flow-setting-item">
+        <div v-if="node.attr.showPriorityLevel" class="flow-setting-item">
           <p class="flow-setting-item-title">分支等级</p>
-          <a-select v-model="node.priorityLevel" :size="size" style="width: 100%" placeholder="请选择等级" :options="levelOptions"></a-select>
+          <a-select v-model="node.attr.priorityLevel" :size="size" style="width: 100%" placeholder="请选择等级" :options="levelOptions"></a-select>
         </div>
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">分支类型</p>
-          <a-radio-group v-model="node.branchType">
+          <a-radio-group v-model="node.attr.branchType">
             <a-radio value="1">规则</a-radio>
             <a-radio value="2">公式</a-radio>
             <a-radio value="3">其他</a-radio>
           </a-radio-group>
         </div>
-        <div v-if="node.branchType == 1" class="flow-setting-item">
+        <div v-if="node.attr.branchType == 1" class="flow-setting-item">
           <p class="flow-setting-item-title">条件规则</p>
           <div class="flow-setting-condition-box">
             <div v-for="(group, i) in node.conditionGroup" :key="i">
               <div class="flow-setting-condition-group">
                 <div class="flow-setting-condition-item" v-for="(condition, k) in group.conditions" :key="k">
-                  <a-select v-model="condition.columnValue" :size="size" style="width: 40%;" placeholder="字段" @change="handleChange">
+                  <a-select v-model="condition.columnValue" :size="size" style="width: 40%" placeholder="字段" @change="handleChange">
                     <a-select-opt-group label="基础字段">
                       <a-select-option :value="column.value" v-for="(column, i) in columns" :key="i">{{ column.label }}</a-select-option>
                     </a-select-opt-group>
@@ -45,9 +46,9 @@
                   </a-select>
                   <div class="flow-setting-condition-option">
                     <!-- 判断(操作)符 -->
-                    <FlowSimpleSelect v-model="condition.optType" :name.sync="condition.optTypeName" :datas="optTypes" labelName="label" style="width: 26%;" />
+                    <FlowSimpleSelect v-model="condition.optType" :name.sync="condition.optTypeName" :datas="optTypes" labelName="label" style="width: 26%" />
                     <!-- 值类型 -->
-                    <FlowSimpleSelect v-model="condition.valueType" :datas="valueTypes" labelName="label" style="width: 26%;" @change="condition.conditionValue = []" />
+                    <FlowSimpleSelect v-model="condition.valueType" :datas="valueTypes" labelName="label" style="width: 26%" @change="condition.conditionValue = []" />
                     <!-- 值 -->
                     <div class="flow-setting-condition-value">
                       <!-- 动态值 -->
@@ -84,14 +85,14 @@
                 </div>
                 <div class="flow-setting-condition-add" @click="addCondition(1, group)">
                   <a-icon type="plus-circle" theme="filled" />
-                  <span style="margin-left: 5px;">且条件</span>
+                  <span style="margin-left: 5px">且条件</span>
                 </div>
               </div>
               <div v-if="node.conditionGroup.length > 1 && i != node.conditionGroup.length - 1" class="flow-setting-condition-group-connector">或</div>
             </div>
             <div class="flow-setting-condition-add" @click="addGroup(1)">
               <a-icon type="plus-circle" theme="filled" />
-              <span style="margin-left: 5px;">或条件</span>
+              <span style="margin-left: 5px">或条件</span>
             </div>
           </div>
         </div>
@@ -189,7 +190,7 @@
         this.visible = true;
         this.node = node;
         // 等级
-        if (node.showPriorityLevel) {
+        if (node.attr.showPriorityLevel) {
           this.levelOptions = [];
           routeNode.conditionNodes.forEach((item, index) => {
             let priorityLevel = index + 1;
@@ -271,7 +272,7 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        if (this.node.branchType == 1) {
+        if (this.node.attr.branchType == 1) {
           this.node.conditionGroup.forEach((group, j) => {
             if (j != 0) {
               content += ' 或 ';

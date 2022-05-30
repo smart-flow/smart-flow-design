@@ -3,8 +3,8 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowWriteSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div class="node-name" :class="nodeNameClass(node, 'node-fill')">
-            <EditName v-model="node.nodeName" />
+          <div class="node-name" :class="nameClass(node, 'node-fill')">
+            <EditName v-model="node.name" />
             <img :src="writeIcon" style="margin-left: 10px;" />
           </div>
           <div class="node-main"><span class="hint-title">设置此节点</span></div>

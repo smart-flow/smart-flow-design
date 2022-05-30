@@ -12,7 +12,7 @@
     <template slot="title">
       <img :src="ccIcon" class="anticon" />
       <span class="flow-ant-drawer-title">
-        <EditName v-model="node.nodeName" />
+        <EditName v-model="node.name" />
       </span>
     </template>
     <div class="flow-setting-module">
