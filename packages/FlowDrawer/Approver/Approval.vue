@@ -421,7 +421,7 @@
             addable: false,
           },
           {
-            name: '发起人本人',
+            name: '发起人自己',
             value: 10,
             disabled: true,
             // 是否可以多个组
@@ -807,7 +807,7 @@
        * 显示添加按钮
        */
       show: function() {
-        // 发起人自选/发起人本人只能一个组
+        // 发起人自选/发起人自己只能一个组
         return this.groups.filter((group) => [9, 10].includes(group.approverType)).length == 0;
       },
       approveNodes: function() {

@@ -157,7 +157,7 @@
             value: 7,
           },
           {
-            name: '发起人本人',
+            name: '发起人自己',
             value: 8,
             popovers: [
               {
