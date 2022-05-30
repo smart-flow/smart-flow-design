@@ -10,6 +10,11 @@
   <a href="https://gitee.com/crowncloud/smart-flow-design/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-Apache-blue" alt="license">
   </a>
+  <a href='https://gitee.com/crowncloud/smart-flow-design/stargazers'>
+     <img src='https://gitee.com/crowncloud/smart-flow-design/badge/star.svg?theme=dark' alt='star'/>
+  </a>
+  <a href='https://gitee.com/crowncloud/smart-flow-design/members'><img src='https://gitee.com/crowncloud/smart-flow-design/badge/fork.svg?theme=white' alt='fork'/>
+  </a>
 </p>
 
 ![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/demo.jpg) ![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/setting.jpg)
