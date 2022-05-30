@@ -23,8 +23,8 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
-  import FlowNav from '../Common/FlowNav.vue';
+  import { flowMixin } from '../../mixins/flowMixin';
+  import FlowNav from '../../Common/FlowNav.vue';
   import MenuShot from './MenuShot.vue';
   import Advanced from './Advanced.vue';
   import Exhibition from './Exhibition.vue';

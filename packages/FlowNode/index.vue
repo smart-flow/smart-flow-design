@@ -1,10 +1,10 @@
 <template>
   <div class="flow-row-container">
-    <FlowApproverNode v-if="node && node.type == 1" :node="node" :readable="readable" />
+    <FlowApproverNode v-if="node && (node.type == 1 || node.type == 6)" :node="node" :readable="readable" />
     <FlowCopyerNode v-if="node && node.type == 2" :node="node" :readable="readable" />
     <BranchNode v-if="node && node.type == 4" :node="node" :readable="readable" />
     <EventNode v-if="node && node.type == 5" :node="node" :readable="readable" />
-    <WriteNode v-if="node && (node.type == 0 || node.type == 6)" :node="node" :readable="readable" />
+    <WriteNode v-if="node && node.type == 0" :node="node" :readable="readable" />
     <SuggestNode v-if="node && node.type == 7" :node="node" :readable="readable" />
     <ParallelNode v-if="node && node.type == 9" :node="node" :readable="readable" />
     <PolymerizeNode v-if="node && node.type == 11" :node="node" :readable="readable" />
@@ -20,7 +20,7 @@
   import WriteNode from './Write/index.vue';
   import EventNode from './Event/index.vue';
   import FlowAddNode from './Add/index.vue';
-  import FlowBranchSetting from '../FlowNodeSetting/Branch/index.vue';
+  import FlowBranchSetting from '../FlowDrawer/Branch/index.vue';
   import EditName from '../Common/EditName.vue';
   export default {
     name: 'FlowNode',

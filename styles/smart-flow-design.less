@@ -281,8 +281,9 @@
 
               .flow-node-box {
                 cursor: pointer;
-                width: 220px;
+                // width: 220px;
                 // height: 118px;
+                width: 200px;
                 height: 100px;
                 background-color: #fff;
                 -webkit-box-shadow: 0 2px 6px 0 rgba(75, 82, 94, 0.2);
@@ -299,6 +300,14 @@
                   background-image: -webkit-linear-gradient(left, #ff6a00, #f78b3e), -webkit-linear-gradient(#ff6a00, #ff6a00);
                   background-image: -o-linear-gradient(left, #ff6a00 0, #f78b3e 100%), -o-linear-gradient(#ff6a00, #ff6a00);
                   background-image: linear-gradient(90deg, #ff6a00, #f78b3e), linear-gradient(#ff6a00, #ff6a00);
+                }
+
+                .node-launch {
+                  background-image: -webkit-gradient(linear, left top, right top, from(#a9b4cd), to(#a9b4cd)),
+                    -webkit-gradient(linear, left top, left bottom, from(#a9b4cd), to(#a9b4cd));
+                  background-image: -webkit-linear-gradient(left, #a9b4cd, #a9b4cd), -webkit-linear-gradient(#a9b4cd, #a9b4cd);
+                  background-image: -o-linear-gradient(left, #a9b4cd 0, #a9b4cd 100%), -o-linear-gradient(#a9b4cd, #a9b4cd);
+                  background-image: linear-gradient(90deg, #a9b4cd, #a9b4cd), linear-gradient(#a9b4cd, #a9b4cd);
                 }
 
                 /* .node-cc {
@@ -330,6 +339,14 @@
                   background-image: -webkit-linear-gradient(left, #29cc80, #5ccc98), -webkit-linear-gradient(#29cc80, #29cc80);
                   background-image: -o-linear-gradient(left, #29cc80 0, #5ccc98 100%), -o-linear-gradient(#29cc80, #29cc80);
                   background-image: linear-gradient(90deg, #29cc80, #5ccc98), linear-gradient(#29cc80, #29cc80);
+                }
+
+                .node-transact {
+                  background-image: -webkit-gradient(linear, left top, right top, from(#935af6), to(#f65ac2)),
+                    -webkit-gradient(linear, left top, left bottom, from(#935af6), to(#935af6));
+                  background-image: -webkit-linear-gradient(left, #935af6, #f65ac2), -webkit-linear-gradient(#935af6, #935af6);
+                  background-image: -o-linear-gradient(left, #935af6 0, #f65ac2 100%), -o-linear-gradient(#935af6, #935af6);
+                  background-image: linear-gradient(90deg, #935af6, #f65ac2), linear-gradient(#935af6, #935af6);
                 }
 
                 .node-delete {
@@ -477,7 +494,7 @@
 
               .flow-branch-suggest {
                 cursor: pointer;
-                width: 220px;
+                width: 200px;
                 height: 60px;
                 background-color: #fff;
                 -webkit-box-shadow: 0 2px 6px 0 rgba(75, 82, 94, 20%);

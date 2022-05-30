@@ -46,6 +46,7 @@ import {
   Dropdown,
   Menu,
   Affix,
+  Space,
 } from 'ant-design-vue';
 
 export default {
@@ -98,6 +99,7 @@ Vue.use(Dropdown);
 Vue.use(Menu);
 Vue.use(Affix);
 Vue.use(Cascader);
+Vue.use(Space);
 
 Vue.prototype.$confirm = Modal.confirm;
 Vue.prototype.$message = message;

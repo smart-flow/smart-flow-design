@@ -38,10 +38,10 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
-  import FlowNav from '../Common/FlowNav.vue';
-  import FlowSelect from '../Component/FlowSelect.vue';
-  import FlowSimpleSelect from '../Component/FlowSimpleSelect.vue';
+  import { flowMixin } from '../../mixins/flowMixin';
+  import FlowNav from '../../Common/FlowNav.vue';
+  import FlowSelect from '../../Component/FlowSelect.vue';
+  import FlowSimpleSelect from '../../Component/FlowSimpleSelect.vue';
   export default {
     name: 'BasicInfo',
     mixins: [flowMixin],

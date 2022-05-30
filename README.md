@@ -10,6 +10,11 @@
   <a href="https://gitee.com/crowncloud/smart-flow-design/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-Apache-blue" alt="license">
   </a>
+  <a href='https://gitee.com/crowncloud/smart-flow-design/stargazers'>
+     <img src='https://gitee.com/crowncloud/smart-flow-design/badge/star.svg?theme=dark' alt='star'/>
+  </a>
+  <a href='https://gitee.com/crowncloud/smart-flow-design/members'><img src='https://gitee.com/crowncloud/smart-flow-design/badge/fork.svg?theme=white' alt='fork'/>
+  </a>
 </p>
 
 ![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/demo.jpg) ![图片](https://gitee.com/crowncloud/smart-flow-design/raw/master/setting.jpg)
@@ -20,6 +25,7 @@
 
 注：该项目不兼容 vue3.0 项目，暂无后续兼容 vue3.0 的计划
 
+- [github](https://github.com/smart-flow/smart-flow-design)
 - [码云](https://gitee.com/crowncloud/smart-flow-design)
 
 ## 特性

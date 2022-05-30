@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    v-if="node.approverGroup"
+    v-if="node.approverGroups"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -17,7 +17,7 @@
       </span>
     </template>
     <div class="flow-setting-module">
-      <div class="flow-setting-content">
+      <div v-if="node.type == 1" class="flow-setting-content">
         <!-- 审批类型 -->
         <div class="flow-setting-item">
           <p class="flow-setting-item-title">审批类型</p>
@@ -33,12 +33,19 @@
           </p>
         </div>
       </div>
+      <div v-if="node.type == 6" class="flow-setting-content">
+        <!-- 办理人设置 -->
+        <div class="flow-setting-item">
+          <p class="flow-setting-item-title">办理人设置</p>
+          <a-alert message="当流程中某个节点不需要审批，但需要对审批单进行业务办理时，可设置办理人节点，场景如财务打款、处理盖章等" type="info" />
+        </div>
+      </div>
 
       <a-tabs v-if="node.approvalMethod == 1">
         <a-tab-pane key="1" tab="审批设置">
           <div class="flow-setting-content">
             <!-- 审批方式 -->
-            <div class="flow-setting-item">
+            <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">审批方式</p>
               <a-select v-model="node.approvalMode" :size="size" class="w-fill">
                 <a-select-option value="1">
@@ -59,9 +66,9 @@
               </a-select>
             </div>
             <!-- 审批人 -->
-            <FlowNodeApproval :groups="node.approverGroup" :node="node" />
+            <FlowNodeApproval :groups="node.approverGroups" :node="node" :title="node.type == 1 ? '审批人' : '办理人'" />
             <!-- 审批人与发起人为同一人时 -->
-            <div class="flow-setting-item">
+            <div v-if="node.type == 1" class="flow-setting-item">
               <p class="flow-setting-item-title">
                 <span>审批人与发起人为同一人时</span>
               </p>
@@ -87,12 +94,12 @@
             <!-- 审批人为空时 -->
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">
-                <span>审批人为空时</span>
+                <span>{{ node.type == 1 ? '审批人' : '办理人' }}为空时</span>
                 <a-popover placement="topLeft" trigger="click">
                   <template slot="content">
                     <div class="approver-tip-content">
                       <div class="approver-tip-main-content">
-                        <p class="main-title">什么情况下会出现审批人为空？</p>
+                        <p class="main-title">什么情况下会出现{{ node.type == 1 ? '审批人' : '办理人' }}为空？</p>
                         <p class="content">设置了“上级”审批，但申请人在飞书管理后台 - 组织架构中没有上级</p>
                         <p class="content">设置了“部门负责人”审批，但申请人在飞书管理后台 - 组织架构中没有部门负责人</p>
                         <p class="content">设置了“角色”审批，但该角色在飞书管理后台 - 组织架构中没有任何成员</p>
@@ -125,6 +132,7 @@
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">提示：</p>
               <div class="hint-info">
+                <p v-if="node.type == 6">办理人不涉及审批人去重设置，不同节点相同的办理人仍需要执行。</p>
                 <p>若审批人离职，会自动转交给审批人的上级代为处理</p>
                 <p>抄送的人数最多支持100人以内</p>
               </div>
@@ -135,88 +143,16 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm readable />
+              <AuthForm v-model="node.privileges" readable />
             </div>
           </div>
         </a-tab-pane>
         <a-tab-pane key="3" tab="高级设置">
-          <div class="flow-setting-content">
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">操作配置</p>
-              <div class="flow-setting-option" v-for="(operation, i) in operations" :key="i">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">{{ operation.name }}</p>
-                      <p class="setting-option-desc">{{ operation.content }}</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" default-checked />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">超时配置</p>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">审批限时处理</p>
-                      <p class="setting-option-desc">支持自动提醒、转交等，为每条审批流设一个智能闹钟</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">安全配置</p>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">审批同意是否需要手写签名</p>
-                      <p class="setting-option-desc">如果全局设置了需要签字，则此处不生效</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" />
-                  </div>
-                </div>
-              </div>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">填写密码</p>
-                      <p class="setting-option-desc">凭密码才能填写表单</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" @click.stop @change="openPasswordModal" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FlowNodeApprovalConfigure v-model="node.configure" />
         </a-tab-pane>
       </a-tabs>
     </div>
-    <p>{{ node }}</p>
-    <!-- 填写密码 -->
-    <a-modal :visible="passwordVisible" :width="drawerWidth()" title="填写密码" @cancel="passwordVisible = false">
-      <div class="flow-setting-module">
-        <a-input-password placeholder="输入密码" />
-      </div>
-    </a-modal>
+    <!-- <p>{{ node }}</p> -->
     <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
@@ -224,6 +160,7 @@
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowDrawerFooter from '../../Common/DrawerFooter.vue';
   import FlowNodeApproval from './Approval.vue';
+  import FlowNodeApprovalConfigure from './Configure.vue';
   import EditName from '../../Common/EditName.vue';
   import AuthForm from '../../Common/AuthForm.vue';
   export default {
@@ -232,6 +169,7 @@
       FlowDrawerFooter,
       EditName,
       FlowNodeApproval,
+      FlowNodeApprovalConfigure,
       AuthForm,
     },
     mixins: [flowMixin],
@@ -239,11 +177,8 @@
       return {
         node: {},
         visible: false,
-        // 填写密码弹窗
-        passwordVisible: false,
         headerStyle: {
           background: 'linear-gradient(89.96deg,#fa6f32 .05%,#fb9337 79.83%)',
-          // 'background-color': '#ff8126',
           'border-radius': '0px 0px 0 0',
         },
         // 审批类型
@@ -299,6 +234,19 @@
               },
             ],
           },
+          {
+            name: '给出异常提示,待管理员指定',
+            value: 5,
+            popovers: [
+              {
+                title: '什么是给出异常提示,待管理员指定？',
+                content: '若审批人为空，则在页面给出反馈,并且纳入到异常流程中,管理员处理',
+              },
+              {
+                content: '提示：可在“基础信息 - 谁可以管理这个审批”中，查看和编辑该审批流程的管理员',
+              },
+            ],
+          },
         ],
         sameApprovals: [
           {
@@ -339,51 +287,6 @@
             ],
           },
         ],
-        // 操作配置
-        operations: [
-          {
-            name: '转交',
-            value: '1',
-            content: '转交给他人办理，依然在当前节点',
-            code: 'turn',
-          },
-          {
-            name: '抄送',
-            value: '2',
-            content: '选择抄送给谁，可以在待阅和已阅中查看',
-            code: 'cc',
-          },
-          {
-            name: '退回',
-            value: '3',
-            content: '退回给申请人，申请人修改完成后，流程按节点开始走',
-            code: 'back',
-          },
-          {
-            name: '撤回',
-            value: '4',
-            content: '允许申请人对未进入流程（第一个流程节点为待处理状态）的申请进行撤回',
-            code: '',
-          },
-          {
-            name: '加签',
-            value: '5',
-            content: '这个事情我不能完全做主，需要某些人先处理，再右我处理',
-            code: 'addSign',
-          },
-          {
-            name: '跟踪',
-            value: '6',
-            content: '流程实例所有的进度我要发短信和email给我，可在我的跟踪查看',
-            code: 'trace',
-          },
-          {
-            name: '拒绝',
-            value: '6',
-            content: '节点负责人可以拒绝该流程（拒绝后流程直接结束，标记为已拒绝）',
-            code: 'end',
-          },
-        ],
       };
     },
     methods: {
@@ -393,11 +296,6 @@
       showDrawer(node) {
         this.node = node;
         this.visible = true;
-      },
-      openPasswordModal(checked) {
-        if (checked) {
-          this.passwordVisible = true;
-        }
       },
       onClose() {
         this.visible = false;
@@ -409,7 +307,7 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.approverGroup.forEach((group) => {
+        this.node.approverGroups.forEach((group) => {
           if (group.approverNames.length > 0) {
             content += group.approverNames.join(',');
           }

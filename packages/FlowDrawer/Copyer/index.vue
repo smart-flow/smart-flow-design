@@ -1,5 +1,6 @@
 <template>
   <a-drawer
+    v-if="node.approverGroups"
     :width="drawerWidth()"
     :headerStyle="headerStyle"
     :bodyStyle="bodyStyle"
@@ -21,7 +22,7 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">抄送人</p>
-              <FlowNodeApproval :groups="node.approverGroup" :node="node" title="抄送人" />
+              <FlowNodeApproval :groups="node.approverGroups" :node="node" title="抄送人" />
             </div>
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">提示：</p>
@@ -35,31 +36,12 @@
           <div class="flow-setting-content">
             <div class="flow-setting-item">
               <p class="flow-setting-item-title">表单权限</p>
-              <AuthForm />
+              <AuthForm v-model="node.privileges" />
             </div>
           </div>
         </a-tab-pane>
         <a-tab-pane key="3" tab="高级设置">
-          <div class="flow-setting-content">
-            <div class="flow-setting-item">
-              <p class="flow-setting-item-title">配置</p>
-              <div class="flow-setting-option">
-                <div class="flow-setting-option-item">
-                  <div class="flow-setting-option-item-left">
-                    <img :src="optionIcon" />
-                    <div class="flow-setting-option-desc">
-                      <p class="setting-option-title">发起人填写</p>
-                      <p class="setting-option-desc">允许发起人添加抄送人</p>
-                    </div>
-                  </div>
-                  <div class="flow-setting-option-item-switch">
-                    <a-switch checked-children="开" un-checked-children="关" />
-                  </div>
-                </div>
-              </div>
-              <span></span>
-            </div>
-          </div>
+          <FlowNodeCopyerConfigure v-model="node.configure" />
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -73,9 +55,10 @@
   import EditName from '../../Common/EditName.vue';
   import AuthForm from '../../Common/AuthForm.vue';
   import FlowNodeApproval from '../Approver/Approval.vue';
+  import FlowNodeCopyerConfigure from './Configure.vue';
   export default {
     name: 'FlowCopyerSetting',
-    components: { FlowDrawerFooter, FlowNodeApproval, EditName, AuthForm },
+    components: { FlowDrawerFooter, FlowNodeApproval, FlowNodeCopyerConfigure, EditName, AuthForm },
     mixins: [flowMixin],
     data() {
       return {
@@ -236,7 +219,7 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        this.node.approverGroup.forEach((group) => {
+        this.node.approverGroups.forEach((group) => {
           if (group.approverNames.length > 0) {
             content += group.approverNames.join(',');
           }
@@ -244,6 +227,10 @@
             content += ',';
           }
         });
+        if (!content && this.node.customCc) {
+          //  是否设置发起人填写
+          content += '发起人填写';
+        }
         if (content) {
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: content });
           this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });

@@ -26,7 +26,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowWriteSetting from '../../FlowNodeSetting/Write/index.vue';
+  import FlowWriteSetting from '../../FlowDrawer/Write/index.vue';
   import EditName from '../../Common/EditName.vue';
   import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {

@@ -3,13 +3,13 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowApproverSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div class="node-name" :class="nodeNameClass(node, 'node-sp')">
+          <div class="node-name" :class="nodeNameClass(node, node.type == 1 ? 'node-sp' : 'node-transact')">
             <EditName v-model="node.nodeName" />
             <img :src="approverIcon" style="margin-left: 10px;" />
           </div>
           <div class="node-main">
             <span v-if="node.content">
-              审批人:
+              {{ node.type == 1 ? '审批人' : '办理人' }}:
               <a-tooltip placement="top">
                 <template slot="title">
                   <span>{{ node.content }}</span>
@@ -22,6 +22,9 @@
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
+          <div class="flow-node-toolbar">
+            <a-icon type="copy" @click.stop="node.deletable = true" />
+          </div>
           <!-- 删除提示 -->
           <DeleteConfirm :node="node" />
         </div>
@@ -35,7 +38,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowApproverSetting from '../../FlowNodeSetting/Approver/index.vue';
+  import FlowApproverSetting from '../../FlowDrawer/Approver/index.vue';
   import EditName from '../../Common/EditName.vue';
   import DeleteConfirm from '../../Common/DeleteConfirm.vue';
   export default {

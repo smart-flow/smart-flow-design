@@ -19,7 +19,7 @@
                   </div>
                 </div>
                 <div class="flowSetting-card-context">
-                 <!--  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+                  <!--  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
                     <a-form-item label="Note">
                       
                     </a-form-item>
@@ -30,7 +30,6 @@
                      
                     </a-form-item>
                   </a-form> -->
-
 
                   <!-- <a-row :gutter="16">
                     <a-col class="gutter-row" :span="6">
@@ -81,7 +80,7 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
+  import { flowMixin } from '../../mixins/flowMixin';
   export default {
     name: 'Remind',
     mixins: [flowMixin],

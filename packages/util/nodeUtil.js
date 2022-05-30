@@ -31,7 +31,7 @@ export function getStartNode() {
  */
 export function addCondition(node, len) {
   return {
-    pid: node.uid,
+    pid: node.id,
     uid: uuid.v4(),
     nodeName: (node.type == 4 ? '分支' : '并行') + len,
     type: node.type == 4 ? 3 : 10,
@@ -60,17 +60,17 @@ export function addCondition(node, len) {
  *   添加节点
  */
 export function addNode(node, currNode, addNodeData) {
-  if (node && node.uid == currNode.uid) {
+  if (node && node.id == currNode.id) {
     // 当前节点的子节点暂存
     const childNode = currNode.childNode;
     if (childNode) {
-      childNode.pid = addNodeData.uid;
+      childNode.pid = addNodeData.id;
     }
     // 如果添加的是并行节点
     if (addNodeData.type == 9) {
       if (childNode) {
         // 聚合节点作为其父节点
-        childNode.pid = addNodeData.childNode.uid;
+        childNode.pid = addNodeData.childNode.id;
       }
       //  将需要添加的节点后面挂载当前聚合节点子节点
       addNodeData.childNode.childNode = childNode;
@@ -79,7 +79,7 @@ export function addNode(node, currNode, addNodeData) {
       addNodeData.childNode = childNode;
     }
     //  当前添加节点父节点
-    addNodeData.pid = currNode.uid;
+    addNodeData.pid = currNode.id;
     //  当前子节点上添加需要添加的节点
     node.childNode = addNodeData;
   } else if (node) {
@@ -96,7 +96,7 @@ export function addNode(node, currNode, addNodeData) {
  *   添加分支
  */
 export function addBranch(node, currNode) {
-  if (node && node.uid == currNode.uid) {
+  if (node && node.id == currNode.id) {
     node.conditionNodes = currNode.conditionNodes;
   } else if (node) {
     addBranch(node.childNode, currNode);
@@ -112,7 +112,7 @@ export function addBranch(node, currNode) {
  *   删除节点
  */
 export function delNode(node, currNode) {
-  if (node && currNode && node.uid == currNode.pid) {
+  if (node && currNode && node.id == currNode.pid) {
     // 当前节点的子节点暂存
     let childNode = currNode.childNode;
     // 如果删除的是并行节点
@@ -138,10 +138,10 @@ export function delNode(node, currNode) {
  *   删除分支节点
  */
 export function delBranchNode(state, node, currNode) {
-  if (node && currNode && node.uid == currNode.pid) {
+  if (node && currNode && node.id == currNode.pid) {
     // 只有两个分支
     if (node.conditionNodes.length == 2) {
-      if (node.uid == state.node.uid) {
+      if (node.id == state.node.id) {
         state.node = {};
       } else {
         // 需要讲路由节点删除
@@ -150,7 +150,7 @@ export function delBranchNode(state, node, currNode) {
     } else {
       // 执行删除当前分支
       node.conditionNodes.forEach((conditionNode, index) => {
-        if (conditionNode.uid == currNode.uid) {
+        if (conditionNode.id == currNode.id) {
           node.conditionNodes.splice(index, 1);
         }
       });
@@ -170,7 +170,7 @@ export function delBranchNode(state, node, currNode) {
  *
  */
 export function updateNode(node, currNode, field, value) {
-  if (node && currNode && node.uid == currNode.uid) {
+  if (node && currNode && node.id == currNode.id) {
     node[field] = value;
   } else if (node && currNode) {
     updateNode(node.childNode, currNode, field, value);

@@ -16,12 +16,16 @@
             <span>意见分支</span>
           </a-menu-item>
           <a-menu-item v-if="nodeType != 10 && $store.state.flow.parallelBranchEnable" key="9" @click="addType(9)">
-            <img :src="childflowIcon2" class="anticon" />
+            <img :src="parallelIcon" class="anticon" />
             <span>并行分支</span>
           </a-menu-item>
           <a-menu-item key="2" @click="addType(2)">
             <img :src="ccIcon2" class="anticon" />
             <span>抄送节点</span>
+          </a-menu-item>
+          <a-menu-item key="6" @click="addType(6)">
+            <img :src="writeIcon2" class="anticon" />
+            <span>办理节点</span>
           </a-menu-item>
           <a-menu-item key="20" @click="addType(20)">
             <img :src="noticeIcon2" class="anticon" />
@@ -30,10 +34,6 @@
           <a-menu-item key="5" @click="addType(5)">
             <img :src="webhookIcon2" class="anticon" />
             <span>事件节点</span>
-          </a-menu-item>
-          <a-menu-item key="6" @click="addType(6)">
-            <img :src="writeIcon" class="anticon" />
-            <span>填写节点</span>
           </a-menu-item>
         </a-menu>
       </template>
@@ -61,7 +61,7 @@
         type: Number,
         default: 1,
       },
-      uid: {
+      id: {
         type: String,
         default: '',
       },
@@ -78,7 +78,7 @@
     methods: {
       addType(type) {
         var addNode = null;
-        if (type == 1) {
+        if (type == 1 || type == 6) {
           addNode = this.addApproverNode(type);
         } else if (type == 2) {
           addNode = this.addCcNode(type);
@@ -86,8 +86,6 @@
           addNode = this.addBranchNode(type);
         } else if (type == 5) {
           addNode = this.addEventNode(type);
-        } else if (type == 6) {
-          addNode = this.addWriteNode(type);
         } else if (type == 7) {
           addNode = this.addSuggestNode(type);
         } else if (type == 9) {
@@ -97,8 +95,8 @@
         }
         const nodeType = this.nodeType;
         const currNode = this.node;
-        const uid = this.uid;
-        this.$store.dispatch('flow/addNode', { addNode, currNode, nodeType, uid });
+        const id = this.id;
+        this.$store.dispatch('flow/addNode', { addNode, currNode, nodeType, id });
         if (nodeType == 1 && type == 7) {
           // 当审批节点下添加意见分支,就不允许添加其他类型的节点了
           this.$store.dispatch('flow/updateNode', { currNode, field: 'showAdd', value: false });
@@ -110,8 +108,8 @@
        */
       addApproverNode(type) {
         return {
-          uid: this.uuid(),
-          nodeName: '审核人',
+          id: this.uuid(),
+          nodeName: type == 1 ? '审批人' : '办理人',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
@@ -119,8 +117,12 @@
           approvalMethod: 1,
           // 审批方式
           approvalMode: '1',
+          // 审批人与发起人为同一人时
+          sameMode: 2,
+          // 审批人为空时
+          noHander: 4,
           // 审批设置
-          approverGroup: [
+          approverGroups: [
             {
               id: this.uuid(),
               // 审批人模式
@@ -133,27 +135,10 @@
               approverNames: [],
             },
           ],
-          // 审批人与发起人为同一人时
-          sameMode: 2,
-          // 审批人为空时
-          noHander: 4,
           // 表单权限
-          privilege: [
-            {
-              // 表单ID
-              id: null,
-              // 表单名称
-              name: '姓名',
-              // 表单编辑
-              writable: false,
-              // 表单只读
-              readable: true,
-              // 表单隐藏
-              displayable: false,
-              // 表单必填
-              required: false,
-            },
-          ],
+          privileges: [],
+          // 高级配置
+          configure: {},
           // 子节点
           childNode: null,
           // 显示添加按钮
@@ -171,7 +156,7 @@
        */
       addCcNode(type) {
         return {
-          uid: this.uuid(),
+          id: this.uuid(),
           nodeName: '抄送人',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -179,7 +164,7 @@
           // 子节点
           childNode: null,
           // 抄送人设置
-          approverGroup: [
+          approverGroups: [
             {
               id: this.uuid(),
               // 审批人模式
@@ -192,6 +177,10 @@
               approverNames: [],
             },
           ],
+          // 表单权限
+          privileges: [],
+          // 高级配置
+          configure: {},
           // 显示添加按钮
           showAdd: true,
           // 可删除提示
@@ -207,7 +196,7 @@
        */
       addNoticeNode(type) {
         return {
-          uid: this.uuid(),
+          id: this.uuid(),
           nodeName: '通知',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -215,7 +204,7 @@
           // 子节点
           childNode: null,
           // 审批设置
-          approverGroup: [
+          approverGroups: [
             {
               id: this.uuid(),
               // 审批人模式
@@ -241,7 +230,7 @@
        */
       addEventNode(type) {
         return {
-          uid: this.uuid(),
+          id: this.uuid(),
           nodeName: '事件',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -257,17 +246,19 @@
         };
       },
       /**
-       * 添加填写节点
+       * 添加办理节点
        */
       addWriteNode(type) {
         return {
-          uid: this.uuid(),
-          nodeName: '填写',
+          id: this.uuid(),
+          nodeName: '办理',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
           status: -1,
           // 子节点
           childNode: null,
+          // 表单权限
+          privileges: [],
           // 显示添加按钮
           showAdd: true,
           // 可删除提示
@@ -282,7 +273,7 @@
       addBranchNode(type) {
         const uid = this.uuid();
         return {
-          uid: uid,
+          id: uid,
           nodeName: '路由',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -294,7 +285,7 @@
           // 条件节点
           conditionNodes: [
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '分支1',
               type: 3,
@@ -318,7 +309,7 @@
               conditionGroup: [],
             },
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '其他情况',
               type: 3,
@@ -352,7 +343,7 @@
       addSuggestNode(type) {
         const uid = this.uuid();
         return {
-          uid: uid,
+          id: uid,
           nodeName: '意见',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -365,7 +356,7 @@
           error: false,
           conditionNodes: [
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '同意',
               type: 8,
@@ -383,7 +374,7 @@
               error: false,
             },
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '不同意',
               type: 8,
@@ -409,7 +400,7 @@
       addParallelNode(type) {
         const uid = this.uuid();
         return {
-          uid: uid,
+          id: uid,
           nodeName: '并行',
           type: type,
           // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
@@ -418,7 +409,7 @@
           showAdd: true,
           // 聚合节点
           childNode: {
-            uid: this.uuid(),
+            id: this.uuid(),
             pid: uid,
             nodeName: '聚合',
             type: 11,
@@ -433,7 +424,7 @@
           },
           conditionNodes: [
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '并行1',
               type: 10,
@@ -457,7 +448,7 @@
               conditionGroup: [],
             },
             {
-              uid: this.uuid(),
+              id: this.uuid(),
               pid: uid,
               nodeName: '并行2',
               type: 10,

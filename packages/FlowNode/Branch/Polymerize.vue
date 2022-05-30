@@ -5,7 +5,7 @@
         <div class="flow-branch-suggest">
           <div class="node-name">
             <EditName v-model="node.nodeName" style="width: 90%" />
-            <img :src="childflowIcon2" style="margin-left: 10px;" />
+            <img :src="parallelIcon" style="margin-left: 10px;" />
           </div>
           <!--  <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div> -->
         </div>
@@ -19,7 +19,7 @@
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
   import FlowAddNode from '../Add/index.vue';
-  import FlowApproverSetting from '../../FlowNodeSetting/Approver/index.vue';
+  import FlowApproverSetting from '../../FlowDrawer/Approver/index.vue';
   import EditName from '../../Common/EditName.vue';
   export default {
     name: 'FlowPolymerizeNode',
