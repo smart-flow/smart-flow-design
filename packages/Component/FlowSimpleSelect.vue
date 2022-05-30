@@ -35,9 +35,9 @@
         default: '请选择',
       },
       value: {
-        type: String,
+        type: Number,
         required: false,
-        default: '',
+        default: null,
       },
     },
     data() {

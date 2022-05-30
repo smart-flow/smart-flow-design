@@ -73,7 +73,7 @@ export const flowMixin = {
      * 节点头部样式
      * @returns
      */
-    nodeNameClass() {
+    nameClass() {
       return (node, defaultStyle) => {
         if (node.status == -1) {
           return defaultStyle;

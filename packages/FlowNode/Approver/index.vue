@@ -3,8 +3,8 @@
     <div class="flow-box">
       <div class="flow-item" :class="{ 'flow-item-active': isActive }" @click="!readable && open('flowApproverSetting', node)">
         <div class="flow-node-box" :class="{ 'has-error': node.error }">
-          <div class="node-name" :class="nodeNameClass(node, node.type == 1 ? 'node-sp' : 'node-transact')">
-            <EditName v-model="node.nodeName" />
+          <div class="node-name" :class="nameClass(node, node.type == 1 ? 'node-sp' : 'node-transact')">
+            <EditName v-model="node.name" />
             <img :src="approverIcon" style="margin-left: 10px;" />
           </div>
           <div class="node-main">
@@ -22,9 +22,9 @@
           <!-- 错误提示 -->
           <a-icon v-if="node.error" type="exclamation-circle" theme="filled" class="node-error" />
           <div v-if="!readable && !node.deletable" class="close-icon"><a-icon type="close-circle" @click.stop="node.deletable = true" /></div>
-          <div class="flow-node-toolbar">
+          <!-- <div class="flow-node-toolbar">
             <a-icon type="copy" @click.stop="node.deletable = true" />
-          </div>
+          </div> -->
           <!-- 删除提示 -->
           <DeleteConfirm :node="node" />
         </div>

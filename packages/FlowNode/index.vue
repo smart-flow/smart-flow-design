@@ -9,7 +9,7 @@
     <ParallelNode v-if="node && node.type == 9" :node="node" :readable="readable" />
     <PolymerizeNode v-if="node && node.type == 11" :node="node" :readable="readable" />
     <NoticeNode v-if="node && node.type == 20" :node="node" :readable="readable" />
-    <FlowNode v-if="node && node.childNode && node.childNode.hasOwnProperty('nodeName')" :node="node.childNode" :readable="readable" />
+    <FlowNode v-if="node && node.childNode && node.childNode.hasOwnProperty('name')" :node="node.childNode" :readable="readable" />
   </div>
 </template>
 <script>

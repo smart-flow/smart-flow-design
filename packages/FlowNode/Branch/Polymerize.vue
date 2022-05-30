@@ -4,7 +4,7 @@
       <div class="flow-item flow-node-branch">
         <div class="flow-branch-suggest">
           <div class="node-name">
-            <EditName v-model="node.nodeName" style="width: 90%" />
+            <EditName v-model="node.name" style="width: 90%" />
             <img :src="parallelIcon" style="margin-left: 10px;" />
           </div>
           <!--  <div class="close-icon"><a-icon type="close-circle" @click.stop="!read && delNode(node)" /></div> -->

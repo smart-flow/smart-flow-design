@@ -12,7 +12,7 @@
     <template slot="title">
       <img :src="ccIcon" class="anticon" />
       <span class="flow-ant-drawer-title">
-        <EditName v-model="node.nodeName" />
+        <EditName v-model="node.name" />
       </span>
     </template>
     <div class="flow-setting-module">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <FlowDrawerFooter @close="onClose" />
+    <FlowDrawerFooter @close="onClose" @save="onSave" />
   </a-drawer>
 </template>
 <script>
@@ -57,6 +57,20 @@
       onClose() {
         this.visible = false;
         this.$emit('close');
+      },
+      /**
+       * 保存配置
+       */
+      onSave() {
+        // 更新节点显示信息
+        if (this.node.privileges.length > 0) {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: '已设置' });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+          this.onClose();
+        } else {
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'content', value: null });
+          this.$store.dispatch('flow/updateNode', { currNode: this.node, field: 'error', value: false });
+        }
       },
     },
   };

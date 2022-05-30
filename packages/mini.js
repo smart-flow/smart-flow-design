@@ -15,9 +15,7 @@ import '../styles/smart-flow-design.less';
 // import '../static/icons/iconfont';
 
 // 导入单个组件
-import FlowDesign from './FlowDesign/index';
-import BasicInfo from './FlowDesign/BasicInfo/index';
-import FlowSetting from './FlowDesign/FlowSetting/index';
+import { FlowDesign, BasicInfo, FlowSetting } from './FlowDesign/index';
 import flowStore from './store/index';
 
 const components = [BasicInfo, FlowDesign, FlowSetting];
@@ -26,7 +24,6 @@ const install = function(Vue) {
   // use ant组件
   if (install.installed) return;
   install.installed = true;
-
   components.map((component) => {
     Vue.component(component.name, component);
   });

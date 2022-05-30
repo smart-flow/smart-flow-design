@@ -162,7 +162,7 @@
           <p class="flow-setting-item-title">
             <span>选择节点</span>
           </p>
-          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="approveNodes" valueName="uid" labelName="nodeName" />
+          <FlowSelect v-model="group.approverIds" :name.sync="group.approverNames" :datas="approveNodes" valueName="id" labelName="name" />
           <p class="flow-setting-item-title">
             <span class="light-text">你可以选择前序节点名称，如果名称重复建议先修改审批节点的节点名称</span>
           </p>
@@ -280,14 +280,14 @@
             // 多个组时需要disabled
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
           },
           {
             name: '部门负责人',
             value: 2,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是部门负责人审批？',
@@ -307,7 +307,7 @@
             value: 3,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是部门负责人审批？',
@@ -344,7 +344,7 @@
             value: 5,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是角色？',
@@ -366,7 +366,7 @@
             value: 6,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是岗位？',
@@ -388,7 +388,7 @@
             value: 7,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是用户组？',
@@ -410,7 +410,7 @@
             value: 8,
             disabled: false,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
           },
           {
             name: '发起人自选',
@@ -418,14 +418,14 @@
             // 多个组时需要disabled
             disabled: true,
             // 是否可以多个组
-            showAdd: false,
+            addable: false,
           },
           {
-            name: '发起人本人',
+            name: '发起人自己',
             value: 10,
             disabled: true,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是发起人审批？',
@@ -438,7 +438,7 @@
             value: 11,
             disabled: true,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是节点审批人？',
@@ -461,7 +461,7 @@
             value: 12,
             disabled: true,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '什么是连续多级上级审批？',
@@ -476,7 +476,7 @@
             value: 13,
             disabled: true,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '如何配置表单内人员？',
@@ -489,7 +489,7 @@
             value: 14,
             disabled: true,
             // 是否可以多个组
-            showAdd: true,
+            addable: true,
             popovers: [
               {
                 title: '何配置表单内部门？',
@@ -807,7 +807,7 @@
        * 显示添加按钮
        */
       show: function() {
-        // 发起人自选/发起人本人只能一个组
+        // 发起人自选/发起人自己只能一个组
         return this.groups.filter((group) => [9, 10].includes(group.approverType)).length == 0;
       },
       approveNodes: function() {

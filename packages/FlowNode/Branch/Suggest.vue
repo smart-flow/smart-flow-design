@@ -2,7 +2,7 @@
   <div class="flow-row">
     <div class="flow-branch">
       <div class="meet-node"></div>
-      <div class="flow-col" v-for="(conditionNode, index) in node.conditionNodes" :key="conditionNode.priorityLevel">
+      <div class="flow-col" v-for="(conditionNode, index) in node.conditionNodes" :key="index">
         <div class="clear-left-border" v-if="index == 0"></div>
         <div class="clear-right-border" v-if="node.conditionNodes.length - 1 == index"></div>
         <div class="flow-row">
@@ -10,7 +10,7 @@
             <div class="flow-item flow-node-branch">
               <div class="flow-branch-suggest">
                 <div class="node-name">
-                  <span>{{ conditionNode.nodeName }}</span>
+                  <span>{{ conditionNode.name }}</span>
                   <span style="margin-left: 10px;">
                     <a-icon v-if="index == 0" type="check-circle" theme="filled" style="color: green;" />
                     <a-icon v-if="node.conditionNodes.length - 1 == index" type="close-circle" theme="filled" style="color: red;" />
@@ -21,10 +21,10 @@
                 <DeleteConfirm :node="conditionNode" @callback="delCallback" />
               </div>
             </div>
-            <FlowAddNode :node.sync="node" :nodeType="3" :uid="conditionNode.id" :readable="readable" />
+            <FlowAddNode :node.sync="node" :nodeType="3" :id="conditionNode.id" :readable="readable" />
           </div>
         </div>
-        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('nodeName')" :node="conditionNode.childNode" :readable="readable" />
+        <FlowNode v-if="conditionNode.childNode && conditionNode.childNode.hasOwnProperty('name')" :node="conditionNode.childNode" :readable="readable" />
       </div>
     </div>
     <div class="after-branch-btn">
@@ -62,10 +62,10 @@
     methods: {
       delCallback(conditionNode) {
         let currNode = {
-          uid: this.node.pid,
+          id: this.node.pid,
         };
         // 将对应的审批节点的添加按钮开启
-        this.$store.dispatch('flow/updateNode', { currNode, field: 'showAdd', value: true });
+        this.$store.dispatch('flow/updateNode', { currNode, field: 'addable', value: true });
       },
     },
   };
