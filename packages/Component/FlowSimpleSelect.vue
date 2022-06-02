@@ -24,6 +24,11 @@
         required: false,
         default: 'name',
       },
+      CodeName: {
+        type: String,
+        required: false,
+        default: 'code',
+      },
       size: {
         type: String,
         required: false,
@@ -66,6 +71,10 @@
         this.$emit(
           'update:name',
           this.datas.filter((data) => data[this.valueName] == value).map((data) => data[this.labelName]),
+        );
+        this.$emit(
+          'update:code',
+          this.datas.filter((data) => data[this.valueName] == value).map((data) => data[this.CodeName]),
         );
         this.$emit('change', value);
       },

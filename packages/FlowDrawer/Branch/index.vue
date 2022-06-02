@@ -45,8 +45,15 @@
                     </a-select-opt-group>
                   </a-select>
                   <div class="flow-setting-condition-option">
-                    <!-- 判断(操作)符 -->
-                    <FlowSimpleSelect v-model="condition.optType" :name.sync="condition.optTypeName" :datas="optTypes" labelName="label" style="width: 26%" />
+                    <!-- 比较(操作)符 -->
+                    <FlowSimpleSelect
+                      v-model="condition.optType"
+                      :name.sync="condition.optTypeName"
+                      :code.sync="condition.optCode"
+                      :datas="optTypes"
+                      labelName="label"
+                      style="width: 26%"
+                    />
                     <!-- 值类型 -->
                     <FlowSimpleSelect v-model="condition.valueType" :datas="valueTypes" labelName="label" style="width: 26%" @change="condition.conditionValue = []" />
                     <!-- 值 -->
@@ -128,24 +135,25 @@
           { label: '公式', value: 2 },
           { label: '其他', value: 3 },
         ],
+        // 基础字段
         columns: [
-          { label: '姓名', value: '姓名' },
-          { label: '工号', value: '工号' },
-          { label: '部门', value: '部门' },
-          { label: 'Base地', value: 'Base地' },
-          { label: '所属体系', value: '所属体系' },
-          { label: '归属地', value: '归属地' },
+          { label: '姓名', value: '姓名', code: 'NAME' },
+          { label: '工号', value: '工号', code: 'JOB_NUMBER' },
+          { label: '部门', value: '部门', code: 'DEPT' },
+          { label: 'Base地', value: 'Base地', code: 'BASE' },
+          { label: '所属体系', value: '所属体系', code: '' },
+          { label: '归属地', value: '归属地', code: 'LOCATION' },
         ],
+        // 表单字段，必填
         formColumns: [{ label: '加班类型', value: '加班类型' }],
+        // 比较(操作)符
         optTypes: [
-          { label: '等于', value: 'eq' },
-          { label: '不等于', value: 'ne' },
-          { label: '大于', value: 'gt' },
-          { label: '大于等于', value: 'ge' },
-          { label: '小于', value: 'lt' },
-          { label: '小于等于', value: 'le' },
-          /*  { label: '为空', value: '7' },
-          { label: '不为空', value: '8' }, */
+          { label: '等于', value: 'eq', code: '=' },
+          { label: '不等于', value: 'ne', code: '!=' },
+          { label: '大于', value: 'gt', code: '>' },
+          { label: '大于等于', value: 'ge', code: '>=' },
+          { label: '小于', value: 'lt', code: '<' },
+          { label: '小于等于', value: 'le', code: '<=' },
         ],
         // 值类型
         valueTypes: [
@@ -199,7 +207,10 @@
           this.levelOptions = [];
           routeNode.conditionNodes.forEach((item, index) => {
             let priorityLevel = index + 1;
-            this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
+            // 其他情况节点,顺序只能是最后,不能修改
+            if (priorityLevel < routeNode.conditionNodes.length) {
+              this.levelOptions.push({ label: '优先' + priorityLevel, value: priorityLevel });
+            }
           });
         }
       },
@@ -216,11 +227,14 @@
             conditions: [
               {
                 id: this.uuid(),
+                // 位置编码，用户后台easyrules特殊判断
+                code: 'NAME',
                 columnId: '姓名',
                 columnName: '姓名',
                 columnValue: '姓名',
                 columnType: undefined,
                 optType: 'eq',
+                optCode: '=',
                 optTypeName: '等于',
                 valueType: '1',
                 conditionValue: [],
@@ -241,6 +255,7 @@
                 columnValue: undefined,
                 columnType: undefined,
                 optType: undefined,
+                optCode: undefined,
                 optTypeName: undefined,
                 valueType: undefined,
                 conditionValue: [],
@@ -289,7 +304,7 @@
                   if (i != 0) {
                     content += ' 且 ';
                   }
-                  content += '[' + condition.columnValue + ' ' + condition.optTypeName + ' ' + conditionValueName + ']';
+                  content += '[' + condition.columnValue + ' ' + condition.optCode + ' ' + conditionValueName + ']';
                 }
               });
             }
