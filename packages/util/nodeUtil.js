@@ -211,6 +211,32 @@ export function getApproveNodes(node, approveNodes) {
 }
 
 /**
+ * 校验节点
+ * @param {*} node
+ */
+export function validate(node, count) {
+  if (!count) {
+    count = { value: 0 };
+  }
+  if (!node.content) {
+    node.error = true;
+    count.value++;
+  }
+  // 如果有孩子节点
+  const childNode = node.childNode;
+  if (childNode) {
+    validate(childNode, count);
+  }
+  const conditionNodes = node.conditionNodes;
+  if (conditionNodes) {
+    conditionNodes.forEach((conditionNode, i) => {
+      validate(conditionNode, count);
+    });
+  }
+  return count.value == 0;
+}
+
+/**
  * 更新地图
  *
  */

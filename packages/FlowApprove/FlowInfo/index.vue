@@ -116,12 +116,14 @@
         }
       },
       getData() {
+        let result = null;
         this.form.validateFields((err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
-            return values;
+            console.log('flowInfo: ', values);
+            result = values;
           }
         });
+        return result;
       },
     },
   };

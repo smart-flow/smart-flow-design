@@ -19,7 +19,7 @@
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
-  import { getStartNode } from '../../util/nodeUtil';
+  import { getStartNode, validate } from '../../util/nodeUtil';
   import FlowZoom from '../../Common/FlowZoom.vue';
   import FlowMap from '../../Common/FlowMap.vue';
   import FlowNav from '../../Common/FlowNav.vue';
@@ -69,14 +69,14 @@
       this.$store.dispatch('flow/setNode', this.node);
     },
     methods: {
-      toReturn() {},
-      change(type) {},
-      handleSave() {},
       getData() {
-        return this.nodeData;
-      },
-      publish() {
-        this.$emit('publish', this.nodeData);
+        // 初始数据
+        const data = this.nodeData;
+        if (validate(data)) {
+          console.log('flowDesign: ', data);
+          return data;
+        }
+        return null;
       },
     },
   };

@@ -47,7 +47,16 @@
       },
       handleSave() {},
       publish() {
-        this.$refs['flowInfo'].getData();
+        const flowInfoData = this.$refs['flowInfo'].getData();
+        if (!flowInfoData) {
+          this.currentNav = 1;
+          return;
+        }
+        const flowDesignData = this.$refs['flowDesign'].getData();
+        if (!flowDesignData) {
+          this.currentNav = 2;
+          return;
+        }
       },
     },
   };
