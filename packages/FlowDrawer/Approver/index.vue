@@ -312,7 +312,6 @@
       onSave() {
         // 更新节点显示信息
         let content = '';
-        debugger;
         this.node.approverGroups.forEach((group) => {
           if (group.approverNames.length > 0) {
             content += group.approverNames.join(',');
