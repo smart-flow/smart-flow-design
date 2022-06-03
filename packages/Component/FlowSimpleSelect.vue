@@ -37,7 +37,7 @@
       value: {
         type: [Number, String],
         required: false,
-        default: '',
+        // default: null,
       },
       placeholder: {
         type: String,

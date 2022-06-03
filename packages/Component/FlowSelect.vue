@@ -35,9 +35,9 @@
         default: 'default',
       },
       value: {
-        type: Array,
+        type: [Array, Number, String],
         required: false,
-        default: () => null,
+        // default: () => null,
       },
       placeholder: {
         type: String,
