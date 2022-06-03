@@ -35,7 +35,7 @@
         default: 'large',
       },
       value: {
-        type: String,
+        type: [Number, String],
         required: false,
         default: '',
       },

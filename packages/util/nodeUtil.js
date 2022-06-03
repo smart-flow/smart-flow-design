@@ -17,12 +17,16 @@ export function getStartNode() {
     type: 0,
     // 流程节点状态(用于只读模式, 0:未进行 1:进行中  2:已完成)
     status: -1,
-    // 是否有错误
-    error: false,
+    // 表单权限
+    privileges: [],
     // 子节点
     childNode: null,
     // 显示添加按钮
     addable: true,
+    // 是否有错误
+    error: false,
+    // 显示内容
+    content: null,
   };
 }
 

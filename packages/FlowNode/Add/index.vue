@@ -268,6 +268,8 @@
           deletable: false,
           // 是否有错误
           error: false,
+          // 显示内容
+          content: null,
         };
       },
       /**
