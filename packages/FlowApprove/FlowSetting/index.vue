@@ -1,6 +1,5 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="navable && !readable" :currentNav="4" :buttonName="buttonName" @change="change" />
     <MenuShot :menus="menus" @change="changeMenu" />
     <div class="designer-content-box">
       <div class="flowSetting-box">
@@ -24,7 +23,6 @@
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
-  import FlowNav from '../../Common/FlowNav.vue';
   import MenuShot from './MenuShot.vue';
   import Advanced from './Advanced.vue';
   import Exhibition from './Exhibition.vue';
@@ -33,7 +31,7 @@
   export default {
     name: 'FlowSetting',
     mixins: [flowMixin],
-    components: { FlowNav, MenuShot, Advanced, Exhibition, Remind, Print },
+    components: { MenuShot, Advanced, Exhibition, Remind, Print },
     props: {
       navable: {
         type: Boolean,
@@ -65,14 +63,9 @@
             code: 3,
             activate: false,
           },
-          /* {
-            name: '审批人设置',
-            code: 4,
-            activate: false,
-          }, */
           {
             name: '打印模板',
-            code: 5,
+            code: 4,
             activate: false,
           },
         ],

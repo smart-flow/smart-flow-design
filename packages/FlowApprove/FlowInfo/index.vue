@@ -1,6 +1,5 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="navable && !readable" :currentNav="1" :buttonName="buttonName" @click="publish" @change="change" />
     <div class="designer-base-info">
       <div class="base-info-panel">
         <a-form :layout="formLayout">
@@ -43,7 +42,7 @@
   import FlowSelect from '../../Component/FlowSelect.vue';
   import FlowSimpleSelect from '../../Component/FlowSimpleSelect.vue';
   export default {
-    name: 'BasicInfo',
+    name: 'FlowInfo',
     mixins: [flowMixin],
     components: { FlowNav, FlowSelect, FlowSimpleSelect },
     props: {
@@ -61,7 +60,7 @@
         buttonName: '保存',
         formLayout: 'vertical',
         flowName: '',
-        flowGroup: '',
+        flowGroup: null,
         bindForm: [],
         flowGroups: [
           { label: '人事', value: '人事' },

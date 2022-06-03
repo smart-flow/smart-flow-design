@@ -1,5 +1,5 @@
 <template>
-  <BasicInfo ref="BasicInfo" />
+  <FlowInfo ref="FlowInfo" />
 </template>
 <script>
   export default {

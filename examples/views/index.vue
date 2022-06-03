@@ -2,7 +2,7 @@
   <!-- <FlowDesign ref="FlowDesign" :node.sync="childNode" /> -->
   <!--<FlowDesign ref="FlowDesign" :node.sync="childNode" :readable="readable" />-->
   <!-- <FlowDesign ref="FlowDesign" /> -->
-  <div></div>
+  <FlowApprove></FlowApprove>
 </template>
 <script>
   export default {

@@ -8,17 +8,17 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      redirect: 'flowDesign',
+      redirect: 'cretate',
     },
     {
-      path: '/basicInfo',
+      path: '/cretate',
+      name: 'cretate',
+      component: () => import('../views/index.vue'),
+    },
+    {
+      path: '/flowInfo',
       name: 'basic',
       component: () => import('../views/basic.vue'),
-    },
-    {
-      path: '/formDesign',
-      name: 'form',
-      component: () => import('../views/form.vue'),
     },
     {
       path: '/flowDesign',

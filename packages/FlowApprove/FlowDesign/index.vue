@@ -1,6 +1,5 @@
 <template>
   <div class="designer-wrap">
-    <FlowNav v-if="navable && !readable" :currentNav="3" @click="publish" @change="change" />
     <div class="designer-content-box" :style="{ height: readable ? '100vh' : 'calc(100vh - 50px)' }">
       <div class="flow-design-wrap">
         <div id="flow-design" class="flow-design-container" :style="zoomStyle">
@@ -19,16 +18,15 @@
   </div>
 </template>
 <script>
-  import { flowMixin } from '../mixins/flowMixin';
-  import { getStartNode } from '../util/nodeUtil';
-  import FlowZoom from '../Common/FlowZoom.vue';
-  import FlowMap from '../Common/FlowMap.vue';
-  import FlowNav from '../Common/FlowNav.vue';
-  import FlowHelper from '../Common/FlowHelper.vue';
-  import FlowTips from '../Common/FlowTips.vue';
-  import FlowNode from '../FlowNode/index.vue';
-  import FlowStartNode from '../FlowNode/Start';
-  import FlowEndNode from '../FlowNode/End';
+  import { flowMixin } from '../../mixins/flowMixin';
+  import FlowZoom from '../../Common/FlowZoom.vue';
+  import FlowMap from '../../Common/FlowMap.vue';
+  import FlowNav from '../../Common/FlowNav.vue';
+  import FlowHelper from '../../Common/FlowHelper.vue';
+  import FlowTips from '../../Common/FlowTips.vue';
+  import FlowNode from '../../FlowNode/index.vue';
+  import FlowStartNode from '../../FlowNode/Start';
+  import FlowEndNode from '../../FlowNode/End';
   export default {
     name: 'FlowDesign',
     mixins: [flowMixin],
@@ -36,8 +34,8 @@
     props: {
       node: {
         type: Object,
-        default: function() {
-          return getStartNode();
+        default: () => {
+          return {};
         },
       },
       navable: {

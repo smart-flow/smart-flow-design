@@ -47,22 +47,16 @@
             value: 1,
             path: '/basicInfo',
           },
-          /* {
-            name: '表单设计',
-            shortName: '表单',
-            value: 2,
-            path: '/formDesign',
-          }, */
           {
             name: '流程设计',
             shortName: '流程',
-            value: 3,
+            value: 2,
             path: '/flowDesign',
           },
           {
             name: '更多配置',
             shortName: '配置',
-            value: 4,
+            value: 3,
             path: '/flowSetting',
           },
         ],
@@ -70,7 +64,7 @@
     },
     methods: {
       onChange(item) {
-        this.$router.push({ path: item.path });
+        // this.$router.push({ path: item.path });
         this.$emit('change', item);
       },
       onClick() {

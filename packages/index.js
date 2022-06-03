@@ -11,7 +11,7 @@ import './components_use';
 import * as all from './mini';
 
 export default all.default;
-export const BasicInfo = all.BasicInfo;
+export const FlowInfo = all.FlowInfo;
 export const FlowDesign = all.FlowDesign;
 export const FlowSetting = all.FlowSetting;
 export const flowStore = all.flowStore;
