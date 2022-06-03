@@ -134,6 +134,20 @@ import 'smart-flow-design/lib/smart-flow-design.css'
 Vue.use(SmartFlowDesign)
 ```
 
+## 参考smart-flow-design-demo
+地址 https://gitee.com/crowncloud/smart-flow-design-demo
+
+```node
+# 构建mini,生成lib目录
+yarn run mini
+
+# 在lib的文件发布到npm
+npm login
+
+npm publish
+```
+
+
 ## 更新日志
 
 [CHANGELOG](./CHANGELOG.md)
