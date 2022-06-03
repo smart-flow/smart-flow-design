@@ -1,5 +1,5 @@
 <template>
-  <a-select v-model="currentValue" :size="size" :mode="mode" allowClear class="w-fill" @change="onChange">
+  <a-select v-model="currentValue" :size="size" :mode="mode" allowClear :placeholder="placeholder" class="w-fill" @change="onChange">
     <a-select-option :value="data[valueName]" v-for="(data, i) in datas" :key="i">
       {{ data[labelName] }}
     </a-select-option>
@@ -37,7 +37,12 @@
       value: {
         type: Array,
         required: false,
-        default: () => [],
+        default: () => null,
+      },
+      placeholder: {
+        type: String,
+        required: false,
+        default: '请选择',
       },
     },
     data() {
@@ -47,11 +52,15 @@
     },
     watch: {
       value(curVal, oldVal) {
-        this.initData(curVal);
+        if (curVal != oldVal) {
+          this.initData(curVal);
+        }
       },
     },
     mounted() {
-      this.initData(this.value);
+      if (this.value) {
+        this.initData(this.value);
+      }
     },
     methods: {
       initData(value) {

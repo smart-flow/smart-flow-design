@@ -34,29 +34,33 @@
         required: false,
         default: 'large',
       },
+      value: {
+        type: String,
+        required: false,
+        default: '',
+      },
       placeholder: {
         type: String,
         required: false,
         default: '请选择',
       },
-      value: {
-        type: Number,
-        required: false,
-        default: null,
-      },
     },
     data() {
       return {
-        currentValue: null,
+        currentValue: undefined,
       };
     },
     watch: {
       value(curVal, oldVal) {
-        this.initData(curVal);
+        if (curVal != oldVal) {
+          this.initData(curVal);
+        }
       },
     },
     mounted() {
-      this.initData(this.value);
+      if (this.value) {
+        this.initData(this.value);
+      }
     },
     methods: {
       initData(value) {
