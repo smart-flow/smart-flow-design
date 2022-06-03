@@ -1,5 +1,5 @@
 <template>
-  <div class="designer-wrap">
+  <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
     <div class="designer-base-info">
       <div class="base-info-panel">
         <a-form :layout="formLayout">

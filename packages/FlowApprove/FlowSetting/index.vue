@@ -1,5 +1,5 @@
 <template>
-  <div class="designer-wrap">
+  <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
     <MenuShot :menus="menus" @change="changeMenu" />
     <div class="designer-content-box">
       <div class="flowSetting-box">

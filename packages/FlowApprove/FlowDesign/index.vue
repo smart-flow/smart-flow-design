@@ -1,6 +1,6 @@
 <template>
-  <div class="designer-wrap">
-    <div class="designer-content-box" :style="{ height: readable ? '100vh' : 'calc(100vh - 50px)' }">
+  <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
+    <div class="designer-content-box">
       <div class="flow-design-wrap">
         <div id="flow-design" class="flow-design-container" :style="zoomStyle">
           <div id="flow-design-content" class="flow-design-content">
@@ -19,6 +19,7 @@
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';
+  import { getStartNode } from '../../util/nodeUtil';
   import FlowZoom from '../../Common/FlowZoom.vue';
   import FlowMap from '../../Common/FlowMap.vue';
   import FlowNav from '../../Common/FlowNav.vue';
@@ -35,12 +36,12 @@
       node: {
         type: Object,
         default: () => {
-          return {};
+          return getStartNode();
         },
       },
       navable: {
         type: Boolean,
-        default: true,
+        default: false,
       },
       readable: {
         type: Boolean,
