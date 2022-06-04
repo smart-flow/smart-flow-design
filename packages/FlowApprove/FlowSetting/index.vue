@@ -1,25 +1,27 @@
 <template>
-  <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
-    <MenuShot :menus="menus" @change="changeMenu" />
-    <div class="designer-content-box">
-      <div class="flowSetting-box">
-        <div v-if="!isMobile" class="flowSetting-nav-box">
-          <div class="flowSetting-nav-group">
-            <div v-for="(menu, i) in menus" :key="i" :class="{ 'act-item': menu.activate == true }" class="flowSetting-nav-group-item" @click="changeMenu(menu)">
-              <img :src="settingBaseIcon" />
-              <span>{{ menu.name }}</span>
+  <transition name="router-fade" mode="out-in">
+    <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
+      <MenuShot :menus="menus" @change="changeMenu" />
+      <div class="designer-content-box">
+        <div class="flowSetting-box">
+          <div v-if="!isMobile" class="flowSetting-nav-box">
+            <div class="flowSetting-nav-group">
+              <div v-for="(menu, i) in menus" :key="i" :class="{ 'act-item': menu.activate == true }" class="flowSetting-nav-group-item" @click="changeMenu(menu)">
+                <img :src="settingBaseIcon" />
+                <span>{{ menu.name }}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="flowSetting-content-box">
-          <Advanced v-if="currentContext == 1"></Advanced>
-          <Exhibition v-if="currentContext == 2"></Exhibition>
-          <Remind v-if="currentContext == 3"></Remind>
-          <Print v-if="currentContext == 5"></Print>
+          <div class="flowSetting-content-box">
+            <Advanced v-if="currentContext == 1"></Advanced>
+            <Exhibition v-if="currentContext == 2"></Exhibition>
+            <Remind v-if="currentContext == 3"></Remind>
+            <Print v-if="currentContext == 5"></Print>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';

@@ -1,21 +1,23 @@
 <template>
-  <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
-    <div class="designer-content-box">
-      <div class="flow-design-wrap">
-        <div id="flow-design" class="flow-design-container" :style="zoomStyle">
-          <div id="flow-design-content" class="flow-design-content">
-            <FlowStartNode :node="nodeData" />
-            <FlowNode :node="nodeData" :readable="readable" />
-            <FlowEndNode :node="nodeData" :readable="readable" />
+  <transition name="router-fade" mode="out-in">
+    <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
+      <div class="designer-content-box">
+        <div class="flow-design-wrap">
+          <div id="flow-design" class="flow-design-container" :style="zoomStyle">
+            <div id="flow-design-content" class="flow-design-content">
+              <FlowStartNode :node="nodeData" />
+              <FlowNode :node="nodeData" :readable="readable" />
+              <FlowEndNode :node="nodeData" :readable="readable" />
+            </div>
           </div>
+          <FlowHelper v-if="!readable" />
+          <FlowTips v-if="readable" />
+          <FlowZoom v-model="zoomValue" />
+          <FlowMap v-if="!isMobile" />
         </div>
-        <FlowHelper v-if="!readable" />
-        <FlowTips v-if="readable" />
-        <FlowZoom v-model="zoomValue" />
-        <FlowMap v-if="!isMobile" />
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 <script>
   import { flowMixin } from '../../mixins/flowMixin';

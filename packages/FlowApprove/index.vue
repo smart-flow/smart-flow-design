@@ -1,9 +1,9 @@
 <template>
   <div>
-    <FlowNav v-if="navable && !readable" :currentNav="currentNav" @click="publish" @change="change" />
-    <FlowInfo v-show="currentNav == 1" ref="flowInfo" :readable="readable" :navable="navable" />
-    <FlowDesign v-show="currentNav == 2" ref="flowDesign" :readable="readable" :navable="navable" :node="node" />
-    <FlowSetting v-show="currentNav == 3" ref="flowSetting" :readable="readable" :navable="navable" />
+    <FlowNav v-if="navable && !readable" :currentNav="currentNav" :key="0" @click="publish" @change="change" />
+    <FlowInfo v-show="currentNav == 1" ref="flowInfo" :key="1" :readable="readable" :navable="navable" />
+    <FlowDesign v-show="currentNav == 2" ref="flowDesign" :key="2" :readable="readable" :navable="navable" :node="node" />
+    <FlowSetting v-show="currentNav == 3" ref="flowSetting" :key="3" :readable="readable" :navable="navable" />
   </div>
 </template>
 <script>
