@@ -117,6 +117,14 @@ export const flowMixin = {
         marginBottom: '16px',
       };
     },
+    infoPanelStyle: () => {
+      const width = scale.isMobile() ? '100%' : '60%';
+      const padding = scale.isMobile() ? '20px 20px' : '20px 200px';
+      return {
+        width: width,
+        padding: padding,
+      };
+    },
   },
   methods: {
     uuid() {

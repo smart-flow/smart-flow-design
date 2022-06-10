@@ -2,7 +2,7 @@
   <transition name="router-fade" mode="out-in">
     <div class="designer-wrap" :style="{ height: readable ? '100vh' : navable ? 'calc(100vh - 50px)' : '100vh' }">
       <div class="designer-base-info">
-        <div class="base-info-panel">
+        <div class="base-info-panel" :style="infoPanelStyle">
           <a-form :layout="formLayout" :form="form">
             <a-form-item label="图标">
               <a-avatar shape="square" size="large" icon="red-envelope" />
